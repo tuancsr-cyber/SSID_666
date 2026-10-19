@@ -4,32 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="theme-color" content="#0072bc" />
+  <meta name="theme-color" content="#0072bc" id="wrapper-meta-theme" />
   <meta name="robots" content="noindex, nofollow, noarchive" />
   <title>VssID - Bảo hiểm xã hội số</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
   <style>
+    :root {
+      --vssid-primary: #0072bc;
+      --vssid-header-start: #0082c8;
+      --vssid-header-mid: #0066a6;
+      --vssid-header-end: #005896;
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
+
     html, body {
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #ffffff; /* Nền tổng thể đổi thành màu trắng */
-      display: flex;
-      flex-direction: column;
+      background-color: #ffffff;
     }
-    /* Thanh màu xanh ở trên: Vừa khít vùng tai thỏ / đồng hồ */
+
+    /* Thanh đệm vùng tai thỏ / đồng hồ trên cùng */
     .top-blue-banner {
       width: 100%;
       height: calc(env(safe-area-inset-top, 20px) + 12px);
-      background-color: #0072bc;
+      background-color: var(--vssid-primary);
       flex-shrink: 0;
+      transition: background-color 0.15s ease;
     }
-    /* Khung ứng dụng lấp đầy toàn bộ phần còn lại, bao gồm cả vùng thanh gạt dưới cùng màu trắng */
+
+    /* Thanh Header dải màu xanh chuẩn VssID */
+    .vssid-header-gradient {
+      background: linear-gradient(90deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 50%, var(--vssid-header-end) 100%);
+    }
+
+    /* Khung nhúng ứng dụng Google Apps Script */
     .app-frame {
       width: 100%;
       flex: 1;
@@ -37,12 +58,244 @@
       border: none;
       display: block;
       background-color: #ffffff;
-      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    /* Thanh điều hướng dưới cùng bù vùng thanh gạt Home Indicator */
+    .wrapper-bottom-nav {
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6px);
     }
   </style>
 </head>
-<body>
-  <div class="top-blue-banner"></div>
-  <iframe class="app-frame" src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec" allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"></iframe>
+<body class="w-full h-full flex items-center justify-center sm:bg-slate-900 select-none">
+
+  <!-- Khung App Shell hiển thị tràn 100% trên điện thoại và căn giữa trên máy tính -->
+  <div id="shell-container" class="relative w-full sm:max-w-[430px] h-full bg-white overflow-hidden flex flex-col sm:shadow-2xl">
+
+    <!-- 1. VÙNG AN TOÀN TAI THỎ (SAFE AREA TOP) -->
+    <div id="top-safe-banner" class="top-blue-banner"></div>
+
+    <!-- 2. PHẦN HEADER ĐIỀU HƯỚNG ĐỘNG (CHUYỂN TỪ GAS FRONTEND SANG GITHUB WRAPPER) -->
+    <header id="wrapper-header" class="hidden flex-shrink-0">
+      <!-- Header Lớp 2: QUẢN LÝ CÁ NHÂN -->
+      <div id="header-mode-screen-2" class="hidden vssid-header-gradient text-white px-4 py-3.5 flex items-center justify-between shadow-sm">
+        <button type="button" onclick="sendLogoutToGas()" class="text-xl active:opacity-75">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <h1 class="text-[15px] font-medium tracking-wide uppercase">QUẢN LÝ CÁ NHÂN</h1>
+        <button type="button" onclick="sendModalToGas()" class="relative text-xl flex items-center justify-center active:opacity-75">
+          <span data-wrapper-icon="header_bell" class="inline-flex items-center justify-center">
+            <i class="fa-solid fa-bell"></i>
+          </span>
+          <span class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">3</span>
+        </button>
+      </div>
+
+      <!-- Header Lớp 3: QUÁ TRÌNH THAM GIA & NÚT QUAY LẠI -->
+      <div id="header-mode-screen-3" class="hidden vssid-header-gradient text-white px-4 py-3.5 flex items-center justify-between shadow-sm">
+        <button type="button" onclick="navigateGasScreen('screen-2')" class="text-xl pr-3 text-white active:opacity-75 flex items-center">
+          <svg style="width: 16px; height: 16px; fill: currentColor;" viewBox="0 0 320 512">
+            <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+          </svg>
+        </button>
+        <h1 class="text-[15px] font-medium tracking-wide uppercase flex-1 text-center pr-5">QUÁ TRÌNH THAM GIA</h1>
+      </div>
+
+      <!-- Header Lớp 4: CHI TIẾT & NÚT QUAY LẠI -->
+      <div id="header-mode-screen-4" class="hidden bg-white px-4 py-3.5 flex items-center justify-between border-b border-slate-100">
+        <button type="button" onclick="navigateGasScreen('screen-3')" class="text-[#285989] text-xl pr-3 active:opacity-75 flex items-center">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-5">Chi tiết</h1>
+      </div>
+    </header>
+
+    <!-- 3. KHUNG NỘI DUNG CHÍNH (GOOGLE APPS SCRIPT IFRAME) -->
+    <iframe
+      id="gas-app-frame"
+      class="app-frame"
+      src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec"
+      allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"
+    ></iframe>
+
+    <!-- 4. THANH ĐIỀU HƯỚNG DƯỚI CÙNG (CHUYỂN TỪ GAS FRONTEND SANG GITHUB WRAPPER) -->
+    <nav id="wrapper-bottom-nav" class="hidden wrapper-bottom-nav border-t border-slate-200 bg-white pt-1.5 px-2 grid-cols-4 text-center flex-shrink-0">
+      <button type="button" onclick="handleBottomNavPersonal()" class="flex flex-col items-center justify-center text-[var(--vssid-primary)] active:opacity-75">
+        <span data-wrapper-icon="nav_ql_canhan" class="w-6 h-6 flex items-center justify-center">
+          <i class="fa-solid fa-id-badge text-lg"></i>
+        </span>
+        <span class="text-[10.5px] mt-0.5 font-medium">QL cá nhân</span>
+      </button>
+      <button type="button" onclick="sendModalToGas()" class="flex flex-col items-center justify-center text-slate-400 active:opacity-75">
+        <span data-wrapper-icon="nav_dichvu_cong" class="w-6 h-6 flex items-center justify-center">
+          <i class="fa-regular fa-file-lines text-lg"></i>
+        </span>
+        <span class="text-[10.5px] mt-0.5">Dịch vụ công</span>
+      </button>
+      <button type="button" onclick="sendModalToGas()" class="flex flex-col items-center justify-center text-slate-400 active:opacity-75">
+        <span data-wrapper-icon="nav_tra_cuu" class="w-6 h-6 flex items-center justify-center">
+          <i class="fa-solid fa-magnifying-glass text-lg"></i>
+        </span>
+        <span class="text-[10.5px] mt-0.5">Tra cứu</span>
+      </button>
+      <button type="button" onclick="sendModalToGas()" class="flex flex-col items-center justify-center text-slate-400 active:opacity-75">
+        <span data-wrapper-icon="nav_tro_giup" class="w-6 h-6 flex items-center justify-center">
+          <i class="fa-solid fa-headset text-lg"></i>
+        </span>
+        <span class="text-[10.5px] mt-0.5">Trợ giúp</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <script>
+    let currentActiveScreen = 'screen-1';
+    let wrapperUiConfig = { theme: {}, icons: {} };
+
+    // Khôi phục nhanh cấu hình màu & icon từ bộ nhớ trình duyệt trên GitHub Pages
+    (function restoreCachedWrapperUi() {
+      try {
+        const saved = localStorage.getItem('VSSID_WRAPPER_UI_CONFIG');
+        if (saved) {
+          applyWrapperUiConfig(JSON.parse(saved));
+        }
+      } catch (e) {}
+    })();
+
+    // Gửi thông điệp điều khiển vào trong GAS Iframe
+    function postToGasFrame(payload) {
+      const frame = document.getElementById('gas-app-frame');
+      if (frame && frame.contentWindow) {
+        frame.contentWindow.postMessage(payload, '*');
+      }
+    }
+
+    // Điều hướng màn hình khi bấm nút Quay lại (<) trên Header
+    function navigateGasScreen(targetScreen) {
+      updateShellLayoutForScreen(targetScreen);
+      postToGasFrame({
+        type: 'VSSID_NAVIGATE',
+        targetScreen: targetScreen
+      });
+    }
+
+    // Khi bấm nút "QL cá nhân" ở thanh điều hướng dưới
+    function handleBottomNavPersonal() {
+      if (currentActiveScreen !== 'screen-2') {
+        navigateGasScreen('screen-2');
+      }
+    }
+
+    // Khi bấm nút Menu (3 gạch) ở màn hình Quản lý cá nhân -> Đăng xuất
+    function sendLogoutToGas() {
+      updateShellLayoutForScreen('screen-1');
+      postToGasFrame({
+        type: 'VSSID_LOGOUT'
+      });
+    }
+
+    // Khi bấm các chức năng thông báo lỗi kết nối
+    function sendModalToGas() {
+      postToGasFrame({
+        type: 'VSSID_SHOW_MODAL',
+        message: 'Lỗi kết nối đến hệ thống<br>Vui lòng thử lại'
+      });
+    }
+
+    // Cập nhật trạng thái Header, Banner đỉnh và Thanh điều hướng dưới theo từng Lớp màn hình
+    function updateShellLayoutForScreen(screenId) {
+      currentActiveScreen = screenId || 'screen-1';
+
+      const headerWrapper = document.getElementById('wrapper-header');
+      const mode2 = document.getElementById('header-mode-screen-2');
+      const mode3 = document.getElementById('header-mode-screen-3');
+      const mode4 = document.getElementById('header-mode-screen-4');
+      const bottomNav = document.getElementById('wrapper-bottom-nav');
+      const topBanner = document.getElementById('top-safe-banner');
+      const metaTheme = document.getElementById('wrapper-meta-theme');
+
+      const t = (wrapperUiConfig && wrapperUiConfig.theme) || {};
+      const primaryColor = t.primary || '#0072bc';
+      const headerStartColor = t.headerStart || primaryColor;
+
+      // Reset các chế độ Header
+      mode2.classList.add('hidden');
+      mode3.classList.add('hidden');
+      mode4.classList.add('hidden');
+
+      if (currentActiveScreen === 'screen-1') {
+        // Màn hình Đăng nhập: Ẩn Header và Bottom Nav
+        headerWrapper.classList.add('hidden');
+        bottomNav.classList.add('hidden');
+        bottomNav.classList.remove('grid');
+        topBanner.style.backgroundColor = primaryColor;
+        if (metaTheme) metaTheme.setAttribute('content', primaryColor);
+      } else if (currentActiveScreen === 'screen-2') {
+        // Màn hình Quản lý cá nhân: Hiện Header Lớp 2 + Hiện Bottom Nav
+        headerWrapper.classList.remove('hidden');
+        mode2.classList.remove('hidden');
+        bottomNav.classList.remove('hidden');
+        bottomNav.classList.add('grid');
+        topBanner.style.backgroundColor = headerStartColor;
+        if (metaTheme) metaTheme.setAttribute('content', headerStartColor);
+      } else if (currentActiveScreen === 'screen-3') {
+        // Màn hình Quá trình tham gia: Hiện Header Lớp 3 (Nút Quay lại) + Hiện Bottom Nav
+        headerWrapper.classList.remove('hidden');
+        mode3.classList.remove('hidden');
+        bottomNav.classList.remove('hidden');
+        bottomNav.classList.add('grid');
+        topBanner.style.backgroundColor = headerStartColor;
+        if (metaTheme) metaTheme.setAttribute('content', headerStartColor);
+      } else if (currentActiveScreen === 'screen-4') {
+        // Màn hình Chi tiết: Hiện Header Lớp 4 (Chi tiết + Nút Quay lại) + Ẩn Bottom Nav
+        headerWrapper.classList.remove('hidden');
+        mode4.classList.remove('hidden');
+        bottomNav.classList.add('hidden');
+        bottomNav.classList.remove('grid');
+        topBanner.style.backgroundColor = '#ffffff';
+        if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
+      }
+    }
+
+    // Áp dụng cấu hình màu Theme và KhoIcon cho Header & Bottom Nav trên GitHub Wrapper
+    function applyWrapperUiConfig(cfg) {
+      if (!cfg || typeof cfg !== 'object') return;
+      wrapperUiConfig = cfg;
+
+      const t = cfg.theme || {};
+      const root = document.documentElement;
+      if (t.primary) root.style.setProperty('--vssid-primary', t.primary);
+      if (t.headerStart) root.style.setProperty('--vssid-header-start', t.headerStart);
+      if (t.headerMid) root.style.setProperty('--vssid-header-mid', t.headerMid);
+      if (t.headerEnd) root.style.setProperty('--vssid-header-end', t.headerEnd);
+
+      const icons = cfg.icons || {};
+      document.querySelectorAll('[data-wrapper-icon]').forEach((el) => {
+        const key = el.getAttribute('data-wrapper-icon');
+        const iconData = icons[key];
+        if (!iconData || !iconData.src) return;
+        el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-6 h-6 object-contain" />`;
+      });
+
+      // Cập nhật lại màu thanh trạng thái theo cấu hình mới
+      updateShellLayoutForScreen(currentActiveScreen);
+    }
+
+    // Lắng nghe sự kiện đồng bộ từ GAS Frontend gửi ra
+    window.addEventListener('message', function (event) {
+      const data = event.data;
+      if (!data || typeof data !== 'object') return;
+
+      if (data.type === 'VSSID_SCREEN_CHANGE') {
+        updateShellLayoutForScreen(data.screenId);
+      } else if (data.type === 'VSSID_UI_CONFIG') {
+        if (data.config) {
+          try {
+            localStorage.setItem('VSSID_WRAPPER_UI_CONFIG', JSON.stringify(data.config));
+          } catch (e) {}
+          applyWrapperUiConfig(data.config);
+        }
+      }
+    });
+  </script>
 </body>
 </html>

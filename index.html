@@ -14,29 +14,42 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      background-color: #0072bc; /* Màu nền xanh của toàn trang vỏ */
+      background-color: #0072bc;
       overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
     }
-    .app-frame {
+    .app-container {
       width: 100%;
       max-width: 414px;
       height: 100%;
       height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background-color: #ffffff;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    /* Vùng màu xanh phía trên được nhân chiều cao gấp 3 lần (khoảng 120px đến 140px tùy màn hình) */
+    .top-blue-banner {
+      width: 100%;
+      height: calc(env(safe-area-inset-top, 20px) + 90px);
+      background-color: #0072bc;
+      flex-shrink: 0;
+    }
+    .app-frame {
+      width: 100%;
+      flex: 1;
       border: none;
       display: block;
-      background-color: #0072bc;
-      
-      /* 👉 ĐOẠN CODE NÀY QUYẾT ĐỊNH CHIỀU CAO VÙNG MÀU XANH PHÍA TRÊN */
-      /* env(safe-area-inset-top) giúp tự động co giãn theo tai thỏ của điện thoại */
-      /* Bạn có thể cộng thêm số px (ví dụ: + 20px) nếu muốn dải màu xanh cao hơn nữa */
-      padding-top: calc(env(safe-area-inset-top, 0px) + 40px); 
+      background-color: #ffffff;
     }
   </style>
 </head>
 <body>
-  <iframe class="app-frame" src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec"></iframe>
+  <div class="app-container">
+    <div class="top-blue-banner"></div>
+    <iframe class="app-frame" src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec"></iframe>
+  </div>
 </body>
 </html>

@@ -13,15 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
-    /* Tự động cộng thêm khoảng cách an toàn tránh tai thỏ khi chạy chế độ PWA Standalone */
-body {
-  padding-top: env(safe-area-inset-top, 0px);
-}
-
-/* Đảm bảo các header ở các màn hình (Lớp 2, Lớp 3) không bị đè lên tai thỏ */
-header {
-  padding-top: max(8px, env(safe-area-inset-top, 0px));
-}
     :root {
       --vssid-primary: #0072bc;
       --vssid-login-top: #0072bc;
@@ -52,6 +43,17 @@ header {
       height: 100%;
       overflow-x: hidden;
       background-color: var(--vssid-header-start);
+    }
+
+    /* Đẩy toàn bộ body xuống dưới vùng tai thỏ / status bar khi chạy PWA standalone */
+    body {
+      padding-top: env(safe-area-inset-top, 0px);
+      background-color: #0f172a;
+    }
+
+    /* Khung app bám sát chiều cao còn lại */
+    #app-container {
+      height: calc(100dvh - env(safe-area-inset-top, 0px));
     }
 
     .vssid-login-bg {
@@ -108,13 +110,12 @@ header {
       filter: none;
       opacity: 1;
     }
-
   </style>
 </head>
 
 <body class="min-h-screen flex items-center justify-center sm:bg-slate-900">
 
-  <div id="app-container" class="relative w-full sm:max-w-[430px] h-[100dvh] bg-white overflow-hidden flex flex-col select-none sm:shadow-2xl">
+  <div id="app-container" class="relative w-full sm:max-w-[430px] bg-white overflow-hidden flex flex-col select-none sm:shadow-2xl">
 
     <!-- LỚP 1: MÀN HÌNH ĐĂNG NHẬP -->
     <section id="screen-1" class="spa-layer active vssid-login-bg relative justify-between">
@@ -158,7 +159,7 @@ header {
             <input
               id="input-mabhxh"
               type="text"
-              inputmode="text"
+              inputmode="numeric"
               value=""
               placeholder="Mã số BHXH/ Số ĐDCN/CCCD"
               class="flex-1 px-3 text-[15px] text-slate-800 focus:outline-none"
@@ -622,7 +623,6 @@ header {
   </div>
 
   <script>
-    // URL Web App Google Apps Script của bạn (Thay link này bằng link Deploy mới nhất)
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
 
     let currentMaBHXH = '';
@@ -639,7 +639,6 @@ header {
       c14ts: 'Thông tin C14-TS'
     };
 
-    // Hàm gọi API kết nối tới Google Sheets qua GAS Backend (Đã có CORS hỗ trợ)
     async function callGasApi(action, payload = {}) {
       try {
         const response = await fetch(GAS_WEB_APP_URL, {
@@ -650,7 +649,6 @@ header {
         const json = await response.json();
         return json;
       } catch (err) {
-        // Fallback gọi qua GET JSONP nếu POST bị lỗi
         return await callGasGetApi(action, payload);
       }
     }
@@ -666,7 +664,6 @@ header {
       }
     }
 
-    // Khởi tạo lấy cấu hình UI từ GAS Backend khi mở app
     (async function initStandaloneApp() {
       try {
         const saved = localStorage.getItem('VSSID_STANDALONE_UI_CONFIG');
@@ -705,6 +702,11 @@ header {
       if (t.detailBox) root.style.setProperty('--vssid-detail-box', t.detailBox);
       if (t.vneidBtn) root.style.setProperty('--vssid-vneid-btn', t.vneidBtn);
       if (t.lateText) root.style.setProperty('--vssid-late-text', t.lateText);
+
+      const metaTheme = document.getElementById('meta-theme-color');
+      if (metaTheme && (t.headerStart || t.primary)) {
+        metaTheme.setAttribute('content', t.headerStart || t.primary);
+      }
 
       const icons = cfg.icons || {};
       if (icons.logo_login && icons.logo_login.src) {
@@ -771,8 +773,16 @@ header {
       const target = document.getElementById(screenId);
       if (target) target.classList.add('active');
 
+      const metaTheme = document.getElementById('meta-theme-color');
+      const t = (activeUiConfig && activeUiConfig.theme) || {};
+
       if (screenId === 'screen-2') {
+        if (metaTheme) metaTheme.setAttribute('content', t.headerStart || '#0082c8');
         renderScreen2FromSession();
+      } else if (screenId === 'screen-4') {
+        if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
+      } else {
+        if (metaTheme) metaTheme.setAttribute('content', t.primary || '#0072bc');
       }
     }
 
@@ -1162,7 +1172,7 @@ header {
         document.getElementById('detail-company').textContent = item.donVi || '';
         document.getElementById('detail-workplace').textContent = item.noiLamViec || '';
         document.getElementById('detail-currency').textContent = item.loaiTien || 'VND';
-        document.getElementById('detail-bhxh-salary').textContent = bhxhSalary;
+        document.getElementById('detail-bhxh-salary').textCoent = bhxhSalary;
         document.getElementById('detail-base-salary').textContent = baseSalary;
       } catch (e) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');

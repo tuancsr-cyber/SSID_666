@@ -1,51 +1,48 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="theme-color" content="#0072bc" />
-<meta name="robots" content="noindex, nofollow, noarchive" />
-<title>VssID - Bảo hiểm xã hội số</title>
-<style>
-* {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-}
-html, body {
-width: 100%;
-height: 100%;
-overflow: hidden;
-background-color: #0072bc;
-display: flex;
-flex-direction: column;
-}
-/* 
-Thanh màu xanh ở trên được thu gọn vừa khít vùng tai thỏ / đồng hồ 
-*/
-.top-blue-banner {
-width: 100%;
-height: calc(env(safe-area-inset-top, 10px) + 6px);
-background-color: #0072bc;
-flex-shrink: 0;
-}
-/*
-Khung ứng dụng lấp đầy toàn bộ phần còn lại, trái phải dưới chân = 0
-*/
-.app-frame {
-width: 100%;
-flex: 1;
-height: 100%;
-border: none;
-display: block;
-background-color: #ffffff;
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0072bc" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>VssID - Bảo hiểm xã hội số</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #ffffff; /* Nền tổng thể đổi thành màu trắng */
+      display: flex;
+      flex-direction: column;
+    }
+    /* Thanh màu xanh ở trên: Vừa khít vùng tai thỏ / đồng hồ */
+    .top-blue-banner {
+      width: 100%;
+      height: calc(env(safe-area-inset-top, 20px) + 12px);
+      background-color: #0072bc;
+      flex-shrink: 0;
+    }
+    /* Khung ứng dụng lấp đầy toàn bộ phần còn lại, bao gồm cả vùng thanh gạt dưới cùng màu trắng */
+    .app-frame {
+      width: 100%;
+      flex: 1;
+      height: 100%;
+      border: none;
+      display: block;
+      background-color: #ffffff;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+  </style>
 </head>
 <body>
-<div class="top-blue-banner"></div>
-<iframe class="app-frame" src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec" allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"></iframe>
+  <div class="top-blue-banner"></div>
+  <iframe class="app-frame" src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec" allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"></iframe>
 </body>
 </html>

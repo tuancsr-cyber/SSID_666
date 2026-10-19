@@ -14,7 +14,7 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      background-color: #0072bc;
+      background-color: #0072bc; /* Màu nền xanh của toàn trang vỏ */
       overflow: hidden;
       display: flex;
       justify-content: center;
@@ -28,6 +28,11 @@
       border: none;
       display: block;
       background-color: #ffffff;
+      
+      /* 👉 ĐOẠN CODE NÀY QUYẾT ĐỊNH CHIỀU CAO VÙNG MÀU XANH PHÍA TRÊN */
+      /* env(safe-area-inset-top) giúp tự động co giãn theo tai thỏ của điện thoại */
+      /* Bạn có thể cộng thêm số px (ví dụ: + 20px) nếu muốn dải màu xanh cao hơn nữa */
+      padding-top: env(safe-area-inset-top, 0px); 
     }
   </style>
 </head>

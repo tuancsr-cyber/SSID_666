@@ -42,45 +42,39 @@
       width: 100%;
       height: 100%;
       overflow-x: hidden;
+      background-color: var(--vssid-header-start);
+    }
+
+    /* Đẩy toàn bộ body xuống dưới vùng tai thỏ / status bar khi chạy PWA standalone */
+    body {
+      padding-top: env(safe-area-inset-top, 0px);
       background-color: #0f172a;
     }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    /* Khung app bám sát chiều cao còn lại */
     #app-container {
-      width: 100%;
-      height: 100%;
-      max-width: 430px;
-      background-color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow: hidden;
-    }
-
-    @media (min-width: 640px) {
-      #app-container {
-        height: calc(100dvh - 20px);
-        max-height: 880px;
-        border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      }
+      height: calc(100dvh - env(safe-area-inset-top, 0px));
     }
 
     /* ĐẶC TẢ MỞ RỘNG CHIỀU CAO HEADER VÀ ALIGN = BOTTOM CHO CÁC ĐỐI TƯỢNG BÊN TRONG */
     .vssid-header-gradient {
       background: linear-gradient(90deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 50%, var(--vssid-header-end) 100%);
-      /* Mở rộng chiều cao phía trên bằng vùng safe-area-inset-top kết hợp khoảng đệm thủ công */
       padding-top: calc(env(safe-area-inset-top, 20px) + 16px);
       padding-bottom: 12px;
-      /* Canh lề các đối tượng bên trong nằm sát đáy (align = bottom) */
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
+    }
+
+    /* ĐẶC TẢ HEADER TRẮNG LỚP 4 (CHI TIẾT) CŨNG ĐƯỢC CĂN CHỈNH TƯƠNG TỰ */
+    .vssid-header-white {
+      background-color: #ffffff;
+      padding-top: calc(env(safe-area-inset-top, 20px) + 16px);
+      padding-bottom: 12px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid #f1f5f9;
     }
 
     .vssid-login-bg {
@@ -136,12 +130,13 @@
   </style>
 </head>
 
-<body>
+<body class="min-h-screen flex items-center justify-center sm:bg-slate-900">
 
-  <div id="app-container">
+  <div id="app-container" class="relative w-full sm:max-w-[430px] bg-white overflow-hidden flex flex-col select-none sm:shadow-2xl">
+
     <!-- LỚP 1: MÀN HÌNH ĐĂNG NHẬP -->
     <section id="screen-1" class="spa-layer active vssid-login-bg relative justify-between">
-      <div class="px-5 pt-4 flex items-center justify-between" style="padding-top: max(16px, env(safe-area-inset-top, 20px));">
+      <div class="px-5 pt-3.5 flex items-center justify-between">
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-white text-xl flex items-center justify-center">
           <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
             <i class="fa-solid fa-bell"></i>
@@ -521,11 +516,11 @@
 
     <!-- LỚP 4: CHI TIẾT -->
     <section id="screen-4" class="spa-layer bg-white">
-      <header class="bg-white px-4 py-3.5 flex items-center justify-between">
-        <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-xl pr-3">
+      <header class="vssid-header-white px-4 shadow-sm">
+        <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-xl pr-3 pb-0.5 flex items-center">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
-        <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-5">Chi tiết</h1>
+        <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-5 pb-0.5">Chi tiết</h1>
       </header>
 
       <div class="px-4 pt-3">

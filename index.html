@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
@@ -10,33 +9,27 @@
   <meta name="robots" content="noindex, nofollow, noarchive" />
   <title>VssID - Bảo hiểm xã hội số</title>
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
       width: 100%;
       height: 100%;
-      background-color: #0072bc;
       overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start; /* Căn lề trên để triệt tiêu phần thừa ở dưới chân */
-    }
-    .app-container {
-      width: 100%;
-      max-width: 414px;
-      height: 100vh;
-      height: 100dvh;
+      background-color: #0072bc;
       display: flex;
       flex-direction: column;
-      background-color: #ffffff;
     }
-    /* Thanh màu xanh ở trên được giảm chiều cao lại còn 1/3 so với trước */
+    /* Thanh màu xanh ở trên được thu gọn lại còn đúng 1/3 (vừa khít vùng tai thỏ / đồng hồ) */
     .top-blue-banner {
       width: 100%;
-      height: calc(env(safe-area-inset-top, 20px) + 15px);
+      height: calc(env(safe-area-inset-top, 20px) + 12px);
       background-color: #0072bc;
       flex-shrink: 0;
     }
+    /* Khung ứng dụng lấp đầy 100% màn hình, trái phải dưới chân = 0 */
     .app-frame {
       width: 100%;
       flex: 1;
@@ -47,9 +40,7 @@
   </style>
 </head>
 <body>
-  <div class="app-container">
-    <div class="top-blue-banner"></div>
-    <iframe class="app-frame" src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec"></iframe>
-  </div>
+  <div class="top-blue-banner"></div>
+  <iframe class="app-frame" src="https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec" allow="camera; microphone; fullscreen; clipboard-read; clipboard-write"></iframe>
 </body>
 </html>

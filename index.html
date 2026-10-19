@@ -42,18 +42,45 @@
       width: 100%;
       height: 100%;
       overflow-x: hidden;
-      background-color: var(--vssid-header-start);
-    }
-
-    /* Đẩy toàn bộ body xuống dưới vùng tai thỏ / status bar khi chạy PWA standalone */
-    body {
-      padding-top: env(safe-area-inset-top, 0px);
       background-color: #0f172a;
     }
 
-    /* Khung app bám sát chiều cao còn lại */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
     #app-container {
-      height: calc(100dvh - env(safe-area-inset-top, 0px));
+      width: 100%;
+      height: 100%;
+      max-width: 430px;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 640px) {
+      #app-container {
+        height: calc(100dvh - 20px);
+        max-height: 880px;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    /* ĐẶC TẢ MỞ RỘNG CHIỀU CAO HEADER VÀ ALIGN = BOTTOM CHO CÁC ĐỐI TƯỢNG BÊN TRONG */
+    .vssid-header-gradient {
+      background: linear-gradient(90deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 50%, var(--vssid-header-end) 100%);
+      /* Mở rộng chiều cao phía trên bằng vùng safe-area-inset-top kết hợp khoảng đệm thủ công */
+      padding-top: calc(env(safe-area-inset-top, 20px) + 16px);
+      padding-bottom: 12px;
+      /* Canh lề các đối tượng bên trong nằm sát đáy (align = bottom) */
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
     }
 
     .vssid-login-bg {
@@ -64,10 +91,6 @@
         linear-gradient(180deg, var(--vssid-login-top) 0%, var(--vssid-login-mid) 28%, var(--vssid-login-light) 46%, #ffffff 58%, #ffffff 100%);
       background-size: 10px 10px, 18px 18px, 100% 100%;
       background-position: 0 0, 5px 5px, 0 0;
-    }
-
-    .vssid-header-gradient {
-      background: linear-gradient(90deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 50%, var(--vssid-header-end) 100%);
     }
 
     .vssid-profile-card {
@@ -113,13 +136,12 @@
   </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center sm:bg-slate-900">
+<body>
 
-  <div id="app-container" class="relative w-full sm:max-w-[430px] bg-white overflow-hidden flex flex-col select-none sm:shadow-2xl">
-
+  <div id="app-container">
     <!-- LỚP 1: MÀN HÌNH ĐĂNG NHẬP -->
     <section id="screen-1" class="spa-layer active vssid-login-bg relative justify-between">
-      <div class="px-5 pt-3.5 flex items-center justify-between">
+      <div class="px-5 pt-4 flex items-center justify-between" style="padding-top: max(16px, env(safe-area-inset-top, 20px));">
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-white text-xl flex items-center justify-center">
           <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
             <i class="fa-solid fa-bell"></i>
@@ -258,12 +280,12 @@
 
     <!-- LỚP 2: QUẢN LÝ CÁ NHÂN -->
     <section id="screen-2" class="spa-layer bg-white justify-between">
-      <header class="vssid-header-gradient text-white px-4 py-3.5 flex items-center justify-between shadow-sm">
-        <button type="button" onclick="handleLogout()" class="text-xl">
+      <header class="vssid-header-gradient text-white px-4 shadow-sm">
+        <button type="button" onclick="handleLogout()" class="text-xl pb-0.5">
           <i class="fa-solid fa-bars"></i>
         </button>
-        <h1 class="text-[15px] font-medium tracking-wide uppercase">QUẢN LÝ CÁ NHÂN</h1>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative text-xl flex items-center justify-center">
+        <h1 class="text-[15px] font-medium tracking-wide uppercase pb-0.5">QUẢN LÝ CÁ NHÂN</h1>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative text-xl flex items-center justify-center pb-0.5">
           <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
             <i class="fa-solid fa-bell"></i>
           </span>
@@ -394,13 +416,13 @@
 
     <!-- LỚP 3: QUÁ TRÌNH THAM GIA -->
     <section id="screen-3" class="spa-layer bg-white justify-between">
-      <header class="vssid-header-gradient text-white px-4 py-3.5 flex items-center justify-between shadow-sm">
-        <button type="button" onclick="showScreen('screen-2')" class="text-xl pr-3 text-white">
+      <header class="vssid-header-gradient text-white px-4 shadow-sm">
+        <button type="button" onclick="showScreen('screen-2')" class="text-xl pr-3 text-white pb-0.5 flex items-center">
           <svg style="width: 16px; height: 16px; fill: currentColor;" viewBox="0 0 320 512">
             <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
           </svg>
         </button>
-        <h1 class="text-[15px] font-medium tracking-wide uppercase flex-1 text-center pr-5">QUÁ TRÌNH THAM GIA</h1>
+        <h1 class="text-[15px] font-medium tracking-wide uppercase flex-1 text-center pr-5 pb-0.5">QUÁ TRÌNH THAM GIA</h1>
       </header>
 
       <div class="grid grid-cols-5 gap-1 px-2.5 pt-3 pb-2 bg-white">
@@ -515,7 +537,7 @@
         <div style="background-color: var(--vssid-detail-box);" class="text-white p-3 text-[12.5px] leading-[1.45] space-y-0.5">
           <div>Chức vụ: <span id="detail-role" class="font-bold"></span></div>
           <div>Đơn vị công tác: <span id="detail-company" class="font-bold"></span></div>
-          <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></div>
+          <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></tr>
           <div>Loại tiền: <span id="detail-currency" class="font-bold"></span></div>
         </div>
 
@@ -1172,7 +1194,7 @@
         document.getElementById('detail-company').textContent = item.donVi || '';
         document.getElementById('detail-workplace').textContent = item.noiLamViec || '';
         document.getElementById('detail-currency').textContent = item.loaiTien || 'VND';
-        document.getElementById('detail-bhxh-salary').textCoent = bhxhSalary;
+        document.getElementById('detail-bhxh-salary').textContent = bhxhSalary;
         document.getElementById('detail-base-salary').textContent = baseSalary;
       } catch (e) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');

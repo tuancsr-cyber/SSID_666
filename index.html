@@ -13,6 +13,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
+    /* Tự động cộng thêm khoảng cách an toàn tránh tai thỏ khi chạy chế độ PWA Standalone */
+body {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Đảm bảo các header ở các màn hình (Lớp 2, Lớp 3) không bị đè lên tai thỏ */
+header {
+  padding-top: max(8px, env(safe-area-inset-top, 0px));
+}
     :root {
       --vssid-primary: #0072bc;
       --vssid-login-top: #0072bc;
@@ -99,6 +108,7 @@
       filter: none;
       opacity: 1;
     }
+
   </style>
 </head>
 

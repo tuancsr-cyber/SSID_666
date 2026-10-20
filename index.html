@@ -41,7 +41,7 @@
       padding: 0;
       width: 100%;
       height: 100%;
-      overflow-x: hidden;
+      overflow: hidden;
       background-color: #0f172a;
     }
 
@@ -54,7 +54,8 @@
     #app-container {
       width: 100%;
       height: 100%;
-      max-width: 430px;
+      max-width: 7.5cm;
+      max-height: 16cm;
       background-color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -64,10 +65,11 @@
 
     @media (min-width: 640px) {
       #app-container {
-        height: calc(100dvh - 20px);
-        max-height: 880px;
+        width: 7.5cm;
+        height: 16cm;
         border-radius: 24px;
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        border: 4px solid #1e293b;
       }
     }
 
@@ -330,7 +332,7 @@
             </div>
             <div class="pt-2.5 pb-1 flex items-start justify-between gap-4">
               <span class="text-slate-600 flex-shrink-0">Địa chỉ</span>
-              <span id="profile-address" class="text-slate-800 text-right leading-snug" style="padding-left: 40px; text-align: right;"></span>
+              <span id="profile-address" class="text-slate-800 text-right leading-snug" style="padding-left: 20px; text-align: right;"></span>
             </div>
           </div>
         </div>
@@ -341,7 +343,7 @@
               <i class="fa-regular fa-id-card text-lg"></i>
             </div>
             <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14.5px] text-slate-600 font-normal uppercase">THẺ BHYT BẢN ĐIỆN TỬ</span>
+              <span class="text-[14px] text-slate-600 font-normal uppercase">THẺ BHYT BẢN ĐIỆN TỬ</span>
               <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
             </div>
           </button>
@@ -351,7 +353,7 @@
               <i class="fa-solid fa-hands-holding-heart text-lg"></i>
             </div>
             <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14.5px] text-slate-600 font-normal uppercase">SỔ BHXH BẢN ĐIỆN TỬ</span>
+              <span class="text-[14px] text-slate-600 font-normal uppercase">SỔ BHXH BẢN ĐIỆN TỬ</span>
               <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
             </div>
           </button>
@@ -361,7 +363,7 @@
               <i class="fa-solid fa-clock-rotate-left text-lg"></i>
             </div>
             <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14.5px] text-slate-600 font-normal uppercase">QUÁ TRÌNH THAM GIA</span>
+              <span class="text-[14px] text-slate-600 font-normal uppercase">QUÁ TRÌNH THAM GIA</span>
               <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
             </div>
           </button>
@@ -371,7 +373,7 @@
               <i class="fa-solid fa-user-check text-lg"></i>
             </div>
             <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14.5px] text-slate-600 font-normal uppercase">THÔNG TIN HƯỞNG</span>
+              <span class="text-[14px] text-slate-600 font-normal uppercase">THÔNG TIN HƯỞNG</span>
               <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
             </div>
           </button>
@@ -381,7 +383,7 @@
               <i class="fa-solid fa-notes-medical text-lg"></i>
             </div>
             <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14.5px] text-slate-600 font-normal uppercase">SỔ KHÁM CHỮA BỆNH</span>
+              <span class="text-[14px] text-slate-600 font-normal uppercase">SỔ KHÁM CHỮA BỆNH</span>
               <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
             </div>
           </button>
@@ -393,25 +395,25 @@
           <span data-icon-slot="nav_ql_canhan" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-solid fa-id-badge text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5 font-medium">QL cá nhân</span>
+          <span class="text-[10px] mt-0.5 font-medium">QL cá nhân</span>
         </button>
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
           <span data-icon-slot="nav_dichvu_cong" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-regular fa-file-lines text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5">Dịch vụ công</span>
+          <span class="text-[10px] mt-0.5">Dịch vụ công</span>
         </button>
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
           <span data-icon-slot="nav_tra_cuu" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-solid fa-magnifying-glass text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5">Tra cứu</span>
+          <span class="text-[10px] mt-0.5">Tra cứu</span>
         </button>
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
           <span data-icon-slot="nav_tro_giup" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-solid fa-headset text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5">Trợ giúp</span>
+          <span class="text-[10px] mt-0.5">Trợ giúp</span>
         </button>
       </nav>
     </section>
@@ -423,72 +425,72 @@
             <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
           </svg>
         </button>
-        <h1 class="text-[15px] font-medium tracking-wide uppercase flex-1 text-center pr-5 pb-0.5">QUÁ TRÌNH THAM GIA</h1>
+        <h1 class="text-[14px] font-medium tracking-wide uppercase flex-1 text-center pr-5 pb-0.5">QUÁ TRÌNH THAM GIA</h1>
       </header>
 
-      <div class="grid grid-cols-5 gap-1 px-2.5 pt-3 pb-2 bg-white">
+      <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-2.5 pb-2 bg-white">
         <button type="button" onclick="switchInsuranceTab('bhxh')" id="tab-btn-bhxh" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-12 h-12 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
-            <i class="fa-solid fa-hands-holding-heart text-xl"></i>
+          <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
+            <i class="fa-solid fa-hands-holding-heart text-base"></i>
           </div>
-          <span class="tab-label text-[11.5px] mt-1.5 font-medium text-[#1b75bb]">BHXH</span>
+          <span class="tab-label text-[10.5px] mt-1 font-medium text-[#1b75bb]">BHXH</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('bhtn')" id="tab-btn-bhtn" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-12 h-12 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-people-arrows text-xl"></i>
+          <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-solid fa-people-arrows text-base"></i>
           </div>
-          <span class="tab-label text-[11.5px] mt-1.5 text-slate-400">BHTN</span>
+          <span class="tab-label text-[10.5px] mt-1 text-slate-400">BHTN</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('bhtnld')" id="tab-btn-bhtnld" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-12 h-12 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-user-shield text-xl"></i>
+          <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-solid fa-user-shield text-base"></i>
           </div>
-          <span class="tab-label text-[11px] leading-tight text-center mt-1 text-slate-400">BHTNLĐ-<br />BNN</span>
+          <span class="tab-label text-[9.5px] leading-tight text-center mt-0.5 text-slate-400">BHTNLĐ-<br />BNN</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('bhyt')" id="tab-btn-bhyt" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-12 h-12 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-circle-plus text-xl"></i>
+          <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-solid fa-circle-plus text-base"></i>
           </div>
-          <span class="tab-label text-[11.5px] mt-1.5 text-slate-400">BHYT</span>
+          <span class="tab-label text-[10.5px] mt-1 text-slate-400">BHYT</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('c14ts')" id="tab-btn-c14ts" class="flex flex-col items-center">
-          <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-12 h-12 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-regular fa-file-lines text-xl"></i>
+          <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-regular fa-file-lines text-base"></i>
           </div>
-          <span class="tab-label text-[11.5px] mt-1.5 text-slate-400">C14-TS</span>
+          <span class="tab-label text-[10px] mt-1 text-slate-400">C14-TS</span>
         </button>
       </div>
 
-      <div class="flex-1 overflow-y-auto no-scrollbar px-2.5 pb-3">
-        <div class="bg-[#f4f5f7] border border-slate-200 px-3 py-2.5 mt-1">
-          <h2 id="participation-title" class="text-[#285989] text-[14.5px] font-normal">
+      <div class="flex-1 overflow-y-auto no-scrollbar px-2 pb-3">
+        <div class="bg-[#f4f5f7] border border-slate-200 px-2.5 py-2 mt-1">
+          <h2 id="participation-title" class="text-[#285989] text-[13.5px] font-normal">
             Quá trình tham gia Bảo hiểm xã hội
           </h2>
           <div id="participation-summary-details" class="mt-0.5 space-y-0.5">
-            <p class="text-[12.5px] text-slate-900">
+            <p class="text-[12px] text-slate-900">
               Tổng thời gian tham gia: <span id="summary-total-time"></span>
             </p>
-            <p class="text-[12.5px]" style="color: var(--vssid-late-text);">
+            <p class="text-[12px]" style="color: var(--vssid-late-text);">
               Tổng thời gian chậm đóng: <span id="summary-late-time"></span>
             </p>
           </div>
         </div>
 
-        <table class="w-full bhxh-table border-collapse text-center bg-white">
+        <table class="w-full bhxh-table border-collapse text-center bg-white mt-2">
           <thead>
-            <tr style="background-color: var(--vssid-table-header);" class="text-white text-[11.5px] font-normal">
-              <th class="py-2 px-1 w-[17%] font-normal">Từ tháng</th>
-              <th class="py-2 px-1 w-[17%] font-normal">Đến tháng</th>
-              <th class="py-2 px-1.5 w-[36%] font-normal">Đơn vị</th>
-              <th class="py-2 px-1 w-[21%] font-normal leading-tight">Nghề nghiệp<br />Chức vụ</th>
-              <th class="py-2 px-1 w-[9%] font-normal"></th>
+            <tr style="background-color: var(--vssid-table-header);" class="text-white text-[11px] font-normal">
+              <th class="py-1.5 px-0.5 w-[17%] font-normal">Từ tháng</th>
+              <th class="py-1.5 px-0.5 w-[17%] font-normal">Đến tháng</th>
+              <th class="py-1.5 px-1 w-[36%] font-normal">Đơn vị</th>
+              <th class="py-1.5 px-0.5 w-[21%] font-normal leading-tight">Nghề nghiệp<br />Chức vụ</th>
+              <th class="py-1.5 px-0.5 w-[9%] font-normal"></th>
             </tr>
           </thead>
-          <tbody id="history-table-body" class="text-[12px] text-slate-800"></tbody>
+          <tbody id="history-table-body" class="text-[11.5px] text-slate-800"></tbody>
         </table>
       </div>
 
@@ -497,25 +499,25 @@
           <span data-icon-slot="nav_ql_canhan" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-solid fa-id-badge text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5 font-medium">QL cá nhân</span>
+          <span class="text-[10px] mt-0.5 font-medium">QL cá nhân</span>
         </button>
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
           <span data-icon-slot="nav_dichvu_cong" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-regular fa-file-lines text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5">Dịch vụ công</span>
+          <span class="text-[10px] mt-0.5">Dịch vụ công</span>
         </button>
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
           <span data-icon-slot="nav_tra_cuu" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-solid fa-magnifying-glass text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5">Tra cứu</span>
+          <span class="text-[10px] mt-0.5">Tra cứu</span>
         </button>
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
           <span data-icon-slot="nav_tro_giup" class="w-6 h-6 flex items-center justify-center">
             <i class="fa-solid fa-headset text-lg"></i>
           </span>
-          <span class="text-[10.5px] mt-0.5">Trợ giúp</span>
+          <span class="text-[10px] mt-0.5">Trợ giúp</span>
         </button>
       </nav>
     </section>
@@ -525,23 +527,23 @@
         <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-xl pr-3 py-1">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
-        <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-5">Chi tiết</h1>
+        <h1 class="text-[15px] font-bold text-[#285989] flex-1 text-center pr-5">Chi tiết</h1>
       </header>
 
-      <div class="px-4 pt-3">
-        <div class="flex items-center justify-around text-[13px] text-slate-800 mb-3.5">
+      <div class="px-3.5 pt-2">
+        <div class="flex items-center justify-around text-[12.5px] text-slate-800 mb-3">
           <div>Từ tháng: <span id="detail-from"></span></div>
           <div>Đến tháng: <span id="detail-to"></span></div>
         </div>
 
-        <div style="background-color: var(--vssid-detail-box);" class="text-white p-3 text-[12.5px] leading-[1.45] space-y-0.5">
+        <div style="background-color: var(--vssid-detail-box);" class="text-white p-3 text-[12px] leading-[1.4] space-y-0.5">
           <div>Chức vụ: <span id="detail-role" class="font-bold"></span></div>
           <div>Đơn vị công tác: <span id="detail-company" class="font-bold"></span></div>
           <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></div>
           <div>Loại tiền: <span id="detail-currency" class="font-bold"></span></div>
         </div>
 
-        <table class="w-full border-collapse text-[12.5px] text-slate-800">
+        <table class="w-full border-collapse text-[12px] text-slate-800 mt-1">
           <tbody>
             <tr>
               <td class="border border-sky-200/80 py-2 px-3 text-center w-1/2">Tiền lương đóng BHXH</td>
@@ -556,45 +558,45 @@
       </div>
     </section>
 
-    <div id="avatar-onboarding-modal" class="hidden absolute inset-0 z-40 bg-black/60 flex items-center justify-center p-5">
-      <div class="relative bg-white w-full max-w-[330px] rounded-xl p-5 shadow-2xl text-center space-y-4">
+    <div id="avatar-onboarding-modal" class="hidden absolute inset-0 z-40 bg-black/60 flex items-center justify-center p-4">
+      <div class="relative bg-white w-full max-w-[280px] rounded-xl p-4 shadow-2xl text-center space-y-3">
         <button
           type="button"
           id="btn-close-avatar-modal"
           onclick="closeAvatarOnboardingModal()"
-          class="hidden absolute top-3 right-3 w-8 h-8 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
+          class="hidden absolute top-2.5 right-2.5 w-7 h-7 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
           title="Đóng"
         >
-          <i class="fa-solid fa-xmark text-lg"></i>
+          <i class="fa-solid fa-xmark text-base"></i>
         </button>
 
-        <div class="w-12 h-12 rounded-full bg-sky-100 text-[#0072bc] mx-auto flex items-center justify-center text-xl">
+        <div class="w-10 h-10 rounded-full bg-sky-100 text-[#0072bc] mx-auto flex items-center justify-center text-lg">
           <i class="fa-solid fa-camera-retro"></i>
         </div>
         <div>
-          <h3 class="font-bold text-slate-800 text-[15px]">Cập nhật ảnh đại diện</h3>
-          <p class="text-xs text-slate-600 mt-1">
+          <h3 class="font-bold text-slate-800 text-[14px]">Cập nhật ảnh đại diện</h3>
+          <p class="text-[11.5px] text-slate-600 mt-0.5">
             Vui lòng chụp ảnh khuôn mặt để hoàn tất hồ sơ
           </p>
         </div>
 
-        <div class="relative w-36 h-36 mx-auto rounded-full overflow-hidden border-2 border-dashed border-[#0072bc] bg-slate-100 flex items-center justify-center">
+        <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-dashed border-[#0072bc] bg-slate-100 flex items-center justify-center">
           <video id="camera-stream" autoplay playsinline class="hidden w-full h-full object-cover"></video>
           <img id="onboarding-preview-img" src="" alt="Preview" class="hidden w-full h-full object-cover" />
           <div id="onboarding-placeholder" class="text-slate-400 text-xs px-3">
-            <i class="fa-regular fa-user text-2xl mb-1 block"></i>
+            <i class="fa-regular fa-user text-xl mb-1 block"></i>
             Chưa có ảnh
           </div>
         </div>
 
         <canvas id="avatar-compress-canvas" width="150" height="150" class="hidden"></canvas>
 
-        <div class="grid grid-cols-2 gap-2 text-xs font-medium">
+        <div class="grid grid-cols-2 gap-1.5 text-[11.5px] font-medium">
           <button
             type="button"
             id="btn-start-camera"
             onclick="startOnboardingCamera()"
-            class="py-2.5 px-3 rounded-lg border border-[#0072bc] text-[#0072bc] hover:bg-sky-50 flex items-center justify-center gap-1.5"
+            class="py-2 px-2 rounded-lg border border-[#0072bc] text-[#0072bc] hover:bg-sky-50 flex items-center justify-center gap-1"
           >
             <i class="fa-solid fa-video"></i> Chụp ảnh
           </button>
@@ -602,11 +604,11 @@
             type="button"
             id="btn-capture-photo"
             onclick="captureFromVideo()"
-            class="hidden py-2.5 px-3 rounded-lg bg-amber-500 text-white hover:bg-amber-600 flex items-center justify-center gap-1.5"
+            class="hidden py-2 px-2 rounded-lg bg-amber-500 text-white hover:bg-amber-600 flex items-center justify-center gap-1"
           >
             <i class="fa-solid fa-camera"></i> Chụp ngay
           </button>
-          <label class="py-2.5 px-3 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1.5 cursor-pointer">
+          <label class="py-2 px-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1 cursor-pointer">
             <i class="fa-solid fa-upload"></i> Chọn file
             <input type="file" accept="image/*" onchange="handleAvatarFileSelect(event)" class="hidden" />
           </label>
@@ -617,23 +619,23 @@
           id="btn-save-avatar"
           onclick="submitCompressedAvatarToGAS()"
           disabled
-          class="w-full py-2.5 rounded-lg bg-[#0072bc] disabled:bg-slate-300 text-white font-semibold text-sm transition shadow"
+          class="w-full py-2 rounded-lg bg-[#0072bc] disabled:bg-slate-300 text-white font-semibold text-xs transition shadow"
         >
           Hoàn tất hồ sơ
         </button>
       </div>
     </div>
 
-    <div id="global-modal-overlay" class="hidden absolute inset-0 z-50 bg-black/45 flex items-center justify-center px-7">
-      <div class="bg-white w-full max-w-[295px] rounded-[11px] pt-5 pb-4 px-5 shadow-xl text-center">
-        <h3 class="text-[15.5px] font-bold text-[#555555] mb-2">Thông báo</h3>
-        <div id="global-modal-message" class="text-[13.5px] text-[#666666] leading-snug mb-5">
+    <div id="global-modal-overlay" class="hidden absolute inset-0 z-50 bg-black/45 flex items-center justify-center px-6">
+      <div class="bg-white w-full max-w-[270px] rounded-[10px] pt-4 pb-3.5 px-4 shadow-xl text-center">
+        <h3 class="text-[14.5px] font-bold text-[#555555] mb-1.5">Thông báo</h3>
+        <div id="global-modal-message" class="text-[13px] text-[#666666] leading-snug mb-4">
           Lỗi kết nối đến hệ thống<br />Vui lòng thử lại
         </div>
         <button
           type="button"
           onclick="closeModal()"
-          class="min-w-[116px] py-1.5 px-6 bg-white border border-[#2b78a6] rounded-[4px] text-[#0b5c8f] font-bold text-[14.5px] active:bg-sky-50 transition"
+          class="min-w-[100px] py-1 px-5 bg-white border border-[#2b78a6] rounded-[4px] text-[#0b5c8f] font-bold text-[13.5px] active:bg-sky-50 transition"
         >
           Đóng
         </button>
@@ -886,10 +888,10 @@
           el.setAttribute('data-frame-mode', isFull ? 'FULL' : 'INNER');
           if (isFull) {
             el.classList.add('is-full-icon');
-            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-12 h-12 rounded-full object-contain transition" />`;
+            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-10 h-10 rounded-full object-contain transition" />`;
           } else {
             el.classList.remove('is-full-icon');
-            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-7 h-7 object-contain transition" />`;
+            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-6 h-6 object-contain transition" />`;
           }
         } else if (key.startsWith('nav_')) {
           el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-6 h-6 object-contain" />`;
@@ -906,7 +908,7 @@
     function renderEyeIconHTML() {
       const eyeIcon = activeUiConfig && activeUiConfig.icons && activeUiConfig.icons.icon_con_mat;
       if (eyeIcon && eyeIcon.src) {
-        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-6 h-4 object-contain mx-auto" />`;
+        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-5 h-3.5 object-contain mx-auto" />`;
       }
       return `<i class="fa-solid fa-eye"></i>`;
     }
@@ -1239,26 +1241,26 @@
 
         if (key === tabKey) {
           if (isFullMode) {
-            circle.className = 'tab-icon-circle is-full-icon w-12 h-12 rounded-full flex items-center justify-center transition overflow-hidden';
+            circle.className = 'tab-icon-circle is-full-icon w-10 h-10 rounded-full flex items-center justify-center transition overflow-hidden';
             if (customImg) {
               customImg.classList.remove('tab-full-inactive');
               customImg.classList.add('tab-full-active');
             }
           } else {
-            circle.className = 'tab-icon-circle w-12 h-12 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden';
+            circle.className = 'tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden';
           }
-          label.className = 'tab-label text-[11.5px] mt-1.5 font-medium text-[var(--vssid-primary)] text-center leading-tight';
+          label.className = 'tab-label text-[10.5px] mt-1 font-medium text-[var(--vssid-primary)] text-center leading-tight';
         } else {
           if (isFullMode) {
-            circle.className = 'tab-icon-circle is-full-icon w-12 h-12 rounded-full flex items-center justify-center transition overflow-hidden';
+            circle.className = 'tab-icon-circle is-full-icon w-10 h-10 rounded-full flex items-center justify-center transition overflow-hidden';
             if (customImg) {
               customImg.classList.remove('tab-full-active');
               customImg.classList.add('tab-full-inactive');
             }
           } else {
-            circle.className = 'tab-icon-circle w-12 h-12 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden';
+            circle.className = 'tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden';
           }
-          label.className = 'tab-label text-[11.5px] mt-1.5 text-slate-400 text-center leading-tight';
+          label.className = 'tab-label text-[10.5px] mt-1 text-slate-400 text-center leading-tight';
         }
       });
 
@@ -1310,16 +1312,16 @@
           .map(
             (row) => `
             <tr>
-              <td class="py-2.5 px-1">${row.tuThang || ''}</td>
-              <td class="py-2.5 px-1">${row.denThang || ''}</td>
-              <td class="py-2 px-1.5 leading-snug">${row.donVi || ''}</td>
-              <td class="py-2 px-1 leading-snug">${row.chucVu || ''}</td>
-              <td class="py-2 px-1">
+              <td class="py-2 px-0.5">${row.tuThang || ''}</td>
+              <td class="py-2 px-0.5">${row.denThang || ''}</td>
+              <td class="py-2 px-1 leading-snug">${row.donVi || ''}</td>
+              <td class="py-2 px-0.5 leading-snug">${row.chucVu || ''}</td>
+              <td class="py-2 px-0.5">
                 <button
                   type="button"
                   data-id="${row._id}"
                   onclick="openHistoryDetail(this.getAttribute('data-id'))"
-                  class="text-[#285989] text-base p-1 flex items-center justify-center mx-auto"
+                  class="text-[#285989] text-sm p-1 flex items-center justify-center mx-auto"
                 >
                   ${eyeHtml}
                 </button>

@@ -42,7 +42,6 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      /* Đổi màu nền thành trắng để tránh vệt đen ở đáy màn hình trên iPhone */
       background-color: #ffffff; 
     }
 
@@ -129,7 +128,6 @@
       opacity: 1;
     }
     
-    /* Style riêng cho các item danh sách để border chuẩn hơn */
     .menu-item-row:last-child .menu-item-border {
       border-bottom: none;
     }
@@ -296,7 +294,6 @@
 
       <div class="flex-1 overflow-y-auto no-scrollbar px-3 pt-4 pb-6">
         
-        <!-- Profile Card Đã Tối Ưu -->
         <div class="vssid-profile-card rounded-[12px] p-4 mb-4" style="box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
           <div class="flex items-center gap-4 pb-4 border-b border-[#d1d5db]/70">
             <div class="relative cursor-pointer" onclick="openAvatarOnboardingModal()" title="Chạm để nhập/đổi ảnh đại diện">
@@ -336,7 +333,6 @@
           </div>
         </div>
 
-        <!-- Menu List Đã Tối Ưu -->
         <div class="space-y-0 px-2 bg-transparent">
           <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
             <div data-icon-slot="menu_the_bhyt" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
@@ -645,6 +641,15 @@
   </div>
 
   <script>
+    // =========================================================================
+    // CẤU HÌNH CHUYỂN ĐỔI NHANH: DEMO GITHUB TXT <-> GOOGLE SHEET (GAS)
+    // - USE_DEMO_TXT = true  : Đọc dữ liệu tức thì từ file demodulieu.txt trên GitHub
+    // - USE_DEMO_TXT = false : Kết nối trực tiếp với Google Sheet (GAS_WEB_APP_URL)
+    // =========================================================================
+    const USE_DEMO_TXT = true;
+    const DEMO_TXT_URL = './demodulieu.txt';
+    const DEMO_SKIP_AVATAR_PROMPT = true; // true: Vào thẳng màn hình 2 khi test demo; false: Bắt chụp avatar nếu chưa có
+
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
 
     const STORAGE_KEYS = {
@@ -664,6 +669,7 @@
     let pendingCompressedAvatar = '';
     let activeMediaStream = null;
     let activeUiConfig = { theme: {}, icons: {}, updatedAt: '' };
+    let cachedDemoAccounts = null;
 
     const TAB_TITLES = {
       bhxh: 'Quá trình tham gia Bảo hiểm xã hội',
@@ -675,6 +681,109 @@
 
     function normalizeMaBHXHClient(val) {
       return String(val || '').trim().replace(/^'+/, '').replace(/^0+/, '');
+    }
+
+    // Bộ đọc file demodulieu.txt trên GitHub (Hỗ trợ cả cú pháp MaBHXH [...] Password [...] User_Cache_JSON [...] và JSON thuần)
+    function parseDemoTxtContent(rawText) {
+      const accounts = [];
+      if (!rawText) return accounts;
+
+      const trimmed = rawText.trim();
+      if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+        try {
+          const parsed = JSON.parse(trimmed);
+          const arr = Array.isArray(parsed) ? parsed : [parsed];
+          arr.forEach((item) => {
+            if (item && item.maBHXH) {
+              accounts.push({
+                maBHXH: String(item.maBHXH).trim(),
+                password: String(item.password || '').trim(),
+                User_Cache_JSON: typeof item.User_Cache_JSON === 'string' ? item.User_Cache_JSON : JSON.stringify(item.User_Cache_JSON),
+                Avatar_Base64: item.Avatar_Base64 || ''
+              });
+            }
+          });
+          if (accounts.length > 0) return accounts;
+        } catch (e) {}
+      }
+
+      const lines = trimmed.split(/\r?\n/);
+      for (const line of lines) {
+        const cleanLine = line.trim();
+        if (!cleanLine) continue;
+
+        const match = cleanLine.match(/MaBHXH\s*\[([^\]]+)\]\s*Password\s*\[([^\]]*)\]\s*User_Cache_JSON\s*\[(.*)/i);
+        if (match) {
+          const ma = match[1].trim();
+          const pass = match[2].trim();
+          let jsonPart = match[3].trim();
+          if (jsonPart.endsWith(']')) {
+            jsonPart = jsonPart.slice(0, -1).trim();
+          }
+          accounts.push({
+            maBHXH: ma,
+            password: pass,
+            User_Cache_JSON: jsonPart,
+            Avatar_Base64: ''
+          });
+        }
+      }
+      return accounts;
+    }
+
+    async function fetchDemoAccountsFromTxt() {
+      if (cachedDemoAccounts && cachedDemoAccounts.length > 0) {
+        return cachedDemoAccounts;
+      }
+      const res = await fetch(`${DEMO_TXT_URL}?t=${Date.now()}`, { cache: 'no-store' });
+      if (!res.ok) {
+        throw new Error('Không tải được file demodulieu.txt');
+      }
+      const text = await res.text();
+      cachedDemoAccounts = parseDemoTxtContent(text);
+      return cachedDemoAccounts;
+    }
+
+    async function handleDemoModeApi(action, payload = {}) {
+      if (action === 'login') {
+        const cleanInputMa = normalizeMaBHXHClient(payload.maBHXH);
+        const cleanInputPass = String(payload.password || '').trim();
+        const accounts = await fetchDemoAccountsFromTxt();
+
+        const found = accounts.find(
+          (acc) => normalizeMaBHXHClient(acc.maBHXH) === cleanInputMa || String(acc.maBHXH).trim() === String(payload.maBHXH).trim()
+        );
+
+        if (!found || found.password !== cleanInputPass) {
+          return { success: false, message: 'Mật khẩu không chính xác' };
+        }
+
+        // Kiểm tra xem user đã từng lưu avatar vào bộ nhớ trình duyệt chưa
+        const vaultEntry = getOfflineVaultAccount(payload.maBHXH, payload.password);
+        const savedAvatar =
+          (vaultEntry && vaultEntry.Avatar_Base64) ||
+          found.Avatar_Base64 ||
+          (DEMO_SKIP_AVATAR_PROMPT ? 'default_avatar.png' : '');
+
+        return {
+          success: true,
+          data: {
+            User_Cache_JSON: found.User_Cache_JSON,
+            Avatar_Base64: savedAvatar,
+            UI_Config_JSON: null
+          }
+        };
+      }
+
+      if (action === 'saveAvatar') {
+        return { success: true };
+      }
+
+      if (action === 'getUiConfig') {
+        return { success: true, upToDate: true };
+      }
+
+      return { success: true };
     }
 
     function saveSessionData(userCacheRaw, avatarStr) {
@@ -762,6 +871,10 @@
     }
 
     async function callGasApi(action, payload = {}) {
+      if (USE_DEMO_TXT) {
+        return await handleDemoModeApi(action, payload);
+      }
+
       try {
         const response = await fetchWithTimeout(
           GAS_WEB_APP_URL,
@@ -818,7 +931,7 @@
     })();
 
     async function syncUiConfigInBackground() {
-      if (!navigator.onLine) return;
+      if (USE_DEMO_TXT || !navigator.onLine) return;
       try {
         const clientVer = (activeUiConfig && activeUiConfig.updatedAt) || '';
         const res = await fetchWithTimeout(

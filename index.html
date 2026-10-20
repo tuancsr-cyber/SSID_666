@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
@@ -15,6 +14,7 @@
 
   <style>
     :root {
+      /* Khóa cứng toàn bộ bảng màu chuẩn theo mẫu 02, 03, 04, c14-ts */
       --vssid-primary: #0074C7;
       --vssid-login-top: #0072bc;
       --vssid-login-mid: #169bd5;
@@ -23,25 +23,24 @@
       --vssid-header-start: #00ABF0;
       --vssid-header-mid: #008FD9;
       --vssid-header-end: #0074C7;
-      /* Profile card gradient đồng bộ theo mẫu 2 */
+      /* Profile card gradient đồng bộ theo mẫu 02 */
       --vssid-profile-card-start: #dfeef5;
       --vssid-profile-card-mid: #ebf3f7;
       --vssid-profile-card-end: #f4f6f8;
       --vssid-bg-main: #F2F2F2;
       --vssid-footer-bg: #FFFFFF;
-      --vssid-table-header: #28527a;
-      --vssid-detail-box: #326295;
+      /* Màu header bảng (03.png) và khung chi tiết (04.png) khóa chuẩn */
+      --vssid-table-header: #355c85;
+      --vssid-detail-box: #356291;
       --vssid-vneid-btn: #c80815;
-      --vssid-late-text: #e02020;
+      --vssid-late-text: #d92626;
     }
-
 
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-
 
     html, body {
       margin: 0;
@@ -52,13 +51,11 @@
       background-color: #FFFFFF;
     }
 
-
     body {
       display: flex;
       align-items: center;
       justify-content: center;
     }
-
 
     #app-container {
       width: 100vw;
@@ -72,8 +69,7 @@
       overflow: hidden;
     }
 
-
-    /* Header banner gradient chuẩn #00ABF0 -> #0074C7 và căn chỉnh chiều cao khớp đường gióng */
+    /* Header banner gradient chuẩn #00ABF0 -> #0074C7 */
     .vssid-header-gradient {
       background: linear-gradient(180deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 52%, var(--vssid-header-end) 100%);
       padding-top: calc(max(22px, env(safe-area-inset-top)) + 6px);
@@ -83,12 +79,10 @@
       justify-content: space-between;
     }
 
-
     .vssid-detail-header {
       padding-top: calc(env(safe-area-inset-top, 14px) + 12px);
-      padding-bottom: 12px;
+      padding-bottom: 8px;
     }
-
 
     .vssid-login-bg {
       background-color: #ffffff;
@@ -100,13 +94,11 @@
       background-position: 0 0, 5px 5px, 0 0;
     }
 
-
     /* Thẻ thông tin cá nhân chuyển sắc nhẹ từ xanh băng nhạt xuống xám sáng */
     .vssid-profile-card {
       background: linear-gradient(180deg, var(--vssid-profile-card-start) 0%, var(--vssid-profile-card-mid) 45%, var(--vssid-profile-card-end) 100%);
       box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
     }
-
 
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -115,7 +107,6 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
-
 
     .spa-layer {
       display: none;
@@ -127,12 +118,32 @@
       display: flex;
     }
 
-
-    .bhxh-table th,
-    .bhxh-table td {
-      border: 1px solid #d1d5db;
+    /* Bảng quá trình tham gia chuẩn mẫu 03.png & image_d44c4d.png */
+    .bhxh-table {
+      border-collapse: collapse;
+      border: 1px solid #9fa6ad;
     }
-
+    .bhxh-table thead tr {
+      background-color: var(--vssid-table-header);
+      border: 1px solid var(--vssid-table-header);
+    }
+    .bhxh-table th {
+      border: none;
+    }
+    .bhxh-table td {
+      border-top: 1px solid #9fa6ad;
+      border-bottom: 1px solid #9fa6ad;
+      border-left: 1px solid #9fa6ad;
+      border-right: 1px solid #9fa6ad;
+    }
+    /* Màu viền 2 cột cuối: vạch ngăn giữa cột Nghề nghiệp/Chức vụ và cột Con mắt mảnh & nhạt hơn (#cfd7df), viền ngoài cùng ánh xanh xám nhẹ (#a8bfd4) */
+    .bhxh-table td.col-role {
+      border-right: 1px solid #cfd7df;
+    }
+    .bhxh-table td.col-eye {
+      border-left: 1px solid #cfd7df;
+      border-right: 1px solid #a8bfd4;
+    }
 
     .tab-icon-circle.is-full-icon {
       border-color: transparent !important;
@@ -148,21 +159,26 @@
       opacity: 1;
     }
 
+    /* Ép 3 icon điều hướng không được chọn dưới đáy luôn ở trạng thái xám đơn sắc chuẩn mẫu 02, 03, c14-ts */
+    [data-icon-slot="nav_dichvu_cong"] img,
+    [data-icon-slot="nav_tra_cuu"] img,
+    [data-icon-slot="nav_tro_giup"] img {
+      filter: grayscale(100%);
+      opacity: 0.55;
+    }
 
     /* Cấu hình chiều cao siêu nhỏ gọn cho Thanh điều hướng dưới */
     .vssid-bottom-nav {
-      padding-top: 4px; /* Thu gọn padding trên */
-      padding-bottom: 8px; /* Giữ nguyên thiết kế cũ (fallback) cho các máy HĐH thấp */
+      padding-top: 4px;
+      padding-bottom: 8px;
     }
     
-    /* Ghi đè: Bỏ safe-area cho iOS 11+ và Android 10+ và ép padding dưới siêu nhỏ */
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
       .vssid-bottom-nav {
         padding-bottom: 2px !important;
       }
     }
   </style>
-
 </head>
 
 <body>
@@ -309,6 +325,7 @@
   </div>
 </section>
 
+<!-- MÀN HÌNH 2: QUẢN LÝ CÁ NHÂN (Chuẩn mẫu 02.png) -->
 <section id="screen-2" class="spa-layer bg-[#F2F2F2] justify-between">
   <header class="vssid-header-gradient text-white pl-[10px] pr-[18px]">
     <button type="button" onclick="handleLogout()" class="flex items-center justify-center w-8 h-8">
@@ -323,13 +340,13 @@
       <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
         <i class="fa-solid fa-bell text-[22px]"></i>
       </span>
-      <span id="profile-notification-badge" class="hidden absolute -top-0.5 -right-1 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center border border-white"></span>
+      <span id="profile-notification-badge" class="hidden absolute -top-0.5 -right-0.5 bg-[#e51c23] text-white text-[10px] font-bold min-w-[15px] h-[15px] px-1 rounded-full flex items-center justify-center leading-none"></span>
     </button>
   </header>
 
   <div class="flex-1 overflow-y-auto no-scrollbar pt-[15px] pb-4 bg-[#F2F2F2]">
     <div class="vssid-profile-card mx-[18px] rounded-[2px] px-[18px] pt-[14px] pb-[10px]">
-      <div class="flex items-center gap-[18px] pb-[14px] border-b border-[#c9d2d8]">
+      <div class="flex items-center gap-[18px] pb-[13px] border-b border-[#8e9ea9]">
         <div class="relative cursor-pointer flex-shrink-0" onclick="openAvatarOnboardingModal()" title="Chạm để nhập/đổi ảnh đại diện">
           <img
             id="profile-avatar"
@@ -340,29 +357,29 @@
           />
         </div>
         <div class="min-w-0 flex-1">
-          <div id="profile-name" class="font-bold text-[15.5px] text-[#111111] leading-snug truncate"></div>
-          <div class="text-[14.5px] text-[#555555] mt-[7px] font-normal">
+          <div id="profile-name" class="font-bold text-[15px] text-[#111111] leading-snug truncate"></div>
+          <div class="text-[14px] text-[#555555] mt-[4px] font-normal">
             Mã BHXH: <span id="profile-mabhxh" class="text-[#555555]"></span>
           </div>
         </div>
       </div>
 
-      <div class="divide-y divide-[#c9d2d8] text-[14.5px]">
-        <div class="py-[9.5px] flex items-center justify-between gap-2">
-          <span class="text-[#4f4f4f]">Ngày sinh</span>
-          <span id="profile-dob" class="text-[#4f4f4f]"></span>
+      <div class="divide-y divide-[#d5e0e6] text-[14px]">
+        <div class="py-[9px] flex items-center justify-between gap-2">
+          <span class="text-[#4a4a4a]">Ngày sinh</span>
+          <span id="profile-dob" class="text-[#4a4a4a]"></span>
         </div>
-        <div class="py-[9.5px] flex items-center justify-between gap-2">
-          <span class="text-[#4f4f4f]">ĐDCN/CCCD/Hộ chiếu</span>
-          <span id="profile-cccd" class="text-[#4f4f4f]"></span>
+        <div class="py-[9px] flex items-center justify-between gap-2">
+          <span class="text-[#4a4a4a]">ĐDCN/CCCD/Hộ chiếu</span>
+          <span id="profile-cccd" class="text-[#4a4a4a]"></span>
         </div>
-        <div class="py-[9.5px] flex items-center justify-between gap-2">
-          <span class="text-[#4f4f4f]">Số điện thoại</span>
-          <span id="profile-phone" class="text-[#4f4f4f]"></span>
+        <div class="py-[9px] flex items-center justify-between gap-2">
+          <span class="text-[#4a4a4a]">Số điện thoại</span>
+          <span id="profile-phone" class="text-[#4a4a4a]"></span>
         </div>
-        <div class="pt-[9.5px] pb-[4px] flex items-start justify-between gap-4">
-          <span class="text-[#4f4f4f] flex-shrink-0">Địa chỉ</span>
-          <span id="profile-address" class="text-[#4f4f4f] text-right leading-[1.32] break-words"></span>
+        <div class="pt-[9px] pb-[4px] flex items-start justify-between gap-4">
+          <span class="text-[#4a4a4a] flex-shrink-0">Địa chỉ</span>
+          <span id="profile-address" class="text-[#4a4a4a] text-right leading-[1.32] break-words"></span>
         </div>
       </div>
     </div>
@@ -372,8 +389,8 @@
         <div data-icon-slot="menu_the_bhyt" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
           <i class="fa-regular fa-id-card text-[19px]"></i>
         </div>
-        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THẺ BHYT BẢN ĐIỆN TỬ</span>
+        <div class="flex-1 flex items-center justify-between border-b border-[#9e9e9e] py-[18px] menu-item-border">
+          <span class="text-[15px] text-[#555555] font-normal uppercase tracking-[0.1px]">THẺ BHYT BẢN ĐIỆN TỬ</span>
           <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
           </svg>
@@ -384,8 +401,8 @@
         <div data-icon-slot="menu_so_bhxh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
           <i class="fa-solid fa-hands-holding-heart text-[19px]"></i>
         </div>
-        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ BHXH BẢN ĐIỆN TỬ</span>
+        <div class="flex-1 flex items-center justify-between border-b border-[#9e9e9e] py-[18px] menu-item-border">
+          <span class="text-[15px] text-[#555555] font-normal uppercase tracking-[0.1px]">SỔ BHXH BẢN ĐIỆN TỬ</span>
           <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
           </svg>
@@ -396,8 +413,8 @@
         <div data-icon-slot="menu_qua_trinh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
           <i class="fa-solid fa-clock-rotate-left text-[19px]"></i>
         </div>
-        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">QUÁ TRÌNH THAM GIA</span>
+        <div class="flex-1 flex items-center justify-between border-b border-[#9e9e9e] py-[18px] menu-item-border">
+          <span class="text-[15px] text-[#555555] font-normal uppercase tracking-[0.1px]">QUÁ TRÌNH THAM GIA</span>
           <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
           </svg>
@@ -408,8 +425,8 @@
         <div data-icon-slot="menu_thong_tin_huong" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
           <i class="fa-solid fa-user-check text-[19px]"></i>
         </div>
-        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THÔNG TIN HƯỞNG</span>
+        <div class="flex-1 flex items-center justify-between border-b border-[#9e9e9e] py-[18px] menu-item-border">
+          <span class="text-[15px] text-[#555555] font-normal uppercase tracking-[0.1px]">THÔNG TIN HƯỞNG</span>
           <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
           </svg>
@@ -420,8 +437,8 @@
         <div data-icon-slot="menu_so_kcb" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
           <i class="fa-solid fa-plus text-[21px]"></i>
         </div>
-        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ KHÁM CHỮA BỆNH</span>
+        <div class="flex-1 flex items-center justify-between border-b border-[#9e9e9e] py-[18px] menu-item-border">
+          <span class="text-[15px] text-[#555555] font-normal uppercase tracking-[0.1px]">SỔ KHÁM CHỮA BỆNH</span>
           <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
             <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
           </svg>
@@ -430,7 +447,7 @@
     </div>
   </div>
 
-  <!-- Chân trang nền #FFFFFF (Đã áp dụng class siêu nhỏ gọn vssid-bottom-nav) -->
+  <!-- Chân trang nền #FFFFFF -->
   <nav class="vssid-bottom-nav bg-[#FFFFFF] px-2 grid grid-cols-4 text-center z-10 relative">
     <button type="button" class="flex flex-col items-center justify-center">
       <span data-icon-slot="nav_ql_canhan" class="w-5 h-5 flex items-center justify-center text-[#0074C7]">
@@ -459,78 +476,103 @@
   </nav>
 </section>
 
+<!-- MÀN HÌNH 3: QUÁ TRÌNH THAM GIA (Chuẩn mẫu 03.png, c14-ts.jpg & image_d44c4d.png) -->
 <section id="screen-3" class="spa-layer bg-white justify-between">
-  <header class="vssid-header-gradient text-white px-4 shadow-sm">
-    <button type="button" onclick="showScreen('screen-2')" class="text-2xl pr-3 text-white p-1 flex items-center">
-      <i class="fa-solid fa-chevron-left text-[20px]"></i>
+  <header class="vssid-header-gradient text-white pl-[12px] pr-[18px]">
+    <button type="button" onclick="showScreen('screen-2')" class="flex items-center justify-start w-8 h-8 text-white">
+      <svg viewBox="0 0 14 24" class="w-[12px] h-[21px]" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12.5 1.5 L2 12 L12.5 22.5" />
+      </svg>
     </button>
-    <h1 class="text-[15px] font-semibold tracking-wide uppercase flex-1 text-center pr-8">QUÁ TRÌNH THAM GIA</h1>
+    <h1 class="text-[16.5px] font-normal tracking-[0.2px] uppercase flex-1 text-center pr-6">QUÁ TRÌNH THAM GIA</h1>
   </header>
 
-  <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-3 pb-2 bg-white">
+  <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-2.5 pb-2 bg-white border-b border-[#e2e4e8]">
     <button type="button" onclick="switchInsuranceTab('bhxh')" id="tab-btn-bhxh" class="flex flex-col items-center">
       <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
         <i class="fa-solid fa-hands-holding-heart text-lg"></i>
       </div>
-      <span class="tab-label text-[11px] mt-1.5 font-medium text-[#1b75bb]">BHXH</span>
+      <span class="tab-label text-[11px] mt-1.5 font-normal text-[#1d629d]">BHXH</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('bhtn')" id="tab-btn-bhtn" class="flex flex-col items-center">
       <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
         <i class="fa-solid fa-people-arrows text-lg"></i>
       </div>
-      <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHTN</span>
+      <span class="tab-label text-[11px] mt-1.5 text-[#8c8c8c]">BHTN</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('bhtnld')" id="tab-btn-bhtnld" class="flex flex-col items-center">
       <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
         <i class="fa-solid fa-user-shield text-lg"></i>
       </div>
-      <span class="tab-label text-[10px] leading-tight text-center mt-1 text-slate-400">BHTNLĐ-<br />BNN</span>
+      <span class="tab-label text-[10.5px] leading-tight text-center mt-1 text-[#8c8c8c]">BHTNLĐ-<br />BNN</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('bhyt')" id="tab-btn-bhyt" class="flex flex-col items-center">
       <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
         <i class="fa-solid fa-circle-plus text-lg"></i>
       </div>
-      <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHYT</span>
+      <span class="tab-label text-[11px] mt-1.5 text-[#8c8c8c]">BHYT</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('c14ts')" id="tab-btn-c14ts" class="flex flex-col items-center">
       <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
         <i class="fa-regular fa-file-lines text-lg"></i>
       </div>
-      <span class="tab-label text-[10.5px] mt-1.5 text-slate-400">C14-TS</span>
+      <span class="tab-label text-[11px] mt-1.5 text-[#8c8c8c]">C14-TS</span>
     </button>
   </div>
 
-  <div class="flex-1 overflow-y-auto no-scrollbar px-2 pb-4">
-    <div class="bg-[#f4f5f7] border border-slate-200 px-3 py-2.5 mt-1 rounded-[4px]">
-      <h2 id="participation-title" class="text-[#285989] text-[14px] font-medium">
+  <!-- Vùng hiển thị 1: Dành cho các tab BHXH, BHTN, BHTNLĐ-BNN, BHYT -->
+  <div id="standard-tab-content" class="flex-1 overflow-y-auto no-scrollbar px-2 pb-3 bg-white">
+    <div id="participation-summary-box" class="bg-[#f2f3f5] border border-[#e2e5e8] px-3 py-2 mt-2 rounded-none">
+      <h2 id="participation-title" class="text-[#285989] text-[14.5px] font-normal leading-snug">
         Quá trình tham gia Bảo hiểm xã hội
       </h2>
-      <div id="participation-summary-details" class="mt-1 space-y-1">
-        <p class="text-[12.5px] text-slate-800">
-          Tổng thời gian tham gia: <span id="summary-total-time" class="font-medium"></span>
+      <div id="participation-summary-details" class="mt-0.5 space-y-0.5">
+        <p class="text-[13px] text-[#222222] font-normal leading-[1.42]">
+          Tổng thời gian tham gia: <span id="summary-total-time"></span>
         </p>
-        <p class="text-[12.5px] font-medium" style="color: var(--vssid-late-text);">
+        <p id="summary-late-row" class="text-[13px] font-normal leading-[1.42]" style="color: var(--vssid-late-text);">
           Tổng thời gian chậm đóng: <span id="summary-late-time"></span>
         </p>
       </div>
     </div>
 
-    <table class="w-full bhxh-table border-collapse text-center bg-white mt-3 shadow-sm rounded-t-[4px] overflow-hidden">
+    <table class="w-full bhxh-table text-center bg-white mt-2.5 rounded-none overflow-hidden">
       <thead>
-        <tr style="background-color: var(--vssid-table-header);" class="text-white text-[12px] font-medium">
-          <th class="py-2 px-1 w-[17%] font-medium">Từ tháng</th>
-          <th class="py-2 px-1 w-[17%] font-medium">Đến tháng</th>
-          <th class="py-2 px-2 w-[36%] font-medium">Đơn vị</th>
-          <th class="py-2 px-1 w-[21%] font-medium leading-tight">Nghề nghiệp<br />Chức vụ</th>
-          <th class="py-2 px-1 w-[9%] font-medium"></th>
+        <tr class="text-white text-[12px] font-normal">
+          <th class="py-1.5 px-0.5 w-[16.5%] font-normal whitespace-nowrap">Từ tháng</th>
+          <th class="py-1.5 px-0.5 w-[14.5%] font-normal leading-[1.2]">Đến<br />tháng</th>
+          <th class="py-1.5 px-1.5 w-[39%] font-normal">Đơn vị</th>
+          <th class="py-1.5 pl-0.5 pr-0 w-[22.5%] font-normal leading-[1.2]">Nghề nghiệp<br />Chức vụ</th>
+          <th class="py-1.5 px-0 w-[7.5%] font-normal"></th>
         </tr>
       </thead>
-      <tbody id="history-table-body" class="text-[12px] text-slate-800"></tbody>
+      <tbody id="history-table-body" class="text-[12px] text-[#222222]"></tbody>
     </table>
+  </div>
+
+  <!-- Vùng hiển thị 2: Giao diện riêng cho tab C14-TS (Chuẩn mẫu c14-ts.jpg) -->
+  <div id="c14ts-tab-content" class="hidden flex-1 flex flex-col justify-between bg-[#e8e9eb]">
+    <div class="flex-1"></div>
+    <div class="bg-[#f2f3f5] border-t border-[#dcdfe4] px-3.5 py-2 flex items-center justify-end">
+      <button
+        type="button"
+        onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')"
+        class="flex items-center gap-1.5 text-[#185a94] active:opacity-70 transition"
+      >
+        <svg viewBox="0 0 24 24" class="w-[22px] h-[22px]" fill="none" stroke="#185a94" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3" fill="#ffffff" />
+          <circle cx="6" cy="12" r="3" fill="#ffffff" />
+          <circle cx="18" cy="19" r="3" fill="#ffffff" />
+          <line x1="8.6" y1="10.5" x2="15.4" y2="6.5" />
+          <line x1="8.6" y1="13.5" x2="15.4" y2="17.5" />
+        </svg>
+        <span class="text-[14.5px] font-normal text-[#185a94] leading-none pt-0.5">Chia sẻ</span>
+      </button>
+    </div>
   </div>
 
   <nav class="border-t border-slate-200 vssid-bottom-nav bg-[#FFFFFF] px-2 grid grid-cols-4 text-center z-10 relative">
@@ -561,36 +603,37 @@
   </nav>
 </section>
 
+<!-- MÀN HÌNH 4: CHI TIẾT (Chuẩn mẫu 04.png) -->
 <section id="screen-4" class="spa-layer bg-white">
-  <header class="vssid-detail-header bg-white px-4 flex items-center justify-between border-b border-slate-100 shadow-sm">
-    <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-2xl pr-3 py-1">
+  <header class="vssid-detail-header bg-white px-4 flex items-center justify-between">
+    <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-2xl pr-3 py-1 flex items-center">
       <i class="fa-solid fa-chevron-left text-[20px]"></i>
     </button>
     <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-8">Chi tiết</h1>
   </header>
 
-  <div class="px-4 pt-4">
-    <div class="flex items-center justify-around text-[13.5px] text-slate-800 mb-4 font-medium">
-      <div>Từ tháng: <span id="detail-from" class="text-slate-900"></span></div>
-      <div>Đến tháng: <span id="detail-to" class="text-slate-900"></span></div>
+  <div class="px-4 pt-3">
+    <div class="flex items-center justify-around text-[12.5px] text-[#222222] mb-3 font-normal">
+      <div>Từ tháng: <span id="detail-from" class="text-[#222222]"></span></div>
+      <div>Đến tháng: <span id="detail-to" class="text-[#222222]"></span></div>
     </div>
 
-    <div style="background-color: var(--vssid-detail-box);" class="text-white p-4 rounded-[6px] text-[13px] leading-[1.6] space-y-1 shadow-sm">
+    <div style="background-color: var(--vssid-detail-box);" class="text-white px-3 py-2.5 rounded-none text-[12.5px] leading-[1.38] space-y-0.5">
       <div>Chức vụ: <span id="detail-role" class="font-bold"></span></div>
       <div>Đơn vị công tác: <span id="detail-company" class="font-bold"></span></div>
       <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></div>
       <div>Loại tiền: <span id="detail-currency" class="font-bold"></span></div>
     </div>
 
-    <table class="w-full border-collapse text-[13px] text-slate-800 mt-3 shadow-sm rounded-[4px] overflow-hidden">
+    <table class="w-full border-collapse text-[12.5px] text-[#222222] mt-0 rounded-none">
       <tbody>
         <tr>
-          <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Tiền lương đóng BHXH</td>
-          <td id="detail-bhxh-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
+          <td class="border border-[#cfdde8] py-[6px] px-3 text-center w-1/2 bg-white font-normal text-[#222222]">Tiền lương đóng BHXH</td>
+          <td id="detail-bhxh-salary" class="border border-[#cfdde8] py-[6px] px-3 text-right w-1/2 bg-white font-normal text-[#222222]"></td>
         </tr>
         <tr>
-          <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Mức lương</td>
-          <td id="detail-base-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
+          <td class="border border-[#cfdde8] py-[6px] px-3 text-center w-1/2 bg-white font-normal text-[#222222]">Mức lương</td>
+          <td id="detail-base-salary" class="border border-[#cfdde8] py-[6px] px-3 text-right w-1/2 bg-white font-normal text-[#222222]"></td>
         </tr>
       </tbody>
     </table>
@@ -687,9 +730,8 @@
 
   <script>
     // --- THIẾT LẬP MÔI TRƯỜNG ---
-    const USE_DEMO_TXT = false; // Đổi thành false để kết nối thực tế với Google Sheet
+    const USE_DEMO_TXT = true; // Đổi thành false để kết nối thực tế với Google Sheet
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
-
 
     const STORAGE_KEYS = {
       UI_CONFIG: 'VSSID_STANDALONE_UI_CONFIG',
@@ -701,7 +743,6 @@
       OFFLINE_VAULT: 'VSSID_OFFLINE_ACCOUNTS_VAULT'
     };
 
-
     let currentMaBHXH = '';
     let activeUserData = null;
     let activeAvatarBase64 = '';
@@ -709,7 +750,6 @@
     let pendingCompressedAvatar = '';
     let activeMediaStream = null;
     let activeUiConfig = { theme: {}, icons: {}, updatedAt: '' };
-
 
     const TAB_TITLES = {
       bhxh: 'Quá trình tham gia Bảo hiểm xã hội',
@@ -719,11 +759,9 @@
       c14ts: 'Thông tin C14-TS'
     };
 
-
     function normalizeMaBHXHClient(val) {
       return String(val || '').trim().replace(/^'+/, '').replace(/^0+/, '');
     }
-
 
     function saveSessionData(userCacheRaw, avatarStr) {
       const jsonStr = typeof userCacheRaw === 'string' ? userCacheRaw : JSON.stringify(userCacheRaw);
@@ -733,7 +771,6 @@
         activeUserData = null;
       }
       activeAvatarBase64 = avatarStr || '';
-
 
       try {
         sessionStorage.setItem(STORAGE_KEYS.USER_CACHE, jsonStr);
@@ -745,14 +782,11 @@
       } catch (e) {}
     }
 
-
     function loadSessionDataIntoMemory() {
       if (activeUserData) return activeUserData;
 
-
       const rawJSON = sessionStorage.getItem(STORAGE_KEYS.USER_CACHE) || localStorage.getItem(STORAGE_KEYS.USER_CACHE);
       const rawAvatar = sessionStorage.getItem(STORAGE_KEYS.AVATAR) || localStorage.getItem(STORAGE_KEYS.AVATAR) || '';
-
 
       if (rawJSON) {
         try {
@@ -768,7 +802,6 @@
       }
       return null;
     }
-
 
     function saveOfflineVaultAccount(maBHXH, password, userCacheJSON, avatarBase64) {
       try {
@@ -786,7 +819,6 @@
       } catch (e) {}
     }
 
-
     function getOfflineVaultAccount(maBHXH, password) {
       try {
         const cleanKey = normalizeMaBHXHClient(maBHXH);
@@ -800,7 +832,6 @@
       } catch (e) {}
       return null;
     }
-
 
     async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
       const controller = new AbortController();
@@ -816,172 +847,148 @@
       }
     }
 
+    async function callGasApi(action, payload = {}) {
+      // --- CHẾ ĐỘ TEST GIAO DIỆN VỚI GITHUB FILE ---
+      if (typeof USE_DEMO_TXT !== 'undefined' && USE_DEMO_TXT) {
+        if (action === 'login') {
+          try {
+            const res = await fetch('demodulieu.txt');
+            if (!res.ok) throw new Error('Không tìm thấy file demodulieu.txt');
+            const text = await res.text();
 
-async function callGasApi(action, payload = {}) {
-  // --- CHẾ ĐỘ TEST GIAO DIỆN VỚI GITHUB FILE ---
-  if (typeof USE_DEMO_TXT !== 'undefined' && USE_DEMO_TXT) {
-    if (action === 'login') {
-      try {
-        // Đọc file demo cùng cấp thư mục trên GitHub
-        const res = await fetch('demodulieu.txt');
-        if (!res.ok) throw new Error('Không tìm thấy file demodulieu.txt');
-        const text = await res.text();
-        
-        const lines = text.split('\n');
-        for (let line of lines) {
-          if (!line.trim()) continue;
-          
-          // Tách thông tin bằng Regex
-          const maMatch = line.match(/MaBHXH\s+\[(.*?)\]/);
-          const passMatch = line.match(/Password\s+\[(.*?)\]/);
-          const jsonStartIndex = line.indexOf('User_Cache_JSON [');
-          
-          if (maMatch && passMatch && jsonStartIndex !== -1) {
-            const ma = maMatch[1].trim();
-            const pass = passMatch[1].trim();
-            // Tách bóc tách chính xác chuỗi JSON Object từ file text
-            const jsonStr = line.substring(jsonStartIndex + 17, line.lastIndexOf(']')).trim();
-            
-            if (ma === payload.maBHXH && pass === payload.password) {
-              return {
-                success: true,
-                data: {
-                  User_Cache_JSON: jsonStr,
-                  Avatar_Base64: '',
-                  UI_Config_JSON: null
+            const lines = text.split('\n');
+            for (let line of lines) {
+              if (!line.trim()) continue;
+
+              const maMatch = line.match(/MaBHXH\s+\[(.*?)\]/);
+              const passMatch = line.match(/Password\s+\[(.*?)\]/);
+              const jsonStartIndex = line.indexOf('User_Cache_JSON [');
+
+              if (maMatch && passMatch && jsonStartIndex !== -1) {
+                const ma = maMatch[1].trim();
+                const pass = passMatch[1].trim();
+                const jsonStr = line.substring(jsonStartIndex + 17, line.lastIndexOf(']')).trim();
+
+                if (ma === payload.maBHXH && pass === payload.password) {
+                  return {
+                    success: true,
+                    data: {
+                      User_Cache_JSON: jsonStr,
+                      Avatar_Base64: '',
+                      UI_Config_JSON: null
+                    }
+                  };
                 }
-              };
+              }
             }
+            return { success: false, message: 'Sai thông tin đăng nhập trong file Demo' };
+          } catch (err) {
+            console.error(err);
+            return { success: false, message: 'Lỗi đọc file demodulieu.txt trên Github' };
           }
         }
-        return { success: false, message: 'Sai thông tin đăng nhập trong file Demo' };
+
+        if (action === 'saveAvatar') {
+          return { success: true };
+        }
+      }
+      // --- KẾT THÚC CHẾ ĐỘ TEST ---
+
+      // --- CHẾ ĐỘ KẾT NỐI THỰC TẾ GOOGLE SHEET ---
+      try {
+        const response = await fetchWithTimeout(
+          GAS_WEB_APP_URL,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, ...payload })
+          },
+          8000
+        );
+        return await response.json();
       } catch (err) {
-        console.error(err);
-        return { success: false, message: 'Lỗi đọc file demodulieu.txt trên Github' };
+        console.warn(`POST API failed for ${action}, falling back to GET...`, err);
+        try {
+          return await callGasGetApi(action, payload);
+        } catch (fallbackErr) {
+          console.error(`Fallback GET API also failed for ${action}`, fallbackErr);
+          return { success: false, error: 'Network or Server Error' };
+        }
       }
     }
-    
-    // Giả lập lưu avatar thành công luôn khi test UI
-    if (action === 'saveAvatar') {
-      return { success: true };
+
+    async function callGasGetApi(action, payload = {}) {
+      const params = new URLSearchParams({ action, data: JSON.stringify(payload) });
+      const res = await fetchWithTimeout(`${GAS_WEB_APP_URL}?${params.toString()}`, { method: 'GET' }, 8000);
+      return await res.json();
     }
-  }
-  // --- KẾT THÚC CHẾ ĐỘ TEST ---
 
+    (function initStandaloneApp() {
+      try {
+        const savedCfg = localStorage.getItem(STORAGE_KEYS.UI_CONFIG);
+        if (savedCfg) {
+          applyUiConfigObject(JSON.parse(savedCfg));
+        }
+      } catch (e) {
+        console.warn('Failed to load local UI config', e);
+      }
 
-  // --- CHẾ ĐỘ KẾT NỐI THỰC TẾ GOOGLE SHEET ---
-  try {
-    const response = await fetchWithTimeout(
-      GAS_WEB_APP_URL,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action, ...payload })
-      },
-      8000
-    );
-    return await response.json();
-  } catch (err) {
-    console.warn(`POST API failed for ${action}, falling back to GET...`, err);
-    // Bọc thêm try/catch ở đây để chặn lỗi liên hoàn
-    try {
-      return await callGasGetApi(action, payload);
-    } catch (fallbackErr) {
-      console.error(`Fallback GET API also failed for ${action}`, fallbackErr);
-      return { success: false, error: 'Network or Server Error' }; // Luôn trả về object có cấu trúc chuẩn
+      const restoredData = loadSessionDataIntoMemory();
+      const savedScreen = localStorage.getItem(STORAGE_KEYS.ACTIVE_SCREEN) || 'screen-2';
+
+      if (restoredData && activeAvatarBase64 && savedScreen !== 'screen-1') {
+        renderScreen2FromSession();
+        if (savedScreen === 'screen-3') {
+          const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
+          showScreen('screen-3');
+          switchInsuranceTab(lastTab);
+        } else if (savedScreen === 'screen-4') {
+          const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
+          const lastDetailId = localStorage.getItem(STORAGE_KEYS.ACTIVE_DETAIL_ID) || '0';
+          switchInsuranceTab(lastTab);
+          openHistoryDetail(lastDetailId);
+        } else {
+          showScreen('screen-2');
+        }
+      } else {
+        showScreen('screen-1');
+      }
+
+      syncUiConfigInBackground();
+    })();
+
+    async function syncUiConfigInBackground() {
+      if (!navigator.onLine) return;
+      try {
+        const clientVer = (typeof activeUiConfig !== 'undefined' && activeUiConfig && activeUiConfig.updatedAt) || '';
+        const json = await callGasGetApi('getUiConfig', { clientUiVersion: clientVer });
+
+        if (json && json.success && !json.upToDate && json.data) {
+          const cfgObj = typeof json.data === 'string' ? JSON.parse(json.data) : json.data;
+          localStorage.setItem(STORAGE_KEYS.UI_CONFIG, JSON.stringify(cfgObj));
+          applyUiConfigObject(cfgObj);
+        }
+      } catch (e) {
+        console.warn('Background UI sync failed', e);
+      }
     }
-  }
-}
-
-
-async function callGasGetApi(action, payload = {}) {
-  const params = new URLSearchParams({ action, data: JSON.stringify(payload) });
-  const res = await fetchWithTimeout(`${GAS_WEB_APP_URL}?${params.toString()}`, { method: 'GET' }, 8000);
-  return await res.json();
-}
-
-
-(function initStandaloneApp() {
-  try {
-    const savedCfg = localStorage.getItem(STORAGE_KEYS.UI_CONFIG);
-    if (savedCfg) {
-      applyUiConfigObject(JSON.parse(savedCfg));
-    }
-  } catch (e) {
-    console.warn("Failed to load local UI config", e);
-  }
-
-
-  const restoredData = loadSessionDataIntoMemory();
-  const savedScreen = localStorage.getItem(STORAGE_KEYS.ACTIVE_SCREEN) || 'screen-2';
-
-
-  if (restoredData && activeAvatarBase64 && savedScreen !== 'screen-1') {
-    renderScreen2FromSession();
-    if (savedScreen === 'screen-3') {
-      const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
-      showScreen('screen-3');
-      switchInsuranceTab(lastTab);
-    } else if (savedScreen === 'screen-4') {
-      const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
-      const lastDetailId = localStorage.getItem(STORAGE_KEYS.ACTIVE_DETAIL_ID) || '0';
-      switchInsuranceTab(lastTab);
-      openHistoryDetail(lastDetailId);
-    } else {
-      showScreen('screen-2');
-    }
-  } else {
-    showScreen('screen-1');
-  }
-
-
-  // Chạy ngầm sau khi UI đã lên
-  syncUiConfigInBackground();
-})();
-
-
-async function syncUiConfigInBackground() {
-  if (!navigator.onLine) return;
-  try {
-    const clientVer = (typeof activeUiConfig !== 'undefined' && activeUiConfig && activeUiConfig.updatedAt) || '';
-    
-    // Tái sử dụng hàm callGasGetApi thay vì tự viết lại fetch
-    const json = await callGasGetApi('getUiConfig', { clientUiVersion: clientVer });
-    
-    if (json && json.success && !json.upToDate && json.data) {
-      const cfgObj = typeof json.data === 'string' ? JSON.parse(json.data) : json.data;
-      localStorage.setItem(STORAGE_KEYS.UI_CONFIG, JSON.stringify(cfgObj));
-      applyUiConfigObject(cfgObj);
-    }
-  } catch (e) {
-    console.warn("Background UI sync failed", e);
-  }
-}
-
 
     function applyUiConfigObject(cfg) {
       if (!cfg || typeof cfg !== 'object') return;
       activeUiConfig = cfg;
 
-
-      const t = cfg.theme || {};
       const root = document.documentElement;
-      if (t.primary) root.style.setProperty('--vssid-primary', t.primary);
-      if (t.loginTop) root.style.setProperty('--vssid-login-top', t.loginTop);
-      if (t.loginMid) root.style.setProperty('--vssid-login-mid', t.loginMid);
-      if (t.loginLight) root.style.setProperty('--vssid-login-light', t.loginLight);
-      /* Giữ chuẩn dải gradient #00ABF0 -> #0074C7 cho header banner */
+      /* Khóa cứng toàn bộ mã màu chuẩn của 02, 03, 04 trong CSS để không bị UI_Config ghi đè */
+      root.style.setProperty('--vssid-primary', '#0074C7');
       root.style.setProperty('--vssid-header-start', '#00ABF0');
       root.style.setProperty('--vssid-header-mid', '#008FD9');
       root.style.setProperty('--vssid-header-end', '#0074C7');
-      if (t.profileCardStart) root.style.setProperty('--vssid-profile-card-start', t.profileCardStart);
-      if (t.profileCardMid) root.style.setProperty('--vssid-profile-card-mid', t.profileCardMid);
-      if (t.profileCardEnd) root.style.setProperty('--vssid-profile-card-end', t.profileCardEnd);
-      if (t.tableHeader) root.style.setProperty('--vssid-table-header', t.tableHeader);
-      if (t.detailBox) root.style.setProperty('--vssid-detail-box', t.detailBox);
-      if (t.vneidBtn) root.style.setProperty('--vssid-vneid-btn', t.vneidBtn);
-      if (t.lateText) root.style.setProperty('--vssid-late-text', t.lateText);
-
+      root.style.setProperty('--vssid-profile-card-start', '#dfeef5');
+      root.style.setProperty('--vssid-profile-card-mid', '#ebf3f7');
+      root.style.setProperty('--vssid-profile-card-end', '#f4f6f8');
+      root.style.setProperty('--vssid-table-header', '#355c85');
+      root.style.setProperty('--vssid-detail-box', '#356291');
+      root.style.setProperty('--vssid-late-text', '#d92626');
 
       const icons = cfg.icons || {};
       if (icons.logo_login && icons.logo_login.src) {
@@ -995,18 +1002,15 @@ async function syncUiConfigInBackground() {
         }
       }
 
-
       document.querySelectorAll('[data-icon-slot]').forEach((el) => {
         const key = el.getAttribute('data-icon-slot');
         const iconData = icons[key];
         if (!iconData || !iconData.src) return;
 
-
         const isFull = String(iconData.frame || 'FULL').toUpperCase() === 'FULL';
         if (key === 'header_bell') {
           el.innerHTML = `<img src="${iconData.src}" alt="Bell" class="w-6 h-6 object-contain" />`;
         } else if (key.startsWith('menu_')) {
-          /* Giữ nguyên kích thước 42px và khoảng cách mr-[20px] để chữ menu luôn thẳng trục với Họ Tên */
           if (isFull) {
             el.className = 'w-[42px] h-[42px] mr-[20px] rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden';
             el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-[42px] h-[42px] object-contain" />`;
@@ -1024,11 +1028,9 @@ async function syncUiConfigInBackground() {
             el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-6 h-6 object-contain transition" />`;
           }
         } else if (key.startsWith('nav_')) {
-          /* Đã cập nhật kích thước icon tùy chỉnh ở nav_ về w-5 h-5 cho đồng nhất thiết kế siêu nhỏ gọn */
           el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-5 h-5 object-contain" />`;
         }
       });
-
 
       const activeScreenEl = document.querySelector('.spa-layer.active');
       if (activeScreenEl && activeScreenEl.id === 'screen-3') {
@@ -1037,41 +1039,39 @@ async function syncUiConfigInBackground() {
       }
     }
 
-
     function renderEyeIconHTML() {
       const eyeIcon = activeUiConfig && activeUiConfig.icons && activeUiConfig.icons.icon_con_mat;
       if (eyeIcon && eyeIcon.src) {
-        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-5 h-4 object-contain mx-auto" />`;
+        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-[20px] h-[14px] object-contain mx-auto" />`;
       }
-      return `<i class="fa-solid fa-eye text-[15px]"></i>`;
+      return `
+        <svg viewBox="0 0 24 16" class="w-[20px] h-[14px] mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.5 8C3.8 3.5 7.5 1.25 12 1.25C16.5 1.25 20.2 3.5 22.5 8C20.2 12.5 16.5 14.75 12 14.75C7.5 14.75 3.8 12.5 1.5 8Z" stroke="#355c85" stroke-width="1.7" />
+          <circle cx="12" cy="8" r="3.6" fill="#355c85" />
+          <circle cx="10.8" cy="6.8" r="1" fill="#ffffff" />
+        </svg>
+      `;
     }
-
 
     function showModal(message) {
       document.getElementById('global-modal-message').innerHTML = message;
       document.getElementById('global-modal-overlay').classList.remove('hidden');
     }
 
-
     function closeModal() {
       document.getElementById('global-modal-overlay').classList.add('hidden');
     }
-
 
     function showScreen(screenId) {
       document.querySelectorAll('.spa-layer').forEach((el) => el.classList.remove('active'));
       const target = document.getElementById(screenId);
       if (target) target.classList.add('active');
 
-
       try {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_SCREEN, screenId);
       } catch (e) {}
 
-
       const metaTheme = document.getElementById('meta-theme-color');
-      const t = (activeUiConfig && activeUiConfig.theme) || {};
-
 
       if (screenId === 'screen-2' || screenId === 'screen-3') {
         if (metaTheme) metaTheme.setAttribute('content', '#00ABF0');
@@ -1079,15 +1079,13 @@ async function syncUiConfigInBackground() {
       } else if (screenId === 'screen-4') {
         if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
       } else {
-        if (metaTheme) metaTheme.setAttribute('content', t.primary || '#0072bc');
+        if (metaTheme) metaTheme.setAttribute('content', '#0072bc');
       }
     }
-
 
     function completeLoginFlow(maBHXH, password, User_Cache_JSON, Avatar_Base64, UI_Config_JSON) {
       currentMaBHXH = maBHXH;
       pendingUserCacheJSON = typeof User_Cache_JSON === 'string' ? User_Cache_JSON : JSON.stringify(User_Cache_JSON);
-
 
       if (UI_Config_JSON) {
         try {
@@ -1097,48 +1095,39 @@ async function syncUiConfigInBackground() {
         } catch (e) {}
       }
 
-
       if (!Avatar_Base64 || Avatar_Base64.trim() === '') {
         openAvatarOnboardingModal();
         return;
       }
-
 
       saveSessionData(pendingUserCacheJSON, Avatar_Base64);
       saveOfflineVaultAccount(maBHXH, password, pendingUserCacheJSON, Avatar_Base64);
       showScreen('screen-2');
     }
 
-
     async function handleLoginSubmit(event) {
       if (event) event.preventDefault();
-
 
       const maBHXH = document.getElementById('input-mabhxh').value.trim();
       const password = document.getElementById('input-password').value.trim();
       const btnLogin = document.getElementById('btn-login');
-
 
       if (!maBHXH || !password) {
         showModal('Vui lòng nhập đầy đủ Mã BHXH và Mật khẩu');
         return;
       }
 
-
       btnLogin.disabled = true;
       btnLogin.innerHTML = '<span>Đang xử lý...</span>';
-
 
       try {
         const clientUiVersion = (activeUiConfig && activeUiConfig.updatedAt) || '';
         const response = await callGasApi('login', { maBHXH, password, clientUiVersion });
 
-
         if (!response || !response.success || !response.data) {
           showModal((response && response.message) || 'Mật khẩu không chính xác');
           return;
         }
-
 
         const { User_Cache_JSON, Avatar_Base64, UI_Config_JSON } = response.data;
         completeLoginFlow(maBHXH, password, User_Cache_JSON, Avatar_Base64, UI_Config_JSON);
@@ -1161,7 +1150,6 @@ async function syncUiConfigInBackground() {
       }
     }
 
-
     function handleLogout() {
       stopOnboardingCamera();
       activeUserData = null;
@@ -1169,7 +1157,6 @@ async function syncUiConfigInBackground() {
       currentMaBHXH = '';
       pendingUserCacheJSON = '';
       pendingCompressedAvatar = '';
-
 
       try {
         sessionStorage.removeItem(STORAGE_KEYS.USER_CACHE);
@@ -1179,18 +1166,15 @@ async function syncUiConfigInBackground() {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_SCREEN, 'screen-1');
       } catch (e) {}
 
-
       const passInput = document.getElementById('input-password');
       if (passInput) passInput.value = '';
       showScreen('screen-1');
     }
 
-
     function openParticipationScreen() {
       showScreen('screen-3');
       switchInsuranceTab('bhxh');
     }
-
 
     function openAvatarOnboardingModal() {
       pendingCompressedAvatar = '';
@@ -1198,7 +1182,6 @@ async function syncUiConfigInBackground() {
       document.getElementById('camera-stream').classList.add('hidden');
       document.getElementById('onboarding-placeholder').classList.remove('hidden');
       document.getElementById('btn-save-avatar').disabled = true;
-
 
       const existingAvatar = activeAvatarBase64 || sessionStorage.getItem(STORAGE_KEYS.AVATAR) || localStorage.getItem(STORAGE_KEYS.AVATAR);
       const closeBtn = document.getElementById('btn-close-avatar-modal');
@@ -1210,16 +1193,13 @@ async function syncUiConfigInBackground() {
         }
       }
 
-
       document.getElementById('avatar-onboarding-modal').classList.remove('hidden');
     }
-
 
     function closeAvatarOnboardingModal() {
       stopOnboardingCamera();
       document.getElementById('avatar-onboarding-modal').classList.add('hidden');
     }
-
 
     async function startOnboardingCamera() {
       const video = document.getElementById('camera-stream');
@@ -1239,7 +1219,6 @@ async function syncUiConfigInBackground() {
       }
     }
 
-
     function stopOnboardingCamera() {
       if (activeMediaStream) {
         activeMediaStream.getTracks().forEach((track) => track.stop());
@@ -1250,18 +1229,15 @@ async function syncUiConfigInBackground() {
       document.getElementById('btn-start-camera').classList.remove('hidden');
     }
 
-
     function captureFromVideo() {
       const video = document.getElementById('camera-stream');
       compressImageToBase64(video, video.videoWidth || 300, video.videoHeight || 300);
       stopOnboardingCamera();
     }
 
-
     function handleAvatarFileSelect(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
-
 
       stopOnboardingCamera();
       const reader = new FileReader();
@@ -1275,7 +1251,6 @@ async function syncUiConfigInBackground() {
       reader.readAsDataURL(file);
     }
 
-
     function compressImageToBase64(sourceEl, srcW, srcH) {
       const canvas = document.getElementById('avatar-compress-canvas');
       const size = 150;
@@ -1283,24 +1258,19 @@ async function syncUiConfigInBackground() {
       canvas.height = size;
       const ctx = canvas.getContext('2d');
 
-
       const minSide = Math.min(srcW, srcH);
       const sx = (srcW - minSide) / 2;
       const sy = (srcH - minSide) / 2;
 
-
       ctx.clearRect(0, 0, size, size);
       ctx.drawImage(sourceEl, sx, sy, minSide, minSide, 0, 0, size, size);
-
 
       let base64 = canvas.toDataURL('image/jpeg', 0.7);
       if (base64.length >= 40000) {
         base64 = canvas.toDataURL('image/jpeg', 0.5);
       }
 
-
       pendingCompressedAvatar = base64;
-
 
       const previewImg = document.getElementById('onboarding-preview-img');
       previewImg.src = base64;
@@ -1309,18 +1279,15 @@ async function syncUiConfigInBackground() {
       document.getElementById('btn-save-avatar').disabled = false;
     }
 
-
     async function submitCompressedAvatarToGAS() {
       if (!pendingCompressedAvatar || pendingCompressedAvatar.length >= 40000) {
         showModal('Ảnh vượt quá dung lượng cho phép.<br>Vui lòng chọn ảnh khác.');
         return;
       }
 
-
       const btnSave = document.getElementById('btn-save-avatar');
       btnSave.disabled = true;
       btnSave.textContent = 'Đang lưu...';
-
 
       try {
         const data = loadSessionDataIntoMemory();
@@ -1329,15 +1296,12 @@ async function syncUiConfigInBackground() {
           maBHXH = data.profile.maBHXH || '';
         }
 
-
         const saveRes = await callGasApi('saveAvatar', { maBHXH, avatarBase64: pendingCompressedAvatar });
-
 
         if (!saveRes || !saveRes.success) {
           showModal((saveRes && saveRes.message) || 'Không thể lưu ảnh đại diện.<br>Vui lòng thử lại.');
           return;
         }
-
 
         const cacheToPersist = pendingUserCacheJSON || (data ? JSON.stringify(data) : '');
         if (cacheToPersist) {
@@ -1347,7 +1311,6 @@ async function syncUiConfigInBackground() {
             saveOfflineVaultAccount(maBHXH, passVal, cacheToPersist, pendingCompressedAvatar);
           }
         }
-
 
         closeAvatarOnboardingModal();
         showScreen('screen-2');
@@ -1359,25 +1322,20 @@ async function syncUiConfigInBackground() {
       }
     }
 
-
     function renderScreen2FromSession() {
       const data = loadSessionDataIntoMemory();
-
 
       if (!data) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
         return;
       }
 
-
       try {
         const p = data.profile || {};
-
 
         if (p.maBHXH) {
           currentMaBHXH = p.maBHXH;
         }
-
 
         document.getElementById('profile-name').textContent = p.hoTen || '';
         document.getElementById('profile-mabhxh').textContent = p.maBHXH || '';
@@ -1385,7 +1343,6 @@ async function syncUiConfigInBackground() {
         document.getElementById('profile-cccd').textContent = p.cccd || '';
         document.getElementById('profile-phone').textContent = p.sdt || '';
         document.getElementById('profile-address').textContent = p.diaChi || '';
-
 
         const badgeEl = document.getElementById('profile-notification-badge');
         if (badgeEl) {
@@ -1400,7 +1357,6 @@ async function syncUiConfigInBackground() {
           }
         }
 
-
         const avatarEl = document.getElementById('profile-avatar');
         avatarEl.src = activeAvatarBase64 && activeAvatarBase64.trim() !== '' ? activeAvatarBase64 : 'default_avatar.png';
       } catch (e) {
@@ -1408,12 +1364,10 @@ async function syncUiConfigInBackground() {
       }
     }
 
-
     function switchInsuranceTab(tabKey) {
       try {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_TAB, tabKey);
       } catch (e) {}
-
 
       const tabs = ['bhxh', 'bhtn', 'bhtnld', 'bhyt', 'c14ts'];
       tabs.forEach((key) => {
@@ -1423,7 +1377,6 @@ async function syncUiConfigInBackground() {
         const label = btn.querySelector('.tab-label');
         const customImg = circle ? circle.querySelector('.tab-custom-img') : null;
         const isFullMode = circle && circle.getAttribute('data-frame-mode') === 'FULL';
-
 
         if (key === tabKey) {
           if (isFullMode) {
@@ -1435,7 +1388,9 @@ async function syncUiConfigInBackground() {
           } else {
             circle.className = 'tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden';
           }
-          label.className = 'tab-label text-[11px] mt-1.5 font-medium text-[var(--vssid-primary)] text-center leading-tight';
+          label.className = key === 'bhtnld'
+            ? 'tab-label text-[10.5px] mt-1 font-normal text-[#1d629d] text-center leading-tight'
+            : 'tab-label text-[11px] mt-1.5 font-normal text-[#1d629d] text-center leading-tight';
         } else {
           if (isFullMode) {
             circle.className = 'tab-icon-circle is-full-icon w-11 h-11 rounded-full flex items-center justify-center transition overflow-hidden';
@@ -1446,21 +1401,43 @@ async function syncUiConfigInBackground() {
           } else {
             circle.className = 'tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden';
           }
-          label.className = 'tab-label text-[11px] mt-1.5 text-slate-400 text-center leading-tight';
+          label.className = key === 'bhtnld'
+            ? 'tab-label text-[10.5px] mt-1 text-[#8c8c8c] text-center leading-tight'
+            : 'tab-label text-[11px] mt-1.5 text-[#8c8c8c] text-center leading-tight';
         }
       });
 
+      const standardContent = document.getElementById('standard-tab-content');
+      const c14tsContent = document.getElementById('c14ts-tab-content');
+
+      // Xử lý riêng cho Tab C14-TS giống hệt ảnh c14-ts.jpg
+      if (tabKey === 'c14ts') {
+        if (standardContent) standardContent.classList.add('hidden');
+        if (c14tsContent) c14tsContent.classList.remove('hidden');
+        return;
+      }
+
+      if (c14tsContent) c14tsContent.classList.add('hidden');
+      if (standardContent) standardContent.classList.remove('hidden');
 
       const titleEl = document.getElementById('participation-title');
       if (titleEl) {
         titleEl.textContent = TAB_TITLES[tabKey] || TAB_TITLES.bhxh;
       }
 
+      // Chỉ hiển thị "Tổng thời gian chậm đóng" ở tab bhxh và bhtn
+      const lateRowEl = document.getElementById('summary-late-row');
+      if (lateRowEl) {
+        if (tabKey === 'bhxh' || tabKey === 'bhtn') {
+          lateRowEl.classList.remove('hidden');
+        } else {
+          lateRowEl.classList.add('hidden');
+        }
+      }
 
       const tbody = document.getElementById('history-table-body');
       const summaryDetails = document.getElementById('participation-summary-details');
       const parsed = loadSessionDataIntoMemory();
-
 
       if (!parsed) {
         tbody.innerHTML = '';
@@ -1469,12 +1446,10 @@ async function syncUiConfigInBackground() {
         return;
       }
 
-
       try {
         const allHistory = Array.isArray(parsed.history) ? parsed.history : [];
         const defaultBhxhSummary = (parsed.summary && parsed.summary.bhxh) || {};
         const tabSummary = (parsed.summary && parsed.summary[tabKey]) || defaultBhxhSummary;
-
 
         const filtered = allHistory
           .map((item, idx) => ({ ...item, _id: idx }))
@@ -1487,7 +1462,6 @@ async function syncUiConfigInBackground() {
             return listLoai.includes(tabKey) || listLoai.includes('all');
           });
 
-
         if (filtered.length === 0) {
           tbody.innerHTML = '';
           summaryDetails.classList.add('hidden');
@@ -1495,27 +1469,25 @@ async function syncUiConfigInBackground() {
           return;
         }
 
-
         summaryDetails.classList.remove('hidden');
         document.getElementById('summary-total-time').textContent = tabSummary.tongThoiGian || '0 tháng';
         document.getElementById('summary-late-time').textContent = tabSummary.thoiGianChamDong || '0 tháng';
-
 
         const eyeHtml = renderEyeIconHTML();
         tbody.innerHTML = filtered
           .map(
             (row) => `
-            <tr class="border-b border-slate-200/60 last:border-0">
-              <td class="py-2.5 px-1">${row.tuThang || ''}</td>
-              <td class="py-2.5 px-1">${row.denThang || ''}</td>
-              <td class="py-2.5 px-2 leading-snug">${row.donVi || ''}</td>
-              <td class="py-2.5 px-1 leading-snug">${row.chucVu || ''}</td>
-              <td class="py-2.5 px-1">
+            <tr>
+              <td class="py-[6.5px] px-0.5 text-center whitespace-nowrap">${row.tuThang || ''}</td>
+              <td class="py-[6.5px] px-0.5 text-center whitespace-nowrap">${row.denThang || ''}</td>
+              <td class="py-[6.5px] px-1.5 text-center leading-[1.26]">${row.donVi || ''}</td>
+              <td class="col-role py-[6.5px] px-1 text-center leading-[1.26]">${row.chucVu || ''}</td>
+              <td class="col-eye py-[6.5px] px-0.5 text-center">
                 <button
                   type="button"
                   data-id="${row._id}"
                   onclick="openHistoryDetail(this.getAttribute('data-id'))"
-                  class="text-[#285989] text-sm p-1.5 flex items-center justify-center mx-auto active:scale-95 transition"
+                  class="text-[#355c85] p-0.5 flex items-center justify-center mx-auto active:scale-95 transition"
                 >
                   ${eyeHtml}
                 </button>
@@ -1531,15 +1503,12 @@ async function syncUiConfigInBackground() {
       }
     }
 
-
     function openHistoryDetail(dataId) {
       try {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_DETAIL_ID, String(dataId));
       } catch (e) {}
 
-
       showScreen('screen-4');
-
 
       const parsed = loadSessionDataIntoMemory();
       if (!parsed) {
@@ -1547,16 +1516,13 @@ async function syncUiConfigInBackground() {
         return;
       }
 
-
       try {
         const list = Array.isArray(parsed.history) ? parsed.history : [];
         const idx = Number(dataId);
         const item = !isNaN(idx) && list[idx] ? list[idx] : list.find((x) => String(x.id) === String(dataId));
 
-
         const bhxhSalary = (item && (item.tienLuongDongBHXH || item.mucLuong)) || '';
         const baseSalary = (item && (item.mucLuong || item.tienLuongDongBHXH)) || '';
-
 
         if (!item || (!item.donVi && !item.tuThang)) {
           document.getElementById('detail-from').textContent = '';
@@ -1570,7 +1536,6 @@ async function syncUiConfigInBackground() {
           showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
           return;
         }
-
 
         document.getElementById('detail-from').textContent = item.tuThang || '';
         document.getElementById('detail-to').textContent = item.denThang || '';

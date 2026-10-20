@@ -71,16 +71,18 @@
       }
     }
 
-    /* ĐẶC TẢ MỞ RỘNG CHIỀU CAO HEADER VÀ ALIGN = BOTTOM CHO CÁC ĐỐI TƯỢNG BÊN TRONG */
     .vssid-header-gradient {
       background: linear-gradient(90deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 50%, var(--vssid-header-end) 100%);
-      /* Mở rộng chiều cao phía trên bằng vùng safe-area-inset-top kết hợp khoảng đệm thủ công */
       padding-top: calc(env(safe-area-inset-top, 20px) + 16px);
       padding-bottom: 12px;
-      /* Canh lề các đối tượng bên trong nằm sát đáy (align = bottom) */
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
+    }
+
+    .vssid-detail-header {
+      padding-top: calc(env(safe-area-inset-top, 14px) + 12px);
+      padding-bottom: 12px;
     }
 
     .vssid-login-bg {
@@ -139,7 +141,6 @@
 <body>
 
   <div id="app-container">
-    <!-- LỚP 1: MÀN HÌNH ĐĂNG NHẬP -->
     <section id="screen-1" class="spa-layer active vssid-login-bg relative justify-between">
       <div class="px-5 pt-4 flex items-center justify-between" style="padding-top: max(16px, env(safe-area-inset-top, 20px));">
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-white text-xl flex items-center justify-center">
@@ -182,6 +183,7 @@
               id="input-mabhxh"
               type="text"
               inputmode="numeric"
+              autocomplete="username"
               value=""
               placeholder="Mã số BHXH/ Số ĐDCN/CCCD"
               class="flex-1 px-3 text-[15px] text-slate-800 focus:outline-none"
@@ -196,6 +198,7 @@
             <input
               id="input-password"
               type="password"
+              autocomplete="current-password"
               value=""
               placeholder="Mật khẩu"
               class="flex-1 px-3 text-[15px] text-slate-800 focus:outline-none"
@@ -278,7 +281,6 @@
       </div>
     </section>
 
-    <!-- LỚP 2: QUẢN LÝ CÁ NHÂN -->
     <section id="screen-2" class="spa-layer bg-white justify-between">
       <header class="vssid-header-gradient text-white px-4 shadow-sm">
         <button type="button" onclick="handleLogout()" class="text-xl pb-0.5">
@@ -289,7 +291,7 @@
           <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
             <i class="fa-solid fa-bell"></i>
           </span>
-          <span class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">3</span>
+          <span id="profile-notification-badge" class="hidden absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center"></span>
         </button>
       </header>
 
@@ -328,7 +330,7 @@
             </div>
             <div class="pt-2.5 pb-1 flex items-start justify-between gap-4">
               <span class="text-slate-600 flex-shrink-0">Địa chỉ</span>
-              <span id="profile-address" class="text-slate-800 text-right leading-snug"></span>
+              <span id="profile-address" class="text-slate-800 text-right leading-snug" style="padding-left: 40px; text-align: right;"></span>
             </div>
           </div>
         </div>
@@ -414,7 +416,6 @@
       </nav>
     </section>
 
-    <!-- LỚP 3: QUÁ TRÌNH THAM GIA -->
     <section id="screen-3" class="spa-layer bg-white justify-between">
       <header class="vssid-header-gradient text-white px-4 shadow-sm">
         <button type="button" onclick="showScreen('screen-2')" class="text-xl pr-3 text-white pb-0.5 flex items-center">
@@ -519,10 +520,9 @@
       </nav>
     </section>
 
-    <!-- LỚP 4: CHI TIẾT -->
     <section id="screen-4" class="spa-layer bg-white">
-      <header class="bg-white px-4 py-3.5 flex items-center justify-between">
-        <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-xl pr-3">
+      <header class="vssid-detail-header bg-white px-4 flex items-center justify-between">
+        <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-xl pr-3 py-1">
           <i class="fa-solid fa-chevron-left"></i>
         </button>
         <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-5">Chi tiết</h1>
@@ -537,7 +537,7 @@
         <div style="background-color: var(--vssid-detail-box);" class="text-white p-3 text-[12.5px] leading-[1.45] space-y-0.5">
           <div>Chức vụ: <span id="detail-role" class="font-bold"></span></div>
           <div>Đơn vị công tác: <span id="detail-company" class="font-bold"></span></div>
-          <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></tr>
+          <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></div>
           <div>Loại tiền: <span id="detail-currency" class="font-bold"></span></div>
         </div>
 
@@ -556,7 +556,6 @@
       </div>
     </section>
 
-    <!-- MODAL ẢNH ĐẠI DIỆN -->
     <div id="avatar-onboarding-modal" class="hidden absolute inset-0 z-40 bg-black/60 flex items-center justify-center p-5">
       <div class="relative bg-white w-full max-w-[330px] rounded-xl p-5 shadow-2xl text-center space-y-4">
         <button
@@ -625,7 +624,6 @@
       </div>
     </div>
 
-    <!-- GLOBAL MODAL -->
     <div id="global-modal-overlay" class="hidden absolute inset-0 z-50 bg-black/45 flex items-center justify-center px-7">
       <div class="bg-white w-full max-w-[295px] rounded-[11px] pt-5 pb-4 px-5 shadow-xl text-center">
         <h3 class="text-[15.5px] font-bold text-[#555555] mb-2">Thông báo</h3>
@@ -647,11 +645,23 @@
   <script>
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
 
+    const STORAGE_KEYS = {
+      UI_CONFIG: 'VSSID_STANDALONE_UI_CONFIG',
+      USER_CACHE: 'User_Cache_JSON',
+      AVATAR: 'Avatar_Base64',
+      ACTIVE_SCREEN: 'VSSID_ACTIVE_SCREEN',
+      ACTIVE_TAB: 'VSSID_ACTIVE_TAB',
+      ACTIVE_DETAIL_ID: 'VSSID_ACTIVE_DETAIL_ID',
+      OFFLINE_VAULT: 'VSSID_OFFLINE_ACCOUNTS_VAULT'
+    };
+
     let currentMaBHXH = '';
+    let activeUserData = null;
+    let activeAvatarBase64 = '';
     let pendingUserCacheJSON = '';
     let pendingCompressedAvatar = '';
     let activeMediaStream = null;
-    let activeUiConfig = { theme: {}, icons: {} };
+    let activeUiConfig = { theme: {}, icons: {}, updatedAt: '' };
 
     const TAB_TITLES = {
       bhxh: 'Quá trình tham gia Bảo hiểm xã hội',
@@ -661,13 +671,105 @@
       c14ts: 'Thông tin C14-TS'
     };
 
+    function normalizeMaBHXHClient(val) {
+      return String(val || '').trim().replace(/^'+/, '').replace(/^0+/, '');
+    }
+
+    function saveSessionData(userCacheRaw, avatarStr) {
+      const jsonStr = typeof userCacheRaw === 'string' ? userCacheRaw : JSON.stringify(userCacheRaw);
+      try {
+        activeUserData = typeof userCacheRaw === 'string' ? JSON.parse(userCacheRaw) : userCacheRaw;
+      } catch (e) {
+        activeUserData = null;
+      }
+      activeAvatarBase64 = avatarStr || '';
+
+      try {
+        sessionStorage.setItem(STORAGE_KEYS.USER_CACHE, jsonStr);
+        localStorage.setItem(STORAGE_KEYS.USER_CACHE, jsonStr);
+        if (avatarStr) {
+          sessionStorage.setItem(STORAGE_KEYS.AVATAR, avatarStr);
+          localStorage.setItem(STORAGE_KEYS.AVATAR, avatarStr);
+        }
+      } catch (e) {}
+    }
+
+    function loadSessionDataIntoMemory() {
+      if (activeUserData) return activeUserData;
+
+      const rawJSON = sessionStorage.getItem(STORAGE_KEYS.USER_CACHE) || localStorage.getItem(STORAGE_KEYS.USER_CACHE);
+      const rawAvatar = sessionStorage.getItem(STORAGE_KEYS.AVATAR) || localStorage.getItem(STORAGE_KEYS.AVATAR) || '';
+
+      if (rawJSON) {
+        try {
+          activeUserData = typeof rawJSON === 'string' ? JSON.parse(rawJSON) : rawJSON;
+          activeAvatarBase64 = rawAvatar;
+          if (activeUserData && activeUserData.profile && activeUserData.profile.maBHXH) {
+            currentMaBHXH = activeUserData.profile.maBHXH;
+          }
+          return activeUserData;
+        } catch (e) {
+          activeUserData = null;
+        }
+      }
+      return null;
+    }
+
+    function saveOfflineVaultAccount(maBHXH, password, userCacheJSON, avatarBase64) {
+      try {
+        const cleanKey = normalizeMaBHXHClient(maBHXH);
+        if (!cleanKey) return;
+        const rawVault = localStorage.getItem(STORAGE_KEYS.OFFLINE_VAULT);
+        const vault = rawVault ? JSON.parse(rawVault) : {};
+        vault[cleanKey] = {
+          password: String(password || '').trim(),
+          User_Cache_JSON: typeof userCacheJSON === 'string' ? userCacheJSON : JSON.stringify(userCacheJSON),
+          Avatar_Base64: avatarBase64 || '',
+          savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEYS.OFFLINE_VAULT, JSON.stringify(vault));
+      } catch (e) {}
+    }
+
+    function getOfflineVaultAccount(maBHXH, password) {
+      try {
+        const cleanKey = normalizeMaBHXHClient(maBHXH);
+        const rawVault = localStorage.getItem(STORAGE_KEYS.OFFLINE_VAULT);
+        if (!rawVault) return null;
+        const vault = JSON.parse(rawVault);
+        const entry = vault[cleanKey];
+        if (entry && entry.password === String(password || '').trim() && entry.User_Cache_JSON) {
+          return entry;
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeoutMs);
+      try {
+        const response = await fetch(url, {
+          ...options,
+          signal: controller.signal
+        });
+        return response;
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
     async function callGasApi(action, payload = {}) {
       try {
-        const response = await fetch(GAS_WEB_APP_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action, ...payload })
-        });
+        const response = await fetchWithTimeout(
+          GAS_WEB_APP_URL,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action, ...payload })
+          },
+          8000
+        );
         const json = await response.json();
         return json;
       } catch (err) {
@@ -676,33 +778,60 @@
     }
 
     async function callGasGetApi(action, payload = {}) {
-      try {
-        const params = new URLSearchParams({ action, data: JSON.stringify(payload) });
-        const res = await fetch(`${GAS_WEB_APP_URL}?${params.toString()}`);
-        const json = await res.json();
-        return json;
-      } catch (e) {
-        throw e;
-      }
+      const params = new URLSearchParams({ action, data: JSON.stringify(payload) });
+      const res = await fetchWithTimeout(`${GAS_WEB_APP_URL}?${params.toString()}`, { method: 'GET' }, 8000);
+      return await res.json();
     }
 
-    (async function initStandaloneApp() {
+    (function initStandaloneApp() {
       try {
-        const saved = localStorage.getItem('VSSID_STANDALONE_UI_CONFIG');
-        if (saved) {
-          applyUiConfigObject(JSON.parse(saved));
+        const savedCfg = localStorage.getItem(STORAGE_KEYS.UI_CONFIG);
+        if (savedCfg) {
+          applyUiConfigObject(JSON.parse(savedCfg));
         }
+      } catch (e) {}
 
-        const res = await fetch(`${GAS_WEB_APP_URL}?action=getUiConfig`);
+      const restoredData = loadSessionDataIntoMemory();
+      const savedScreen = localStorage.getItem(STORAGE_KEYS.ACTIVE_SCREEN) || 'screen-2';
+
+      if (restoredData && activeAvatarBase64 && savedScreen !== 'screen-1') {
+        renderScreen2FromSession();
+        if (savedScreen === 'screen-3') {
+          const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
+          showScreen('screen-3');
+          switchInsuranceTab(lastTab);
+        } else if (savedScreen === 'screen-4') {
+          const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
+          const lastDetailId = localStorage.getItem(STORAGE_KEYS.ACTIVE_DETAIL_ID) || '0';
+          switchInsuranceTab(lastTab);
+          openHistoryDetail(lastDetailId);
+        } else {
+          showScreen('screen-2');
+        }
+      } else {
+        showScreen('screen-1');
+      }
+
+      syncUiConfigInBackground();
+    })();
+
+    async function syncUiConfigInBackground() {
+      if (!navigator.onLine) return;
+      try {
+        const clientVer = (activeUiConfig && activeUiConfig.updatedAt) || '';
+        const res = await fetchWithTimeout(
+          `${GAS_WEB_APP_URL}?action=getUiConfig&clientUiVersion=${encodeURIComponent(clientVer)}`,
+          { method: 'GET' },
+          8000
+        );
         const json = await res.json();
-        if (json && json.success && json.data) {
+        if (json && json.success && !json.upToDate && json.data) {
           const cfgObj = typeof json.data === 'string' ? JSON.parse(json.data) : json.data;
-          localStorage.setItem('VSSID_STANDALONE_UI_CONFIG', JSON.stringify(cfgObj));
+          localStorage.setItem(STORAGE_KEYS.UI_CONFIG, JSON.stringify(cfgObj));
           applyUiConfigObject(cfgObj);
         }
       } catch (e) {}
-      showScreen('screen-1');
-    })();
+    }
 
     function applyUiConfigObject(cfg) {
       if (!cfg || typeof cfg !== 'object') return;
@@ -724,11 +853,6 @@
       if (t.detailBox) root.style.setProperty('--vssid-detail-box', t.detailBox);
       if (t.vneidBtn) root.style.setProperty('--vssid-vneid-btn', t.vneidBtn);
       if (t.lateText) root.style.setProperty('--vssid-late-text', t.lateText);
-
-      const metaTheme = document.getElementById('meta-theme-color');
-      if (metaTheme && (t.headerStart || t.primary)) {
-        metaTheme.setAttribute('content', t.headerStart || t.primary);
-      }
 
       const icons = cfg.icons || {};
       if (icons.logo_login && icons.logo_login.src) {
@@ -771,6 +895,12 @@
           el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-6 h-6 object-contain" />`;
         }
       });
+
+      const activeScreenEl = document.querySelector('.spa-layer.active');
+      if (activeScreenEl && activeScreenEl.id === 'screen-3') {
+        const currentTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
+        switchInsuranceTab(currentTab);
+      }
     }
 
     function renderEyeIconHTML() {
@@ -795,6 +925,10 @@
       const target = document.getElementById(screenId);
       if (target) target.classList.add('active');
 
+      try {
+        localStorage.setItem(STORAGE_KEYS.ACTIVE_SCREEN, screenId);
+      } catch (e) {}
+
       const metaTheme = document.getElementById('meta-theme-color');
       const t = (activeUiConfig && activeUiConfig.theme) || {};
 
@@ -806,6 +940,28 @@
       } else {
         if (metaTheme) metaTheme.setAttribute('content', t.primary || '#0072bc');
       }
+    }
+
+    function completeLoginFlow(maBHXH, password, User_Cache_JSON, Avatar_Base64, UI_Config_JSON) {
+      currentMaBHXH = maBHXH;
+      pendingUserCacheJSON = typeof User_Cache_JSON === 'string' ? User_Cache_JSON : JSON.stringify(User_Cache_JSON);
+
+      if (UI_Config_JSON) {
+        try {
+          const parsedCfg = typeof UI_Config_JSON === 'string' ? JSON.parse(UI_Config_JSON) : UI_Config_JSON;
+          localStorage.setItem(STORAGE_KEYS.UI_CONFIG, JSON.stringify(parsedCfg));
+          applyUiConfigObject(parsedCfg);
+        } catch (e) {}
+      }
+
+      if (!Avatar_Base64 || Avatar_Base64.trim() === '') {
+        openAvatarOnboardingModal();
+        return;
+      }
+
+      saveSessionData(pendingUserCacheJSON, Avatar_Base64);
+      saveOfflineVaultAccount(maBHXH, password, pendingUserCacheJSON, Avatar_Base64);
+      showScreen('screen-2');
     }
 
     async function handleLoginSubmit(event) {
@@ -824,32 +980,28 @@
       btnLogin.innerHTML = '<span>Đang xử lý...</span>';
 
       try {
-        const response = await callGasApi('login', { maBHXH, password });
+        const clientUiVersion = (activeUiConfig && activeUiConfig.updatedAt) || '';
+        const response = await callGasApi('login', { maBHXH, password, clientUiVersion });
 
-        if (!response || !response.success) {
-          showModal(response?.message || 'Mật khẩu không chính xác');
+        if (!response || !response.success || !response.data) {
+          showModal((response && response.message) || 'Mật khẩu không chính xác');
           return;
         }
 
-        currentMaBHXH = maBHXH;
         const { User_Cache_JSON, Avatar_Base64, UI_Config_JSON } = response.data;
-        pendingUserCacheJSON = User_Cache_JSON;
-
-        if (UI_Config_JSON) {
-          const parsedCfg = typeof UI_Config_JSON === 'string' ? JSON.parse(UI_Config_JSON) : UI_Config_JSON;
-          localStorage.setItem('VSSID_STANDALONE_UI_CONFIG', JSON.stringify(parsedCfg));
-          applyUiConfigObject(parsedCfg);
-        }
-
-        if (!Avatar_Base64 || Avatar_Base64.trim() === '') {
-          openAvatarOnboardingModal();
+        completeLoginFlow(maBHXH, password, User_Cache_JSON, Avatar_Base64, UI_Config_JSON);
+      } catch (err) {
+        const offlineAccount = getOfflineVaultAccount(maBHXH, password);
+        if (offlineAccount) {
+          completeLoginFlow(
+            maBHXH,
+            password,
+            offlineAccount.User_Cache_JSON,
+            offlineAccount.Avatar_Base64,
+            null
+          );
           return;
         }
-
-        sessionStorage.setItem('User_Cache_JSON', User_Cache_JSON);
-        sessionStorage.setItem('Avatar_Base64', Avatar_Base64);
-        showScreen('screen-2');
-      } catch (err) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
       } finally {
         btnLogin.disabled = false;
@@ -859,11 +1011,20 @@
 
     function handleLogout() {
       stopOnboardingCamera();
-      sessionStorage.removeItem('User_Cache_JSON');
-      sessionStorage.removeItem('Avatar_Base64');
+      activeUserData = null;
+      activeAvatarBase64 = '';
       currentMaBHXH = '';
       pendingUserCacheJSON = '';
       pendingCompressedAvatar = '';
+
+      try {
+        sessionStorage.removeItem(STORAGE_KEYS.USER_CACHE);
+        sessionStorage.removeItem(STORAGE_KEYS.AVATAR);
+        localStorage.removeItem(STORAGE_KEYS.USER_CACHE);
+        localStorage.removeItem(STORAGE_KEYS.AVATAR);
+        localStorage.setItem(STORAGE_KEYS.ACTIVE_SCREEN, 'screen-1');
+      } catch (e) {}
+
       const passInput = document.getElementById('input-password');
       if (passInput) passInput.value = '';
       showScreen('screen-1');
@@ -881,7 +1042,7 @@
       document.getElementById('onboarding-placeholder').classList.remove('hidden');
       document.getElementById('btn-save-avatar').disabled = true;
 
-      const existingAvatar = sessionStorage.getItem('Avatar_Base64');
+      const existingAvatar = activeAvatarBase64 || sessionStorage.getItem(STORAGE_KEYS.AVATAR) || localStorage.getItem(STORAGE_KEYS.AVATAR);
       const closeBtn = document.getElementById('btn-close-avatar-modal');
       if (closeBtn) {
         if (existingAvatar && existingAvatar.trim() !== '') {
@@ -988,13 +1149,10 @@
       btnSave.textContent = 'Đang lưu...';
 
       try {
+        const data = loadSessionDataIntoMemory();
         let maBHXH = currentMaBHXH || document.getElementById('input-mabhxh').value.trim();
-        if (!maBHXH) {
-          const cachedUser = sessionStorage.getItem('User_Cache_JSON');
-          if (cachedUser) {
-            const parsedUser = JSON.parse(cachedUser);
-            maBHXH = (parsedUser.profile && parsedUser.profile.maBHXH) || '';
-          }
+        if (!maBHXH && data && data.profile) {
+          maBHXH = data.profile.maBHXH || '';
         }
 
         const saveRes = await callGasApi('saveAvatar', { maBHXH, avatarBase64: pendingCompressedAvatar });
@@ -1004,10 +1162,14 @@
           return;
         }
 
-        if (pendingUserCacheJSON) {
-          sessionStorage.setItem('User_Cache_JSON', pendingUserCacheJSON);
+        const cacheToPersist = pendingUserCacheJSON || (data ? JSON.stringify(data) : '');
+        if (cacheToPersist) {
+          saveSessionData(cacheToPersist, pendingCompressedAvatar);
+          const passVal = document.getElementById('input-password').value.trim();
+          if (passVal) {
+            saveOfflineVaultAccount(maBHXH, passVal, cacheToPersist, pendingCompressedAvatar);
+          }
         }
-        sessionStorage.setItem('Avatar_Base64', pendingCompressedAvatar);
 
         closeAvatarOnboardingModal();
         showScreen('screen-2');
@@ -1020,20 +1182,18 @@
     }
 
     function renderScreen2FromSession() {
-      const rawJSON = sessionStorage.getItem('User_Cache_JSON');
-      const avatarBase64 = sessionStorage.getItem('Avatar_Base64');
+      const data = loadSessionDataIntoMemory();
 
-      if (!rawJSON) {
+      if (!data) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
         return;
       }
 
       try {
-        const data = typeof rawJSON === 'string' ? JSON.parse(rawJSON) : rawJSON;
         const p = data.profile || {};
 
-        if (data.maBHXH) {
-          currentMaBHXH = data.maBHXH;
+        if (p.maBHXH) {
+          currentMaBHXH = p.maBHXH;
         }
 
         document.getElementById('profile-name').textContent = p.hoTen || '';
@@ -1043,14 +1203,31 @@
         document.getElementById('profile-phone').textContent = p.sdt || '';
         document.getElementById('profile-address').textContent = p.diaChi || '';
 
+        const badgeEl = document.getElementById('profile-notification-badge');
+        if (badgeEl) {
+          const rawNotif = String((p.thongBao !== undefined ? p.thongBao : data.thongBao) ?? '').trim();
+          const numNotif = Number(rawNotif);
+          if (!rawNotif || rawNotif === '0' || (!isNaN(numNotif) && numNotif <= 0)) {
+            badgeEl.textContent = '';
+            badgeEl.classList.add('hidden');
+          } else {
+            badgeEl.textContent = rawNotif;
+            badgeEl.classList.remove('hidden');
+          }
+        }
+
         const avatarEl = document.getElementById('profile-avatar');
-        avatarEl.src = avatarBase64 && avatarBase64.trim() !== '' ? avatarBase64 : 'default_avatar.png';
+        avatarEl.src = activeAvatarBase64 && activeAvatarBase64.trim() !== '' ? activeAvatarBase64 : 'default_avatar.png';
       } catch (e) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
       }
     }
 
     function switchInsuranceTab(tabKey) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.ACTIVE_TAB, tabKey);
+      } catch (e) {}
+
       const tabs = ['bhxh', 'bhtn', 'bhtnld', 'bhyt', 'c14ts'];
       tabs.forEach((key) => {
         const btn = document.getElementById(`tab-btn-${key}`);
@@ -1092,9 +1269,9 @@
 
       const tbody = document.getElementById('history-table-body');
       const summaryDetails = document.getElementById('participation-summary-details');
-      const rawJSON = sessionStorage.getItem('User_Cache_JSON');
+      const parsed = loadSessionDataIntoMemory();
 
-      if (!rawJSON) {
+      if (!parsed) {
         tbody.innerHTML = '';
         summaryDetails.classList.add('hidden');
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
@@ -1102,7 +1279,6 @@
       }
 
       try {
-        const parsed = typeof rawJSON === 'string' ? JSON.parse(rawJSON) : rawJSON;
         const allHistory = Array.isArray(parsed.history) ? parsed.history : [];
         const defaultBhxhSummary = (parsed.summary && parsed.summary.bhxh) || {};
         const tabSummary = (parsed.summary && parsed.summary[tabKey]) || defaultBhxhSummary;
@@ -1129,6 +1305,7 @@
         document.getElementById('summary-total-time').textContent = tabSummary.tongThoiGian || '0 tháng';
         document.getElementById('summary-late-time').textContent = tabSummary.thoiGianChamDong || '0 tháng';
 
+        const eyeHtml = renderEyeIconHTML();
         tbody.innerHTML = filtered
           .map(
             (row) => `
@@ -1144,7 +1321,7 @@
                   onclick="openHistoryDetail(this.getAttribute('data-id'))"
                   class="text-[#285989] text-base p-1 flex items-center justify-center mx-auto"
                 >
-                  ${renderEyeIconHTML()}
+                  ${eyeHtml}
                 </button>
               </td>
             </tr>
@@ -1159,23 +1336,27 @@
     }
 
     function openHistoryDetail(dataId) {
+      try {
+        localStorage.setItem(STORAGE_KEYS.ACTIVE_DETAIL_ID, String(dataId));
+      } catch (e) {}
+
       showScreen('screen-4');
 
-      const rawJSON = sessionStorage.getItem('User_Cache_JSON');
-      if (!rawJSON) {
+      const parsed = loadSessionDataIntoMemory();
+      if (!parsed) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
         return;
       }
 
       try {
-        const parsed = typeof rawJSON === 'string' ? JSON.parse(rawJSON) : rawJSON;
         const list = Array.isArray(parsed.history) ? parsed.history : [];
-        const item = list[Number(dataId)];
+        const idx = Number(dataId);
+        const item = !isNaN(idx) && list[idx] ? list[idx] : list.find((x) => String(x.id) === String(dataId));
 
         const bhxhSalary = (item && (item.tienLuongDongBHXH || item.mucLuong)) || '';
         const baseSalary = (item && (item.mucLuong || item.tienLuongDongBHXH)) || '';
 
-        if (!item || !item.donVi || item.donVi.trim() === '') {
+        if (!item || (!item.donVi && !item.tuThang)) {
           document.getElementById('detail-from').textContent = '';
           document.getElementById('detail-to').textContent = '';
           document.getElementById('detail-role').textContent = '';

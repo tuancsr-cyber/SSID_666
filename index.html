@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
@@ -34,11 +35,13 @@
       --vssid-late-text: #e02020;
     }
 
+
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
       font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
+
 
     html, body {
       margin: 0;
@@ -49,11 +52,13 @@
       background-color: #FFFFFF;
     }
 
+
     body {
       display: flex;
       align-items: center;
       justify-content: center;
     }
+
 
     #app-container {
       width: 100vw;
@@ -67,6 +72,7 @@
       overflow: hidden;
     }
 
+
     /* Header banner gradient chuẩn #00ABF0 -> #0074C7 và căn chỉnh chiều cao khớp đường gióng */
     .vssid-header-gradient {
       background: linear-gradient(180deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 52%, var(--vssid-header-end) 100%);
@@ -77,10 +83,12 @@
       justify-content: space-between;
     }
 
+
     .vssid-detail-header {
       padding-top: calc(env(safe-area-inset-top, 14px) + 12px);
       padding-bottom: 12px;
     }
+
 
     .vssid-login-bg {
       background-color: #ffffff;
@@ -92,11 +100,13 @@
       background-position: 0 0, 5px 5px, 0 0;
     }
 
+
     /* Thẻ thông tin cá nhân chuyển sắc nhẹ từ xanh băng nhạt xuống xám sáng */
     .vssid-profile-card {
       background: linear-gradient(180deg, var(--vssid-profile-card-start) 0%, var(--vssid-profile-card-mid) 45%, var(--vssid-profile-card-end) 100%);
       box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
     }
+
 
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -105,6 +115,7 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+
 
     .spa-layer {
       display: none;
@@ -116,10 +127,12 @@
       display: flex;
     }
 
+
     .bhxh-table th,
     .bhxh-table td {
       border: 1px solid #d1d5db;
     }
+
 
     .tab-icon-circle.is-full-icon {
       border-color: transparent !important;
@@ -134,531 +147,541 @@
       filter: none;
       opacity: 1;
     }
+
+
+    /* Cấu hình chiều cao siêu nhỏ gọn cho Thanh điều hướng dưới */
+    .vssid-bottom-nav {
+      padding-top: 4px; /* Thu gọn padding trên */
+      padding-bottom: 8px; /* Giữ nguyên thiết kế cũ (fallback) cho các máy HĐH thấp */
+    }
+    
+    /* Ghi đè: Bỏ safe-area cho iOS 11+ và Android 10+ và ép padding dưới siêu nhỏ */
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+      .vssid-bottom-nav {
+        padding-bottom: 2px !important;
+      }
+    }
   </style>
+
 </head>
 
 <body>
 
   <div id="app-container">
-    
-    <section id="screen-1" class="spa-layer active vssid-login-bg relative justify-between">
-      <div class="px-5 pt-4 flex items-center justify-between" style="padding-top: max(16px, env(safe-area-inset-top, 20px));">
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-white text-xl flex items-center justify-center">
-          <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
-            <i class="fa-solid fa-bell"></i>
-          </span>
-        </button>
-        <div class="w-8 h-5 rounded-[2px] shadow-sm overflow-hidden border border-white/20">
-          <svg viewBox="0 0 30 20" class="w-full h-full">
-            <rect width="30" height="20" fill="#da251d" />
-            <polygon points="15,4 11.47,14.85 20.71,8.15 9.29,8.15 18.53,14.85" fill="#ffff00" />
-          </svg>
+
+<section id="screen-1" class="spa-layer active vssid-login-bg relative justify-between">
+  <div class="px-5 pt-4 flex items-center justify-between" style="padding-top: max(16px, env(safe-area-inset-top, 20px));">
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-white text-xl flex items-center justify-center">
+      <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
+        <i class="fa-solid fa-bell"></i>
+      </span>
+    </button>
+    <div class="w-8 h-5 rounded-[2px] shadow-sm overflow-hidden border border-white/20">
+      <svg viewBox="0 0 30 20" class="w-full h-full">
+        <rect width="30" height="20" fill="#da251d" />
+        <polygon points="15,4 11.47,14.85 20.71,8.15 9.29,8.15 18.53,14.85" fill="#ffff00" />
+      </svg>
+    </div>
+  </div>
+
+  <div class="px-7 flex-1 flex flex-col items-center justify-center -mt-4">
+    <div id="slot-logo_login" class="w-24 h-24 rounded-full bg-white p-1 shadow-md mb-8 flex items-center justify-center overflow-hidden">
+      <svg viewBox="0 0 120 120" class="w-full h-full">
+        <circle cx="60" cy="60" r="56" fill="#005a9c" />
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#ffffff" stroke-width="2" />
+        <path d="M60 18 C72 28, 78 44, 60 56 C42 44, 48 28, 60 18 Z" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" />
+        <path d="M60 56 C78 38, 96 48, 86 68 C78 82, 66 84, 60 84" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+        <path d="M60 56 C42 38, 24 48, 34 68 C42 82, 54 84, 60 84" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
+        <circle cx="60" cy="46" r="5.5" fill="#ffffff" />
+        <path d="M45 54 Q60 66 75 54" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" />
+        <path d="M60 59 L60 88" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round" />
+        <path id="bhxhTextArc" d="M 20,62 A 40,40 0 1,0 100,62" fill="none" />
+        <text fill="#ffffff" font-size="7.3" font-weight="bold" letter-spacing="0.6">
+          <textPath href="#bhxhTextArc" startOffset="50%" text-anchor="middle">BẢO HIỂM XÃ HỘI VIỆT NAM</textPath>
+        </text>
+      </svg>
+    </div>
+
+    <form id="login-form" onsubmit="handleLoginSubmit(event)" class="w-full space-y-3">
+      <div class="flex items-stretch w-full h-11 rounded-[4px] overflow-hidden border border-slate-300 bg-white shadow-sm">
+        <div class="w-11 bg-[#0b5389] flex items-center justify-center text-white text-lg">
+          <i class="fa-solid fa-user"></i>
         </div>
+        <input
+          id="input-mabhxh"
+          type="text"
+          inputmode="numeric"
+          autocomplete="username"
+          value=""
+          placeholder="Mã số BHXH/ Số ĐDCN/CCCD"
+          class="flex-1 px-3 text-[15px] text-slate-800 focus:outline-none"
+          required
+        />
       </div>
 
-      <div class="px-7 flex-1 flex flex-col items-center justify-center -mt-4">
-        <div id="slot-logo_login" class="w-24 h-24 rounded-full bg-white p-1 shadow-md mb-8 flex items-center justify-center overflow-hidden">
-          <svg viewBox="0 0 120 120" class="w-full h-full">
-            <circle cx="60" cy="60" r="56" fill="#005a9c" />
-            <circle cx="60" cy="60" r="52" fill="none" stroke="#ffffff" stroke-width="2" />
-            <path d="M60 18 C72 28, 78 44, 60 56 C42 44, 48 28, 60 18 Z" fill="none" stroke="#ffffff" stroke-width="4" stroke-linejoin="round" />
-            <path d="M60 56 C78 38, 96 48, 86 68 C78 82, 66 84, 60 84" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
-            <path d="M60 56 C42 38, 24 48, 34 68 C42 82, 54 84, 60 84" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" />
-            <circle cx="60" cy="46" r="5.5" fill="#ffffff" />
-            <path d="M45 54 Q60 66 75 54" fill="none" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" />
-            <path d="M60 59 L60 88" stroke="#ffffff" stroke-width="5.5" stroke-linecap="round" />
-            <path id="bhxhTextArc" d="M 20,62 A 40,40 0 1,0 100,62" fill="none" />
-            <text fill="#ffffff" font-size="7.3" font-weight="bold" letter-spacing="0.6">
-              <textPath href="#bhxhTextArc" startOffset="50%" text-anchor="middle">BẢO HIỂM XÃ HỘI VIỆT NAM</textPath>
-            </text>
-          </svg>
+      <div class="flex items-stretch w-full h-11 rounded-[4px] overflow-hidden border border-slate-300 bg-white shadow-sm">
+        <div class="w-11 bg-[#0b5389] flex items-center justify-center text-white text-lg">
+          <i class="fa-solid fa-lock"></i>
         </div>
-
-        <form id="login-form" onsubmit="handleLoginSubmit(event)" class="w-full space-y-3">
-          <div class="flex items-stretch w-full h-11 rounded-[4px] overflow-hidden border border-slate-300 bg-white shadow-sm">
-            <div class="w-11 bg-[#0b5389] flex items-center justify-center text-white text-lg">
-              <i class="fa-solid fa-user"></i>
-            </div>
-            <input
-              id="input-mabhxh"
-              type="text"
-              inputmode="numeric"
-              autocomplete="username"
-              value=""
-              placeholder="Mã số BHXH/ Số ĐDCN/CCCD"
-              class="flex-1 px-3 text-[15px] text-slate-800 focus:outline-none"
-              required
-            />
-          </div>
-
-          <div class="flex items-stretch w-full h-11 rounded-[4px] overflow-hidden border border-slate-300 bg-white shadow-sm">
-            <div class="w-11 bg-[#0b5389] flex items-center justify-center text-white text-lg">
-              <i class="fa-solid fa-lock"></i>
-            </div>
-            <input
-              id="input-password"
-              type="password"
-              autocomplete="current-password"
-              value=""
-              placeholder="Mật khẩu"
-              class="flex-1 px-3 text-[15px] text-slate-800 focus:outline-none"
-            />
-          </div>
-
-          <div class="flex items-center justify-between text-[13px] text-[#1b6ca8] pt-0.5 pb-1">
-            <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="hover:underline">Quên mật khẩu ?</button>
-            <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="hover:underline">Đăng ký tài khoản</button>
-          </div>
-
-          <div class="flex items-center gap-2.5 pt-1">
-            <button
-              id="btn-login"
-              type="submit"
-              class="flex-1 h-11 bg-white border-[1.5px] border-[#0b5389] rounded-[5px] text-[#0b5389] font-bold text-[15px] shadow-sm active:scale-[0.99] transition flex items-center justify-center gap-2"
-            >
-              <span>Đăng nhập</span>
-            </button>
-            <button
-              type="button"
-              onclick="handleLoginSubmit(event)"
-              class="w-11 h-11 flex items-center justify-center text-[#0b5389]"
-            >
-              <svg viewBox="0 0 36 36" class="w-10 h-10" fill="none" stroke="#1b6ca8" stroke-width="2.2" stroke-linecap="round">
-                <path d="M10 4 H7 A3 3 0 0 0 4 7 V10" />
-                <path d="M26 4 H29 A3 3 0 0 1 32 7 V10" />
-                <path d="M10 32 H7 A3 3 0 0 1 4 29 V26" />
-                <path d="M26 32 H29 A3 3 0 0 0 32 29 V26" />
-                <line x1="13" y1="13" x2="13" y2="16" />
-                <line x1="23" y1="13" x2="23" y2="16" />
-                <path d="M18 14 V19.5 H16.5" />
-                <path d="M13.5 23.5 Q18 27 22.5 23.5" />
-              </svg>
-            </button>
-          </div>
-
-          <div class="pt-2">
-            <button
-              type="button"
-              onclick="handleLoginSubmit(event)"
-              style="background-color: var(--vssid-vneid-btn);"
-              class="w-full text-white rounded-[8px] py-2.5 px-3 flex items-center justify-between shadow-md active:scale-[0.99] transition"
-            >
-              <div class="flex-1 text-center font-bold text-[14px] leading-snug pr-2">
-                Đăng nhập bằng tài khoản<br />định danh điện tử
-              </div>
-              <div class="w-11 h-11 rounded-[8px] bg-[#0f6b2f] border border-yellow-400/50 flex items-center justify-center flex-shrink-0 overflow-hidden">
-                <svg viewBox="0 0 40 40" class="w-9 h-9">
-                  <polygon points="20,3 24.5,14 36.5,14 26.8,21 30.5,32.5 20,25.5 9.5,32.5 13.2,21 3.5,14 15.5,14" fill="#facc15" />
-                  <circle cx="20" cy="19.5" r="6.5" fill="#dc2626" />
-                  <path d="M17 19.5 L20 16 L23 19.5 L20 23 Z" fill="#fef08a" />
-                </svg>
-              </div>
-            </button>
-          </div>
-        </form>
+        <input
+          id="input-password"
+          type="password"
+          autocomplete="current-password"
+          value=""
+          placeholder="Mật khẩu"
+          class="flex-1 px-3 text-[15px] text-slate-800 focus:outline-none"
+        />
       </div>
 
-      <div class="px-5 pb-5 pt-2 flex flex-col gap-2" style="padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 12px);">
-        <div class="text-center">
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-[13.5px] text-[#1b6ca8] font-medium">
-            Mời cài đặt VssID
-          </button>
-        </div>
-        <div class="text-right pr-1">
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-[13px] text-[#1b6ca8]">
-            Chính sách quyền riêng tư
-          </button>
-        </div>
-        <div class="flex items-center justify-between pt-1 text-[#134e7c]">
-          <div class="flex items-center gap-5">
-            <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-regular fa-newspaper"></i></button>
-            <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-headset"></i></button>
-            <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-magnifying-glass"></i></button>
-            <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-tv"></i></button>
-          </div>
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-location-dot"></i></button>
-        </div>
-      </div>
-    </section>
-
-    <section id="screen-2" class="spa-layer bg-[#F2F2F2] justify-between">
-      <!-- Header Banner: #00ABF0 -> #0074C7 -->
-      <header class="vssid-header-gradient text-white pl-[10px] pr-[18px]">
-        <button type="button" onclick="handleLogout()" class="flex items-center justify-center w-8 h-8">
-          <svg viewBox="0 0 26 20" class="w-[23px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="butt">
-            <line x1="1" y1="2.5" x2="25" y2="2.5" />
-            <line x1="1" y1="10" x2="25" y2="10" />
-            <line x1="1" y1="17.5" x2="25" y2="17.5" />
-          </svg>
-        </button>
-        <h1 class="text-[16.5px] font-normal tracking-[0.2px] uppercase flex-1 text-center">QUẢN LÝ CÁ NHÂN</h1>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative flex items-center justify-end w-8 h-8">
-          <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
-            <i class="fa-solid fa-bell text-[22px]"></i>
-          </span>
-          <span id="profile-notification-badge" class="hidden absolute -top-0.5 -right-1 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center border border-white"></span>
-        </button>
-      </header>
-
-      <!-- Main Scrollable Content on #F2F2F2 Background -->
-      <div class="flex-1 overflow-y-auto no-scrollbar pt-[15px] pb-4 bg-[#F2F2F2]">
-        
-        <!-- Profile Card căn theo đường gióng dọc & ngang -->
-        <div class="vssid-profile-card mx-[18px] rounded-[2px] px-[18px] pt-[14px] pb-[10px]">
-          <div class="flex items-center gap-[18px] pb-[14px] border-b border-[#c9d2d8]">
-            <div class="relative cursor-pointer flex-shrink-0" onclick="openAvatarOnboardingModal()" title="Chạm để nhập/đổi ảnh đại diện">
-              <img
-                id="profile-avatar"
-                src="default_avatar.png"
-                alt="Avatar"
-                onerror="this.onerror=null;this.src='https://placehold.co/150x150/0284c7/ffffff?text=Avatar';"
-                class="w-[62px] h-[62px] rounded-full object-cover flex-shrink-0 bg-white"
-              />
-            </div>
-            <div class="min-w-0 flex-1">
-              <div id="profile-name" class="font-bold text-[15.5px] text-[#111111] leading-snug truncate"></div>
-              <div class="text-[14.5px] text-[#555555] mt-[7px] font-normal">
-                Mã BHXH: <span id="profile-mabhxh" class="text-[#555555]"></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="divide-y divide-[#c9d2d8] text-[14.5px]">
-            <div class="py-[9.5px] flex items-center justify-between gap-2">
-              <span class="text-[#4f4f4f]">Ngày sinh</span>
-              <span id="profile-dob" class="text-[#4f4f4f]"></span>
-            </div>
-            <div class="py-[9.5px] flex items-center justify-between gap-2">
-              <span class="text-[#4f4f4f]">ĐDCN/CCCD/Hộ chiếu</span>
-              <span id="profile-cccd" class="text-[#4f4f4f]"></span>
-            </div>
-            <div class="py-[9.5px] flex items-center justify-between gap-2">
-              <span class="text-[#4f4f4f]">Số điện thoại</span>
-              <span id="profile-phone" class="text-[#4f4f4f]"></span>
-            </div>
-            <div class="pt-[9.5px] pb-[4px] flex items-start justify-between gap-4">
-              <span class="text-[#4f4f4f] flex-shrink-0">Địa chỉ</span>
-              <span id="profile-address" class="text-[#4f4f4f] text-right leading-[1.32] break-words"></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Menu List căn thẳng trục với thẻ thông tin cá nhân và chữ tên -->
-        <div class="mt-[15px] pl-[18px] pr-[36px] bg-transparent">
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
-            <div data-icon-slot="menu_the_bhyt" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
-              <i class="fa-regular fa-id-card text-[19px]"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THẺ BHYT BẢN ĐIỆN TỬ</span>
-              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
-              </svg>
-            </div>
-          </button>
-
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
-            <div data-icon-slot="menu_so_bhxh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
-              <i class="fa-solid fa-hands-holding-heart text-[19px]"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ BHXH BẢN ĐIỆN TỬ</span>
-              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
-              </svg>
-            </div>
-          </button>
-
-          <button type="button" onclick="openParticipationScreen()" class="w-full flex items-center text-left active:opacity-70 transition group menu-item-row">
-            <div data-icon-slot="menu_qua_trinh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
-              <i class="fa-solid fa-clock-rotate-left text-[19px]"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">QUÁ TRÌNH THAM GIA</span>
-              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
-              </svg>
-            </div>
-          </button>
-
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
-            <div data-icon-slot="menu_thong_tin_huong" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
-              <i class="fa-solid fa-user-check text-[19px]"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THÔNG TIN HƯỞNG</span>
-              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
-              </svg>
-            </div>
-          </button>
-
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
-            <div data-icon-slot="menu_so_kcb" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
-              <i class="fa-solid fa-plus text-[21px]"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
-              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ KHÁM CHỮA BỆNH</span>
-              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
-              </svg>
-            </div>
-          </button>
-        </div>
+      <div class="flex items-center justify-between text-[13px] text-[#1b6ca8] pt-0.5 pb-1">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="hover:underline">Quên mật khẩu ?</button>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="hover:underline">Đăng ký tài khoản</button>
       </div>
 
-      <!-- Chân trang nền #FFFFFF -->
-      <nav class="bg-[#FFFFFF] pt-2 pb-[calc(env(safe-area-inset-bottom,0px)+8px)] px-2 grid grid-cols-4 text-center z-10 relative">
-        <button type="button" class="flex flex-col items-center justify-center">
-          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#0074C7]">
-            <i class="fa-solid fa-id-badge text-[22px]"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">QL cá nhân</span>
+      <div class="flex items-center gap-2.5 pt-1">
+        <button
+          id="btn-login"
+          type="submit"
+          class="flex-1 h-11 bg-white border-[1.5px] border-[#0b5389] rounded-[5px] text-[#0b5389] font-bold text-[15px] shadow-sm active:scale-[0.99] transition flex items-center justify-center gap-2"
+        >
+          <span>Đăng nhập</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
-          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
-            <i class="fa-regular fa-file-lines text-[22px]"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">Dịch vụ công</span>
-        </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
-          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
-            <i class="fa-solid fa-magnifying-glass text-[22px]"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">Tra cứu</span>
-        </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
-          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
-            <i class="fa-solid fa-headset text-[22px]"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">Trợ giúp</span>
-        </button>
-      </nav>
-    </section>
-
-    <section id="screen-3" class="spa-layer bg-white justify-between">
-      <header class="vssid-header-gradient text-white px-4 shadow-sm">
-        <button type="button" onclick="showScreen('screen-2')" class="text-2xl pr-3 text-white p-1 flex items-center">
-          <i class="fa-solid fa-chevron-left text-[20px]"></i>
-        </button>
-        <h1 class="text-[15px] font-semibold tracking-wide uppercase flex-1 text-center pr-8">QUÁ TRÌNH THAM GIA</h1>
-      </header>
-
-      <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-3 pb-2 bg-white">
-        <button type="button" onclick="switchInsuranceTab('bhxh')" id="tab-btn-bhxh" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
-            <i class="fa-solid fa-hands-holding-heart text-lg"></i>
-          </div>
-          <span class="tab-label text-[11px] mt-1.5 font-medium text-[#1b75bb]">BHXH</span>
-        </button>
-
-        <button type="button" onclick="switchInsuranceTab('bhtn')" id="tab-btn-bhtn" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-people-arrows text-lg"></i>
-          </div>
-          <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHTN</span>
-        </button>
-
-        <button type="button" onclick="switchInsuranceTab('bhtnld')" id="tab-btn-bhtnld" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-user-shield text-lg"></i>
-          </div>
-          <span class="tab-label text-[10px] leading-tight text-center mt-1 text-slate-400">BHTNLĐ-<br />BNN</span>
-        </button>
-
-        <button type="button" onclick="switchInsuranceTab('bhyt')" id="tab-btn-bhyt" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-circle-plus text-lg"></i>
-          </div>
-          <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHYT</span>
-        </button>
-
-        <button type="button" onclick="switchInsuranceTab('c14ts')" id="tab-btn-c14ts" class="flex flex-col items-center">
-          <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-regular fa-file-lines text-lg"></i>
-          </div>
-          <span class="tab-label text-[10.5px] mt-1.5 text-slate-400">C14-TS</span>
-        </button>
-      </div>
-
-      <div class="flex-1 overflow-y-auto no-scrollbar px-2 pb-4">
-        <div class="bg-[#f4f5f7] border border-slate-200 px-3 py-2.5 mt-1 rounded-[4px]">
-          <h2 id="participation-title" class="text-[#285989] text-[14px] font-medium">
-            Quá trình tham gia Bảo hiểm xã hội
-          </h2>
-          <div id="participation-summary-details" class="mt-1 space-y-1">
-            <p class="text-[12.5px] text-slate-800">
-              Tổng thời gian tham gia: <span id="summary-total-time" class="font-medium"></span>
-            </p>
-            <p class="text-[12.5px] font-medium" style="color: var(--vssid-late-text);">
-              Tổng thời gian chậm đóng: <span id="summary-late-time"></span>
-            </p>
-          </div>
-        </div>
-
-        <table class="w-full bhxh-table border-collapse text-center bg-white mt-3 shadow-sm rounded-t-[4px] overflow-hidden">
-          <thead>
-            <tr style="background-color: var(--vssid-table-header);" class="text-white text-[12px] font-medium">
-              <th class="py-2 px-1 w-[17%] font-medium">Từ tháng</th>
-              <th class="py-2 px-1 w-[17%] font-medium">Đến tháng</th>
-              <th class="py-2 px-2 w-[36%] font-medium">Đơn vị</th>
-              <th class="py-2 px-1 w-[21%] font-medium leading-tight">Nghề nghiệp<br />Chức vụ</th>
-              <th class="py-2 px-1 w-[9%] font-medium"></th>
-            </tr>
-          </thead>
-          <tbody id="history-table-body" class="text-[12px] text-slate-800"></tbody>
-        </table>
-      </div>
-
-      <nav class="border-t border-slate-200 bg-[#FFFFFF] pt-2 pb-[calc(env(safe-area-inset-bottom,0px)+8px)] px-2 grid grid-cols-4 text-center z-10 relative">
-        <button type="button" onclick="showScreen('screen-2')" class="flex flex-col items-center justify-center">
-          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#0074C7]">
-            <i class="fa-solid fa-id-badge text-xl"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">QL cá nhân</span>
-        </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
-          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
-            <i class="fa-regular fa-file-lines text-xl"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">Dịch vụ công</span>
-        </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
-          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
-            <i class="fa-solid fa-magnifying-glass text-xl"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">Tra cứu</span>
-        </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
-          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
-            <i class="fa-solid fa-headset text-xl"></i>
-          </span>
-          <span class="text-[11px] text-[#222222] font-normal">Trợ giúp</span>
-        </button>
-      </nav>
-    </section>
-
-    <section id="screen-4" class="spa-layer bg-white">
-      <header class="vssid-detail-header bg-white px-4 flex items-center justify-between border-b border-slate-100 shadow-sm">
-        <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-2xl pr-3 py-1">
-          <i class="fa-solid fa-chevron-left text-[20px]"></i>
-        </button>
-        <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-8">Chi tiết</h1>
-      </header>
-
-      <div class="px-4 pt-4">
-        <div class="flex items-center justify-around text-[13.5px] text-slate-800 mb-4 font-medium">
-          <div>Từ tháng: <span id="detail-from" class="text-slate-900"></span></div>
-          <div>Đến tháng: <span id="detail-to" class="text-slate-900"></span></div>
-        </div>
-
-        <div style="background-color: var(--vssid-detail-box);" class="text-white p-4 rounded-[6px] text-[13px] leading-[1.6] space-y-1 shadow-sm">
-          <div>Chức vụ: <span id="detail-role" class="font-bold"></span></div>
-          <div>Đơn vị công tác: <span id="detail-company" class="font-bold"></span></div>
-          <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></div>
-          <div>Loại tiền: <span id="detail-currency" class="font-bold"></span></div>
-        </div>
-
-        <table class="w-full border-collapse text-[13px] text-slate-800 mt-3 shadow-sm rounded-[4px] overflow-hidden">
-          <tbody>
-            <tr>
-              <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Tiền lương đóng BHXH</td>
-              <td id="detail-bhxh-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
-            </tr>
-            <tr>
-              <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Mức lương</td>
-              <td id="detail-base-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Modal Cập Nhật Avatar -->
-    <div id="avatar-onboarding-modal" class="hidden absolute inset-0 z-40 bg-black/60 flex items-center justify-center p-4">
-      <div class="relative bg-white w-full max-w-[280px] rounded-xl p-4 shadow-2xl text-center space-y-3">
         <button
           type="button"
-          id="btn-close-avatar-modal"
-          onclick="closeAvatarOnboardingModal()"
-          class="hidden absolute top-2.5 right-2.5 w-7 h-7 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
-          title="Đóng"
+          onclick="handleLoginSubmit(event)"
+          class="w-11 h-11 flex items-center justify-center text-[#0b5389]"
         >
-          <i class="fa-solid fa-xmark text-base"></i>
+          <svg viewBox="0 0 36 36" class="w-10 h-10" fill="none" stroke="#1b6ca8" stroke-width="2.2" stroke-linecap="round">
+            <path d="M10 4 H7 A3 3 0 0 0 4 7 V10" />
+            <path d="M26 4 H29 A3 3 0 0 1 32 7 V10" />
+            <path d="M10 32 H7 A3 3 0 0 1 4 29 V26" />
+            <path d="M26 32 H29 A3 3 0 0 0 32 29 V26" />
+            <line x1="13" y1="13" x2="13" y2="16" />
+            <line x1="23" y1="13" x2="23" y2="16" />
+            <path d="M18 14 V19.5 H16.5" />
+            <path d="M13.5 23.5 Q18 27 22.5 23.5" />
+          </svg>
         </button>
+      </div>
 
-        <div class="w-10 h-10 rounded-full bg-sky-100 text-[#0072bc] mx-auto flex items-center justify-center text-lg">
-          <i class="fa-solid fa-camera-retro"></i>
-        </div>
-        <div>
-          <h3 class="font-bold text-slate-800 text-[14px]">Cập nhật ảnh đại diện</h3>
-          <p class="text-[11.5px] text-slate-600 mt-0.5">
-            Vui lòng chụp ảnh khuôn mặt để hoàn tất hồ sơ
-          </p>
-        </div>
-
-        <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-dashed border-[#0072bc] bg-slate-100 flex items-center justify-center">
-          <video id="camera-stream" autoplay playsinline class="hidden w-full h-full object-cover"></video>
-          <img id="onboarding-preview-img" src="" alt="Preview" class="hidden w-full h-full object-cover" />
-          <div id="onboarding-placeholder" class="text-slate-400 text-xs px-3">
-            <i class="fa-regular fa-user text-xl mb-1 block"></i>
-            Chưa có ảnh
-          </div>
-        </div>
-
-        <canvas id="avatar-compress-canvas" width="150" height="150" class="hidden"></canvas>
-
-        <div class="grid grid-cols-2 gap-1.5 text-[11.5px] font-medium">
-          <button
-            type="button"
-            id="btn-start-camera"
-            onclick="startOnboardingCamera()"
-            class="py-2 px-2 rounded-lg border border-[#0072bc] text-[#0072bc] hover:bg-sky-50 flex items-center justify-center gap-1"
-          >
-            <i class="fa-solid fa-video"></i> Chụp ảnh
-          </button>
-          <button
-            type="button"
-            id="btn-capture-photo"
-            onclick="captureFromVideo()"
-            class="hidden py-2 px-2 rounded-lg bg-amber-500 text-white hover:bg-amber-600 flex items-center justify-center gap-1"
-          >
-            <i class="fa-solid fa-camera"></i> Chụp ngay
-          </button>
-          <label class="py-2 px-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1 cursor-pointer">
-            <i class="fa-solid fa-upload"></i> Chọn file
-            <input type="file" accept="image/*" onchange="handleAvatarFileSelect(event)" class="hidden" />
-          </label>
-        </div>
-
+      <div class="pt-2">
         <button
           type="button"
-          id="btn-save-avatar"
-          onclick="submitCompressedAvatarToGAS()"
-          disabled
-          class="w-full py-2 rounded-lg bg-[#0072bc] disabled:bg-slate-300 text-white font-semibold text-xs transition shadow"
+          onclick="handleLoginSubmit(event)"
+          style="background-color: var(--vssid-vneid-btn);"
+          class="w-full text-white rounded-[8px] py-2.5 px-3 flex items-center justify-between shadow-md active:scale-[0.99] transition"
         >
-          Hoàn tất hồ sơ
+          <div class="flex-1 text-center font-bold text-[14px] leading-snug pr-2">
+            Đăng nhập bằng tài khoản<br />định danh điện tử
+          </div>
+          <div class="w-11 h-11 rounded-[8px] bg-[#0f6b2f] border border-yellow-400/50 flex items-center justify-center flex-shrink-0 overflow-hidden">
+            <svg viewBox="0 0 40 40" class="w-9 h-9">
+              <polygon points="20,3 24.5,14 36.5,14 26.8,21 30.5,32.5 20,25.5 9.5,32.5 13.2,21 3.5,14 15.5,14" fill="#facc15" />
+              <circle cx="20" cy="19.5" r="6.5" fill="#dc2626" />
+              <path d="M17 19.5 L20 16 L23 19.5 L20 23 Z" fill="#fef08a" />
+            </svg>
+          </div>
         </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="px-5 pb-5 pt-2 flex flex-col gap-2" style="padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 12px);">
+    <div class="text-center">
+      <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-[13.5px] text-[#1b6ca8] font-medium">
+        Mời cài đặt VssID
+      </button>
+    </div>
+    <div class="text-right pr-1">
+      <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-[13px] text-[#1b6ca8]">
+        Chính sách quyền riêng tư
+      </button>
+    </div>
+    <div class="flex items-center justify-between pt-1 text-[#134e7c]">
+      <div class="flex items-center gap-5">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-regular fa-newspaper"></i></button>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-headset"></i></button>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-tv"></i></button>
+      </div>
+      <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-2xl"><i class="fa-solid fa-location-dot"></i></button>
+    </div>
+  </div>
+</section>
+
+<section id="screen-2" class="spa-layer bg-[#F2F2F2] justify-between">
+  <header class="vssid-header-gradient text-white pl-[10px] pr-[18px]">
+    <button type="button" onclick="handleLogout()" class="flex items-center justify-center w-8 h-8">
+      <svg viewBox="0 0 26 20" class="w-[23px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="butt">
+        <line x1="1" y1="2.5" x2="25" y2="2.5" />
+        <line x1="1" y1="10" x2="25" y2="10" />
+        <line x1="1" y1="17.5" x2="25" y2="17.5" />
+      </svg>
+    </button>
+    <h1 class="text-[16.5px] font-normal tracking-[0.2px] uppercase flex-1 text-center">QUẢN LÝ CÁ NHÂN</h1>
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative flex items-center justify-end w-8 h-8">
+      <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
+        <i class="fa-solid fa-bell text-[22px]"></i>
+      </span>
+      <span id="profile-notification-badge" class="hidden absolute -top-0.5 -right-1 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center border border-white"></span>
+    </button>
+  </header>
+
+  <div class="flex-1 overflow-y-auto no-scrollbar pt-[15px] pb-4 bg-[#F2F2F2]">
+    <div class="vssid-profile-card mx-[18px] rounded-[2px] px-[18px] pt-[14px] pb-[10px]">
+      <div class="flex items-center gap-[18px] pb-[14px] border-b border-[#c9d2d8]">
+        <div class="relative cursor-pointer flex-shrink-0" onclick="openAvatarOnboardingModal()" title="Chạm để nhập/đổi ảnh đại diện">
+          <img
+            id="profile-avatar"
+            src="default_avatar.png"
+            alt="Avatar"
+            onerror="this.onerror=null;this.src='https://placehold.co/150x150/0284c7/ffffff?text=Avatar';"
+            class="w-[62px] h-[62px] rounded-full object-cover flex-shrink-0 bg-white"
+          />
+        </div>
+        <div class="min-w-0 flex-1">
+          <div id="profile-name" class="font-bold text-[15.5px] text-[#111111] leading-snug truncate"></div>
+          <div class="text-[14.5px] text-[#555555] mt-[7px] font-normal">
+            Mã BHXH: <span id="profile-mabhxh" class="text-[#555555]"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divide-y divide-[#c9d2d8] text-[14.5px]">
+        <div class="py-[9.5px] flex items-center justify-between gap-2">
+          <span class="text-[#4f4f4f]">Ngày sinh</span>
+          <span id="profile-dob" class="text-[#4f4f4f]"></span>
+        </div>
+        <div class="py-[9.5px] flex items-center justify-between gap-2">
+          <span class="text-[#4f4f4f]">ĐDCN/CCCD/Hộ chiếu</span>
+          <span id="profile-cccd" class="text-[#4f4f4f]"></span>
+        </div>
+        <div class="py-[9.5px] flex items-center justify-between gap-2">
+          <span class="text-[#4f4f4f]">Số điện thoại</span>
+          <span id="profile-phone" class="text-[#4f4f4f]"></span>
+        </div>
+        <div class="pt-[9.5px] pb-[4px] flex items-start justify-between gap-4">
+          <span class="text-[#4f4f4f] flex-shrink-0">Địa chỉ</span>
+          <span id="profile-address" class="text-[#4f4f4f] text-right leading-[1.32] break-words"></span>
+        </div>
       </div>
     </div>
 
-    <!-- Modal Thông Báo -->
-    <div id="global-modal-overlay" class="hidden absolute inset-0 z-50 bg-black/45 flex items-center justify-center px-6">
-      <div class="bg-white w-full max-w-[270px] rounded-[10px] pt-4 pb-3.5 px-4 shadow-xl text-center">
-        <h3 class="text-[15px] font-bold text-[#555555] mb-2">Thông báo</h3>
-        <div id="global-modal-message" class="text-[13.5px] text-[#666666] leading-snug mb-5">
-          Lỗi kết nối đến hệ thống<br />Vui lòng thử lại
+    <div class="mt-[15px] pl-[18px] pr-[36px] bg-transparent">
+      <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+        <div data-icon-slot="menu_the_bhyt" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+          <i class="fa-regular fa-id-card text-[19px]"></i>
         </div>
-        <button
-          type="button"
-          onclick="closeModal()"
-          class="min-w-[100px] py-1.5 px-5 bg-white border border-[#2b78a6] rounded-[4px] text-[#0b5c8f] font-bold text-[14px] active:bg-sky-50 transition"
-        >
-          Đóng
-        </button>
+        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THẺ BHYT BẢN ĐIỆN TỬ</span>
+          <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+          </svg>
+        </div>
+      </button>
+
+      <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+        <div data-icon-slot="menu_so_bhxh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+          <i class="fa-solid fa-hands-holding-heart text-[19px]"></i>
+        </div>
+        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ BHXH BẢN ĐIỆN TỬ</span>
+          <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+          </svg>
+        </div>
+      </button>
+
+      <button type="button" onclick="openParticipationScreen()" class="w-full flex items-center text-left active:opacity-70 transition group menu-item-row">
+        <div data-icon-slot="menu_qua_trinh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+          <i class="fa-solid fa-clock-rotate-left text-[19px]"></i>
+        </div>
+        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">QUÁ TRÌNH THAM GIA</span>
+          <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+          </svg>
+        </div>
+      </button>
+
+      <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+        <div data-icon-slot="menu_thong_tin_huong" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+          <i class="fa-solid fa-user-check text-[19px]"></i>
+        </div>
+        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THÔNG TIN HƯỞNG</span>
+          <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+          </svg>
+        </div>
+      </button>
+
+      <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+        <div data-icon-slot="menu_so_kcb" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+          <i class="fa-solid fa-plus text-[21px]"></i>
+        </div>
+        <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+          <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ KHÁM CHỮA BỆNH</span>
+          <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Chân trang nền #FFFFFF (Đã áp dụng class siêu nhỏ gọn vssid-bottom-nav) -->
+  <nav class="vssid-bottom-nav bg-[#FFFFFF] px-2 grid grid-cols-4 text-center z-10 relative">
+    <button type="button" class="flex flex-col items-center justify-center">
+      <span data-icon-slot="nav_ql_canhan" class="w-5 h-5 flex items-center justify-center text-[#0074C7]">
+        <i class="fa-solid fa-id-badge text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">QL cá nhân</span>
+    </button>
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+      <span data-icon-slot="nav_dichvu_cong" class="w-5 h-5 flex items-center justify-center text-[#777777]">
+        <i class="fa-regular fa-file-lines text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">Dịch vụ công</span>
+    </button>
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+      <span data-icon-slot="nav_tra_cuu" class="w-5 h-5 flex items-center justify-center text-[#777777]">
+        <i class="fa-solid fa-magnifying-glass text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">Tra cứu</span>
+    </button>
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+      <span data-icon-slot="nav_tro_giup" class="w-5 h-5 flex items-center justify-center text-[#777777]">
+        <i class="fa-solid fa-headset text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">Trợ giúp</span>
+    </button>
+  </nav>
+</section>
+
+<section id="screen-3" class="spa-layer bg-white justify-between">
+  <header class="vssid-header-gradient text-white px-4 shadow-sm">
+    <button type="button" onclick="showScreen('screen-2')" class="text-2xl pr-3 text-white p-1 flex items-center">
+      <i class="fa-solid fa-chevron-left text-[20px]"></i>
+    </button>
+    <h1 class="text-[15px] font-semibold tracking-wide uppercase flex-1 text-center pr-8">QUÁ TRÌNH THAM GIA</h1>
+  </header>
+
+  <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-3 pb-2 bg-white">
+    <button type="button" onclick="switchInsuranceTab('bhxh')" id="tab-btn-bhxh" class="flex flex-col items-center">
+      <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
+        <i class="fa-solid fa-hands-holding-heart text-lg"></i>
+      </div>
+      <span class="tab-label text-[11px] mt-1.5 font-medium text-[#1b75bb]">BHXH</span>
+    </button>
+
+    <button type="button" onclick="switchInsuranceTab('bhtn')" id="tab-btn-bhtn" class="flex flex-col items-center">
+      <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-solid fa-people-arrows text-lg"></i>
+      </div>
+      <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHTN</span>
+    </button>
+
+    <button type="button" onclick="switchInsuranceTab('bhtnld')" id="tab-btn-bhtnld" class="flex flex-col items-center">
+      <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-solid fa-user-shield text-lg"></i>
+      </div>
+      <span class="tab-label text-[10px] leading-tight text-center mt-1 text-slate-400">BHTNLĐ-<br />BNN</span>
+    </button>
+
+    <button type="button" onclick="switchInsuranceTab('bhyt')" id="tab-btn-bhyt" class="flex flex-col items-center">
+      <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-solid fa-circle-plus text-lg"></i>
+      </div>
+      <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHYT</span>
+    </button>
+
+    <button type="button" onclick="switchInsuranceTab('c14ts')" id="tab-btn-c14ts" class="flex flex-col items-center">
+      <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-regular fa-file-lines text-lg"></i>
+      </div>
+      <span class="tab-label text-[10.5px] mt-1.5 text-slate-400">C14-TS</span>
+    </button>
+  </div>
+
+  <div class="flex-1 overflow-y-auto no-scrollbar px-2 pb-4">
+    <div class="bg-[#f4f5f7] border border-slate-200 px-3 py-2.5 mt-1 rounded-[4px]">
+      <h2 id="participation-title" class="text-[#285989] text-[14px] font-medium">
+        Quá trình tham gia Bảo hiểm xã hội
+      </h2>
+      <div id="participation-summary-details" class="mt-1 space-y-1">
+        <p class="text-[12.5px] text-slate-800">
+          Tổng thời gian tham gia: <span id="summary-total-time" class="font-medium"></span>
+        </p>
+        <p class="text-[12.5px] font-medium" style="color: var(--vssid-late-text);">
+          Tổng thời gian chậm đóng: <span id="summary-late-time"></span>
+        </p>
       </div>
     </div>
+
+    <table class="w-full bhxh-table border-collapse text-center bg-white mt-3 shadow-sm rounded-t-[4px] overflow-hidden">
+      <thead>
+        <tr style="background-color: var(--vssid-table-header);" class="text-white text-[12px] font-medium">
+          <th class="py-2 px-1 w-[17%] font-medium">Từ tháng</th>
+          <th class="py-2 px-1 w-[17%] font-medium">Đến tháng</th>
+          <th class="py-2 px-2 w-[36%] font-medium">Đơn vị</th>
+          <th class="py-2 px-1 w-[21%] font-medium leading-tight">Nghề nghiệp<br />Chức vụ</th>
+          <th class="py-2 px-1 w-[9%] font-medium"></th>
+        </tr>
+      </thead>
+      <tbody id="history-table-body" class="text-[12px] text-slate-800"></tbody>
+    </table>
+  </div>
+
+  <nav class="border-t border-slate-200 vssid-bottom-nav bg-[#FFFFFF] px-2 grid grid-cols-4 text-center z-10 relative">
+    <button type="button" onclick="showScreen('screen-2')" class="flex flex-col items-center justify-center">
+      <span data-icon-slot="nav_ql_canhan" class="w-5 h-5 flex items-center justify-center text-[#0074C7]">
+        <i class="fa-solid fa-id-badge text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">QL cá nhân</span>
+    </button>
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+      <span data-icon-slot="nav_dichvu_cong" class="w-5 h-5 flex items-center justify-center text-[#777777]">
+        <i class="fa-regular fa-file-lines text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">Dịch vụ công</span>
+    </button>
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+      <span data-icon-slot="nav_tra_cuu" class="w-5 h-5 flex items-center justify-center text-[#777777]">
+        <i class="fa-solid fa-magnifying-glass text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">Tra cứu</span>
+    </button>
+    <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+      <span data-icon-slot="nav_tro_giup" class="w-5 h-5 flex items-center justify-center text-[#777777]">
+        <i class="fa-solid fa-headset text-[16px]"></i>
+      </span>
+      <span class="text-[9.5px] mt-0.5 text-[#222222] font-normal">Trợ giúp</span>
+    </button>
+  </nav>
+</section>
+
+<section id="screen-4" class="spa-layer bg-white">
+  <header class="vssid-detail-header bg-white px-4 flex items-center justify-between border-b border-slate-100 shadow-sm">
+    <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-2xl pr-3 py-1">
+      <i class="fa-solid fa-chevron-left text-[20px]"></i>
+    </button>
+    <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-8">Chi tiết</h1>
+  </header>
+
+  <div class="px-4 pt-4">
+    <div class="flex items-center justify-around text-[13.5px] text-slate-800 mb-4 font-medium">
+      <div>Từ tháng: <span id="detail-from" class="text-slate-900"></span></div>
+      <div>Đến tháng: <span id="detail-to" class="text-slate-900"></span></div>
+    </div>
+
+    <div style="background-color: var(--vssid-detail-box);" class="text-white p-4 rounded-[6px] text-[13px] leading-[1.6] space-y-1 shadow-sm">
+      <div>Chức vụ: <span id="detail-role" class="font-bold"></span></div>
+      <div>Đơn vị công tác: <span id="detail-company" class="font-bold"></span></div>
+      <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></div>
+      <div>Loại tiền: <span id="detail-currency" class="font-bold"></span></div>
+    </div>
+
+    <table class="w-full border-collapse text-[13px] text-slate-800 mt-3 shadow-sm rounded-[4px] overflow-hidden">
+      <tbody>
+        <tr>
+          <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Tiền lương đóng BHXH</td>
+          <td id="detail-bhxh-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
+        </tr>
+        <tr>
+          <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Mức lương</td>
+          <td id="detail-base-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- Modal Cập Nhật Avatar -->
+<div id="avatar-onboarding-modal" class="hidden absolute inset-0 z-40 bg-black/60 flex items-center justify-center p-4">
+  <div class="relative bg-white w-full max-w-[280px] rounded-xl p-4 shadow-2xl text-center space-y-3">
+    <button
+      type="button"
+      id="btn-close-avatar-modal"
+      onclick="closeAvatarOnboardingModal()"
+      class="hidden absolute top-2.5 right-2.5 w-7 h-7 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 flex items-center justify-center"
+      title="Đóng"
+    >
+      <i class="fa-solid fa-xmark text-base"></i>
+    </button>
+
+    <div class="w-10 h-10 rounded-full bg-sky-100 text-[#0072bc] mx-auto flex items-center justify-center text-lg">
+      <i class="fa-solid fa-camera-retro"></i>
+    </div>
+    <div>
+      <h3 class="font-bold text-slate-800 text-[14px]">Cập nhật ảnh đại diện</h3>
+      <p class="text-[11.5px] text-slate-600 mt-0.5">
+        Vui lòng chụp ảnh khuôn mặt để hoàn tất hồ sơ
+      </p>
+    </div>
+
+    <div class="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-dashed border-[#0072bc] bg-slate-100 flex items-center justify-center">
+      <video id="camera-stream" autoplay playsinline class="hidden w-full h-full object-cover"></video>
+      <img id="onboarding-preview-img" src="" alt="Preview" class="hidden w-full h-full object-cover" />
+      <div id="onboarding-placeholder" class="text-slate-400 text-xs px-3">
+        <i class="fa-regular fa-user text-xl mb-1 block"></i>
+        Chưa có ảnh
+      </div>
+    </div>
+
+    <canvas id="avatar-compress-canvas" width="150" height="150" class="hidden"></canvas>
+
+    <div class="grid grid-cols-2 gap-1.5 text-[11.5px] font-medium">
+      <button
+        type="button"
+        id="btn-start-camera"
+        onclick="startOnboardingCamera()"
+        class="py-2 px-2 rounded-lg border border-[#0072bc] text-[#0072bc] hover:bg-sky-50 flex items-center justify-center gap-1"
+      >
+        <i class="fa-solid fa-video"></i> Chụp ảnh
+      </button>
+      <button
+        type="button"
+        id="btn-capture-photo"
+        onclick="captureFromVideo()"
+        class="hidden py-2 px-2 rounded-lg bg-amber-500 text-white hover:bg-amber-600 flex items-center justify-center gap-1"
+      >
+        <i class="fa-solid fa-camera"></i> Chụp ngay
+      </button>
+      <label class="py-2 px-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-50 flex items-center justify-center gap-1 cursor-pointer">
+        <i class="fa-solid fa-upload"></i> Chọn file
+        <input type="file" accept="image/*" onchange="handleAvatarFileSelect(event)" class="hidden" />
+      </label>
+    </div>
+
+    <button
+      type="button"
+      id="btn-save-avatar"
+      onclick="submitCompressedAvatarToGAS()"
+      disabled
+      class="w-full py-2 rounded-lg bg-[#0072bc] disabled:bg-slate-300 text-white font-semibold text-xs transition shadow"
+    >
+      Hoàn tất hồ sơ
+    </button>
+  </div>
+</div>
+
+<!-- Modal Thông Báo -->
+<div id="global-modal-overlay" class="hidden absolute inset-0 z-50 bg-black/45 flex items-center justify-center px-6">
+  <div class="bg-white w-full max-w-[270px] rounded-[10px] pt-4 pb-3.5 px-4 shadow-xl text-center">
+    <h3 class="text-[15px] font-bold text-[#555555] mb-2">Thông báo</h3>
+    <div id="global-modal-message" class="text-[13.5px] text-[#666666] leading-snug mb-5">
+      Lỗi kết nối đến hệ thống<br />Vui lòng thử lại
+    </div>
+    <button
+      type="button"
+      onclick="closeModal()"
+      class="min-w-[100px] py-1.5 px-5 bg-white border border-[#2b78a6] rounded-[4px] text-[#0b5c8f] font-bold text-[14px] active:bg-sky-50 transition"
+    >
+      Đóng
+    </button>
+  </div>
+</div>
 
   </div>
 
@@ -666,6 +689,7 @@
     // --- THIẾT LẬP MÔI TRƯỜNG ---
     const USE_DEMO_TXT = true; // Đổi thành false để kết nối thực tế với Google Sheet
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
+
 
     const STORAGE_KEYS = {
       UI_CONFIG: 'VSSID_STANDALONE_UI_CONFIG',
@@ -677,6 +701,7 @@
       OFFLINE_VAULT: 'VSSID_OFFLINE_ACCOUNTS_VAULT'
     };
 
+
     let currentMaBHXH = '';
     let activeUserData = null;
     let activeAvatarBase64 = '';
@@ -684,6 +709,7 @@
     let pendingCompressedAvatar = '';
     let activeMediaStream = null;
     let activeUiConfig = { theme: {}, icons: {}, updatedAt: '' };
+
 
     const TAB_TITLES = {
       bhxh: 'Quá trình tham gia Bảo hiểm xã hội',
@@ -693,9 +719,11 @@
       c14ts: 'Thông tin C14-TS'
     };
 
+
     function normalizeMaBHXHClient(val) {
       return String(val || '').trim().replace(/^'+/, '').replace(/^0+/, '');
     }
+
 
     function saveSessionData(userCacheRaw, avatarStr) {
       const jsonStr = typeof userCacheRaw === 'string' ? userCacheRaw : JSON.stringify(userCacheRaw);
@@ -705,6 +733,7 @@
         activeUserData = null;
       }
       activeAvatarBase64 = avatarStr || '';
+
 
       try {
         sessionStorage.setItem(STORAGE_KEYS.USER_CACHE, jsonStr);
@@ -716,11 +745,14 @@
       } catch (e) {}
     }
 
+
     function loadSessionDataIntoMemory() {
       if (activeUserData) return activeUserData;
 
+
       const rawJSON = sessionStorage.getItem(STORAGE_KEYS.USER_CACHE) || localStorage.getItem(STORAGE_KEYS.USER_CACHE);
       const rawAvatar = sessionStorage.getItem(STORAGE_KEYS.AVATAR) || localStorage.getItem(STORAGE_KEYS.AVATAR) || '';
+
 
       if (rawJSON) {
         try {
@@ -736,6 +768,7 @@
       }
       return null;
     }
+
 
     function saveOfflineVaultAccount(maBHXH, password, userCacheJSON, avatarBase64) {
       try {
@@ -753,6 +786,7 @@
       } catch (e) {}
     }
 
+
     function getOfflineVaultAccount(maBHXH, password) {
       try {
         const cleanKey = normalizeMaBHXHClient(maBHXH);
@@ -766,6 +800,7 @@
       } catch (e) {}
       return null;
     }
+
 
     async function fetchWithTimeout(url, options = {}, timeoutMs = 8000) {
       const controller = new AbortController();
@@ -781,7 +816,7 @@
       }
     }
 
-/* STREAMING_CHUNK:Cấu trúc lại hàm gọi API chính (Có tích hợp Demo Mode) */
+
 async function callGasApi(action, payload = {}) {
   // --- CHẾ ĐỘ TEST GIAO DIỆN VỚI GITHUB FILE ---
   if (typeof USE_DEMO_TXT !== 'undefined' && USE_DEMO_TXT) {
@@ -833,6 +868,7 @@ async function callGasApi(action, payload = {}) {
   }
   // --- KẾT THÚC CHẾ ĐỘ TEST ---
 
+
   // --- CHẾ ĐỘ KẾT NỐI THỰC TẾ GOOGLE SHEET ---
   try {
     const response = await fetchWithTimeout(
@@ -857,14 +893,14 @@ async function callGasApi(action, payload = {}) {
   }
 }
 
-/* STREAMING_CHUNK:Giữ nguyên hàm gọi GET API */
+
 async function callGasGetApi(action, payload = {}) {
   const params = new URLSearchParams({ action, data: JSON.stringify(payload) });
   const res = await fetchWithTimeout(`${GAS_WEB_APP_URL}?${params.toString()}`, { method: 'GET' }, 8000);
   return await res.json();
 }
 
-/* STREAMING_CHUNK:Hàm khởi tạo */
+
 (function initStandaloneApp() {
   try {
     const savedCfg = localStorage.getItem(STORAGE_KEYS.UI_CONFIG);
@@ -875,8 +911,10 @@ async function callGasGetApi(action, payload = {}) {
     console.warn("Failed to load local UI config", e);
   }
 
+
   const restoredData = loadSessionDataIntoMemory();
   const savedScreen = localStorage.getItem(STORAGE_KEYS.ACTIVE_SCREEN) || 'screen-2';
+
 
   if (restoredData && activeAvatarBase64 && savedScreen !== 'screen-1') {
     renderScreen2FromSession();
@@ -896,11 +934,12 @@ async function callGasGetApi(action, payload = {}) {
     showScreen('screen-1');
   }
 
+
   // Chạy ngầm sau khi UI đã lên
   syncUiConfigInBackground();
 })();
 
-/* STREAMING_CHUNK:Tái sử dụng callGasGetApi cho việc lấy Config */
+
 async function syncUiConfigInBackground() {
   if (!navigator.onLine) return;
   try {
@@ -924,6 +963,7 @@ async function syncUiConfigInBackground() {
       if (!cfg || typeof cfg !== 'object') return;
       activeUiConfig = cfg;
 
+
       const t = cfg.theme || {};
       const root = document.documentElement;
       if (t.primary) root.style.setProperty('--vssid-primary', t.primary);
@@ -942,6 +982,7 @@ async function syncUiConfigInBackground() {
       if (t.vneidBtn) root.style.setProperty('--vssid-vneid-btn', t.vneidBtn);
       if (t.lateText) root.style.setProperty('--vssid-late-text', t.lateText);
 
+
       const icons = cfg.icons || {};
       if (icons.logo_login && icons.logo_login.src) {
         const logoSlot = document.getElementById('slot-logo_login');
@@ -954,10 +995,12 @@ async function syncUiConfigInBackground() {
         }
       }
 
+
       document.querySelectorAll('[data-icon-slot]').forEach((el) => {
         const key = el.getAttribute('data-icon-slot');
         const iconData = icons[key];
         if (!iconData || !iconData.src) return;
+
 
         const isFull = String(iconData.frame || 'FULL').toUpperCase() === 'FULL';
         if (key === 'header_bell') {
@@ -981,9 +1024,11 @@ async function syncUiConfigInBackground() {
             el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-6 h-6 object-contain transition" />`;
           }
         } else if (key.startsWith('nav_')) {
-          el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-7 h-7 object-contain" />`;
+          /* Đã cập nhật kích thước icon tùy chỉnh ở nav_ về w-5 h-5 cho đồng nhất thiết kế siêu nhỏ gọn */
+          el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-5 h-5 object-contain" />`;
         }
       });
+
 
       const activeScreenEl = document.querySelector('.spa-layer.active');
       if (activeScreenEl && activeScreenEl.id === 'screen-3') {
@@ -991,6 +1036,7 @@ async function syncUiConfigInBackground() {
         switchInsuranceTab(currentTab);
       }
     }
+
 
     function renderEyeIconHTML() {
       const eyeIcon = activeUiConfig && activeUiConfig.icons && activeUiConfig.icons.icon_con_mat;
@@ -1000,26 +1046,32 @@ async function syncUiConfigInBackground() {
       return `<i class="fa-solid fa-eye text-[15px]"></i>`;
     }
 
+
     function showModal(message) {
       document.getElementById('global-modal-message').innerHTML = message;
       document.getElementById('global-modal-overlay').classList.remove('hidden');
     }
 
+
     function closeModal() {
       document.getElementById('global-modal-overlay').classList.add('hidden');
     }
+
 
     function showScreen(screenId) {
       document.querySelectorAll('.spa-layer').forEach((el) => el.classList.remove('active'));
       const target = document.getElementById(screenId);
       if (target) target.classList.add('active');
 
+
       try {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_SCREEN, screenId);
       } catch (e) {}
 
+
       const metaTheme = document.getElementById('meta-theme-color');
       const t = (activeUiConfig && activeUiConfig.theme) || {};
+
 
       if (screenId === 'screen-2' || screenId === 'screen-3') {
         if (metaTheme) metaTheme.setAttribute('content', '#00ABF0');
@@ -1031,9 +1083,11 @@ async function syncUiConfigInBackground() {
       }
     }
 
+
     function completeLoginFlow(maBHXH, password, User_Cache_JSON, Avatar_Base64, UI_Config_JSON) {
       currentMaBHXH = maBHXH;
       pendingUserCacheJSON = typeof User_Cache_JSON === 'string' ? User_Cache_JSON : JSON.stringify(User_Cache_JSON);
+
 
       if (UI_Config_JSON) {
         try {
@@ -1043,39 +1097,48 @@ async function syncUiConfigInBackground() {
         } catch (e) {}
       }
 
+
       if (!Avatar_Base64 || Avatar_Base64.trim() === '') {
         openAvatarOnboardingModal();
         return;
       }
+
 
       saveSessionData(pendingUserCacheJSON, Avatar_Base64);
       saveOfflineVaultAccount(maBHXH, password, pendingUserCacheJSON, Avatar_Base64);
       showScreen('screen-2');
     }
 
+
     async function handleLoginSubmit(event) {
       if (event) event.preventDefault();
+
 
       const maBHXH = document.getElementById('input-mabhxh').value.trim();
       const password = document.getElementById('input-password').value.trim();
       const btnLogin = document.getElementById('btn-login');
+
 
       if (!maBHXH || !password) {
         showModal('Vui lòng nhập đầy đủ Mã BHXH và Mật khẩu');
         return;
       }
 
+
       btnLogin.disabled = true;
       btnLogin.innerHTML = '<span>Đang xử lý...</span>';
+
 
       try {
         const clientUiVersion = (activeUiConfig && activeUiConfig.updatedAt) || '';
         const response = await callGasApi('login', { maBHXH, password, clientUiVersion });
 
+
         if (!response || !response.success || !response.data) {
           showModal((response && response.message) || 'Mật khẩu không chính xác');
           return;
         }
+
 
         const { User_Cache_JSON, Avatar_Base64, UI_Config_JSON } = response.data;
         completeLoginFlow(maBHXH, password, User_Cache_JSON, Avatar_Base64, UI_Config_JSON);
@@ -1098,6 +1161,7 @@ async function syncUiConfigInBackground() {
       }
     }
 
+
     function handleLogout() {
       stopOnboardingCamera();
       activeUserData = null;
@@ -1105,6 +1169,7 @@ async function syncUiConfigInBackground() {
       currentMaBHXH = '';
       pendingUserCacheJSON = '';
       pendingCompressedAvatar = '';
+
 
       try {
         sessionStorage.removeItem(STORAGE_KEYS.USER_CACHE);
@@ -1114,15 +1179,18 @@ async function syncUiConfigInBackground() {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_SCREEN, 'screen-1');
       } catch (e) {}
 
+
       const passInput = document.getElementById('input-password');
       if (passInput) passInput.value = '';
       showScreen('screen-1');
     }
 
+
     function openParticipationScreen() {
       showScreen('screen-3');
       switchInsuranceTab('bhxh');
     }
+
 
     function openAvatarOnboardingModal() {
       pendingCompressedAvatar = '';
@@ -1130,6 +1198,7 @@ async function syncUiConfigInBackground() {
       document.getElementById('camera-stream').classList.add('hidden');
       document.getElementById('onboarding-placeholder').classList.remove('hidden');
       document.getElementById('btn-save-avatar').disabled = true;
+
 
       const existingAvatar = activeAvatarBase64 || sessionStorage.getItem(STORAGE_KEYS.AVATAR) || localStorage.getItem(STORAGE_KEYS.AVATAR);
       const closeBtn = document.getElementById('btn-close-avatar-modal');
@@ -1141,13 +1210,16 @@ async function syncUiConfigInBackground() {
         }
       }
 
+
       document.getElementById('avatar-onboarding-modal').classList.remove('hidden');
     }
+
 
     function closeAvatarOnboardingModal() {
       stopOnboardingCamera();
       document.getElementById('avatar-onboarding-modal').classList.add('hidden');
     }
+
 
     async function startOnboardingCamera() {
       const video = document.getElementById('camera-stream');
@@ -1167,6 +1239,7 @@ async function syncUiConfigInBackground() {
       }
     }
 
+
     function stopOnboardingCamera() {
       if (activeMediaStream) {
         activeMediaStream.getTracks().forEach((track) => track.stop());
@@ -1177,15 +1250,18 @@ async function syncUiConfigInBackground() {
       document.getElementById('btn-start-camera').classList.remove('hidden');
     }
 
+
     function captureFromVideo() {
       const video = document.getElementById('camera-stream');
       compressImageToBase64(video, video.videoWidth || 300, video.videoHeight || 300);
       stopOnboardingCamera();
     }
 
+
     function handleAvatarFileSelect(event) {
       const file = event.target.files && event.target.files[0];
       if (!file) return;
+
 
       stopOnboardingCamera();
       const reader = new FileReader();
@@ -1199,6 +1275,7 @@ async function syncUiConfigInBackground() {
       reader.readAsDataURL(file);
     }
 
+
     function compressImageToBase64(sourceEl, srcW, srcH) {
       const canvas = document.getElementById('avatar-compress-canvas');
       const size = 150;
@@ -1206,19 +1283,24 @@ async function syncUiConfigInBackground() {
       canvas.height = size;
       const ctx = canvas.getContext('2d');
 
+
       const minSide = Math.min(srcW, srcH);
       const sx = (srcW - minSide) / 2;
       const sy = (srcH - minSide) / 2;
 
+
       ctx.clearRect(0, 0, size, size);
       ctx.drawImage(sourceEl, sx, sy, minSide, minSide, 0, 0, size, size);
+
 
       let base64 = canvas.toDataURL('image/jpeg', 0.7);
       if (base64.length >= 40000) {
         base64 = canvas.toDataURL('image/jpeg', 0.5);
       }
 
+
       pendingCompressedAvatar = base64;
+
 
       const previewImg = document.getElementById('onboarding-preview-img');
       previewImg.src = base64;
@@ -1227,15 +1309,18 @@ async function syncUiConfigInBackground() {
       document.getElementById('btn-save-avatar').disabled = false;
     }
 
+
     async function submitCompressedAvatarToGAS() {
       if (!pendingCompressedAvatar || pendingCompressedAvatar.length >= 40000) {
         showModal('Ảnh vượt quá dung lượng cho phép.<br>Vui lòng chọn ảnh khác.');
         return;
       }
 
+
       const btnSave = document.getElementById('btn-save-avatar');
       btnSave.disabled = true;
       btnSave.textContent = 'Đang lưu...';
+
 
       try {
         const data = loadSessionDataIntoMemory();
@@ -1244,12 +1329,15 @@ async function syncUiConfigInBackground() {
           maBHXH = data.profile.maBHXH || '';
         }
 
+
         const saveRes = await callGasApi('saveAvatar', { maBHXH, avatarBase64: pendingCompressedAvatar });
+
 
         if (!saveRes || !saveRes.success) {
           showModal((saveRes && saveRes.message) || 'Không thể lưu ảnh đại diện.<br>Vui lòng thử lại.');
           return;
         }
+
 
         const cacheToPersist = pendingUserCacheJSON || (data ? JSON.stringify(data) : '');
         if (cacheToPersist) {
@@ -1259,6 +1347,7 @@ async function syncUiConfigInBackground() {
             saveOfflineVaultAccount(maBHXH, passVal, cacheToPersist, pendingCompressedAvatar);
           }
         }
+
 
         closeAvatarOnboardingModal();
         showScreen('screen-2');
@@ -1270,20 +1359,25 @@ async function syncUiConfigInBackground() {
       }
     }
 
+
     function renderScreen2FromSession() {
       const data = loadSessionDataIntoMemory();
+
 
       if (!data) {
         showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại');
         return;
       }
 
+
       try {
         const p = data.profile || {};
+
 
         if (p.maBHXH) {
           currentMaBHXH = p.maBHXH;
         }
+
 
         document.getElementById('profile-name').textContent = p.hoTen || '';
         document.getElementById('profile-mabhxh').textContent = p.maBHXH || '';
@@ -1291,6 +1385,7 @@ async function syncUiConfigInBackground() {
         document.getElementById('profile-cccd').textContent = p.cccd || '';
         document.getElementById('profile-phone').textContent = p.sdt || '';
         document.getElementById('profile-address').textContent = p.diaChi || '';
+
 
         const badgeEl = document.getElementById('profile-notification-badge');
         if (badgeEl) {
@@ -1305,6 +1400,7 @@ async function syncUiConfigInBackground() {
           }
         }
 
+
         const avatarEl = document.getElementById('profile-avatar');
         avatarEl.src = activeAvatarBase64 && activeAvatarBase64.trim() !== '' ? activeAvatarBase64 : 'default_avatar.png';
       } catch (e) {
@@ -1312,10 +1408,12 @@ async function syncUiConfigInBackground() {
       }
     }
 
+
     function switchInsuranceTab(tabKey) {
       try {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_TAB, tabKey);
       } catch (e) {}
+
 
       const tabs = ['bhxh', 'bhtn', 'bhtnld', 'bhyt', 'c14ts'];
       tabs.forEach((key) => {
@@ -1325,6 +1423,7 @@ async function syncUiConfigInBackground() {
         const label = btn.querySelector('.tab-label');
         const customImg = circle ? circle.querySelector('.tab-custom-img') : null;
         const isFullMode = circle && circle.getAttribute('data-frame-mode') === 'FULL';
+
 
         if (key === tabKey) {
           if (isFullMode) {
@@ -1351,14 +1450,17 @@ async function syncUiConfigInBackground() {
         }
       });
 
+
       const titleEl = document.getElementById('participation-title');
       if (titleEl) {
         titleEl.textContent = TAB_TITLES[tabKey] || TAB_TITLES.bhxh;
       }
 
+
       const tbody = document.getElementById('history-table-body');
       const summaryDetails = document.getElementById('participation-summary-details');
       const parsed = loadSessionDataIntoMemory();
+
 
       if (!parsed) {
         tbody.innerHTML = '';
@@ -1367,10 +1469,12 @@ async function syncUiConfigInBackground() {
         return;
       }
 
+
       try {
         const allHistory = Array.isArray(parsed.history) ? parsed.history : [];
         const defaultBhxhSummary = (parsed.summary && parsed.summary.bhxh) || {};
         const tabSummary = (parsed.summary && parsed.summary[tabKey]) || defaultBhxhSummary;
+
 
         const filtered = allHistory
           .map((item, idx) => ({ ...item, _id: idx }))
@@ -1383,6 +1487,7 @@ async function syncUiConfigInBackground() {
             return listLoai.includes(tabKey) || listLoai.includes('all');
           });
 
+
         if (filtered.length === 0) {
           tbody.innerHTML = '';
           summaryDetails.classList.add('hidden');
@@ -1390,9 +1495,11 @@ async function syncUiConfigInBackground() {
           return;
         }
 
+
         summaryDetails.classList.remove('hidden');
         document.getElementById('summary-total-time').textContent = tabSummary.tongThoiGian || '0 tháng';
         document.getElementById('summary-late-time').textContent = tabSummary.thoiGianChamDong || '0 tháng';
+
 
         const eyeHtml = renderEyeIconHTML();
         tbody.innerHTML = filtered
@@ -1424,12 +1531,15 @@ async function syncUiConfigInBackground() {
       }
     }
 
+
     function openHistoryDetail(dataId) {
       try {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_DETAIL_ID, String(dataId));
       } catch (e) {}
 
+
       showScreen('screen-4');
+
 
       const parsed = loadSessionDataIntoMemory();
       if (!parsed) {
@@ -1437,13 +1547,16 @@ async function syncUiConfigInBackground() {
         return;
       }
 
+
       try {
         const list = Array.isArray(parsed.history) ? parsed.history : [];
         const idx = Number(dataId);
         const item = !isNaN(idx) && list[idx] ? list[idx] : list.find((x) => String(x.id) === String(dataId));
 
+
         const bhxhSalary = (item && (item.tienLuongDongBHXH || item.mucLuong)) || '';
         const baseSalary = (item && (item.mucLuong || item.tienLuongDongBHXH)) || '';
+
 
         if (!item || (!item.donVi && !item.tuThang)) {
           document.getElementById('detail-from').textContent = '';
@@ -1458,6 +1571,7 @@ async function syncUiConfigInBackground() {
           return;
         }
 
+
         document.getElementById('detail-from').textContent = item.tuThang || '';
         document.getElementById('detail-to').textContent = item.denThang || '';
         document.getElementById('detail-role').textContent = item.chucVu || '';
@@ -1471,5 +1585,6 @@ async function syncUiConfigInBackground() {
       }
     }
   </script>
+
 </body>
 </html>

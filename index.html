@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#0072bc" id="meta-theme-color" />
+  <meta name="theme-color" content="#00ABF0" id="meta-theme-color" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -14,16 +14,20 @@
 
   <style>
     :root {
-      --vssid-primary: #0072bc;
+      --vssid-primary: #0074C7;
       --vssid-login-top: #0072bc;
       --vssid-login-mid: #169bd5;
       --vssid-login-light: #8ed1ee;
-      --vssid-header-start: #0082c8;
-      --vssid-header-mid: #0066a6;
-      --vssid-header-end: #005896;
-      --vssid-profile-card-start: #ebf4f8;
-      --vssid-profile-card-mid: #f4f9fc;
-      --vssid-profile-card-end: #e8f2f8;
+      /* Header banner gradient: sáng nhất #00ABF0, đậm nhất #0074C7 */
+      --vssid-header-start: #00ABF0;
+      --vssid-header-mid: #008FD9;
+      --vssid-header-end: #0074C7;
+      /* Profile card gradient đồng bộ theo mẫu 2 */
+      --vssid-profile-card-start: #dfeef5;
+      --vssid-profile-card-mid: #ebf3f7;
+      --vssid-profile-card-end: #f4f6f8;
+      --vssid-bg-main: #F2F2F2;
+      --vssid-footer-bg: #FFFFFF;
       --vssid-table-header: #28527a;
       --vssid-detail-box: #326295;
       --vssid-vneid-btn: #c80815;
@@ -42,7 +46,7 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #ffffff; 
+      background-color: #FFFFFF;
     }
 
     body {
@@ -56,17 +60,18 @@
       height: 100dvh;
       max-width: none;
       max-height: none;
-      background-color: #ffffff;
+      background-color: var(--vssid-bg-main);
       display: flex;
       flex-direction: column;
       position: relative;
       overflow: hidden;
     }
 
+    /* Header banner gradient chuẩn #00ABF0 -> #0074C7 và căn chỉnh chiều cao khớp đường gióng */
     .vssid-header-gradient {
-      background: linear-gradient(90deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 50%, var(--vssid-header-end) 100%);
-      padding-top: calc(max(16px, env(safe-area-inset-top)));
-      padding-bottom: 14px;
+      background: linear-gradient(180deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 52%, var(--vssid-header-end) 100%);
+      padding-top: calc(max(22px, env(safe-area-inset-top)) + 6px);
+      padding-bottom: 11px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -87,8 +92,10 @@
       background-position: 0 0, 5px 5px, 0 0;
     }
 
+    /* Thẻ thông tin cá nhân chuyển sắc nhẹ từ xanh băng nhạt xuống xám sáng */
     .vssid-profile-card {
-      background: linear-gradient(135deg, var(--vssid-profile-card-start) 0%, var(--vssid-profile-card-mid) 60%, var(--vssid-profile-card-end) 100%);
+      background: linear-gradient(180deg, var(--vssid-profile-card-start) 0%, var(--vssid-profile-card-mid) 45%, var(--vssid-profile-card-end) 100%);
+      box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.35);
     }
 
     .no-scrollbar::-webkit-scrollbar {
@@ -126,10 +133,6 @@
     .tab-full-active {
       filter: none;
       opacity: 1;
-    }
-    
-    .menu-item-row:last-child .menu-item-border {
-      border-bottom: none;
     }
   </style>
 </head>
@@ -278,138 +281,157 @@
       </div>
     </section>
 
-    <section id="screen-2" class="spa-layer bg-[#f5f6f8] justify-between">
-      <header class="vssid-header-gradient text-white px-3 shadow-sm">
-        <button type="button" onclick="handleLogout()" class="text-[26px] flex items-center justify-center p-1 w-10">
-          <i class="fa-solid fa-bars"></i>
+    <section id="screen-2" class="spa-layer bg-[#F2F2F2] justify-between">
+      <!-- Header Banner: #00ABF0 -> #0074C7 -->
+      <header class="vssid-header-gradient text-white pl-[10px] pr-[18px]">
+        <button type="button" onclick="handleLogout()" class="flex items-center justify-center w-8 h-8">
+          <svg viewBox="0 0 26 20" class="w-[23px] h-[18px]" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="butt">
+            <line x1="1" y1="2.5" x2="25" y2="2.5" />
+            <line x1="1" y1="10" x2="25" y2="10" />
+            <line x1="1" y1="17.5" x2="25" y2="17.5" />
+          </svg>
         </button>
-        <h1 class="text-[16px] font-medium tracking-wide uppercase flex-1 text-center">QUẢN LÝ CÁ NHÂN</h1>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative text-[20px] flex items-center justify-center p-1 w-10">
+        <h1 class="text-[16.5px] font-normal tracking-[0.2px] uppercase flex-1 text-center">QUẢN LÝ CÁ NHÂN</h1>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative flex items-center justify-end w-8 h-8">
           <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
-            <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-bell text-[22px]"></i>
           </span>
-          <span id="profile-notification-badge" class="hidden absolute -top-0.5 right-0 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center border border-white"></span>
+          <span id="profile-notification-badge" class="hidden absolute -top-0.5 -right-1 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center border border-white"></span>
         </button>
       </header>
 
-      <div class="flex-1 overflow-y-auto no-scrollbar px-3 pt-4 pb-6">
+      <!-- Main Scrollable Content on #F2F2F2 Background -->
+      <div class="flex-1 overflow-y-auto no-scrollbar pt-[15px] pb-4 bg-[#F2F2F2]">
         
-        <div class="vssid-profile-card rounded-[12px] p-4 mb-4" style="box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
-          <div class="flex items-center gap-4 pb-4 border-b border-[#d1d5db]/70">
-            <div class="relative cursor-pointer" onclick="openAvatarOnboardingModal()" title="Chạm để nhập/đổi ảnh đại diện">
+        <!-- Profile Card căn theo đường gióng dọc & ngang -->
+        <div class="vssid-profile-card mx-[18px] rounded-[2px] px-[18px] pt-[14px] pb-[10px]">
+          <div class="flex items-center gap-[18px] pb-[14px] border-b border-[#c9d2d8]">
+            <div class="relative cursor-pointer flex-shrink-0" onclick="openAvatarOnboardingModal()" title="Chạm để nhập/đổi ảnh đại diện">
               <img
                 id="profile-avatar"
                 src="default_avatar.png"
                 alt="Avatar"
                 onerror="this.onerror=null;this.src='https://placehold.co/150x150/0284c7/ffffff?text=Avatar';"
-                class="w-[60px] h-[60px] rounded-full object-cover border-[1.5px] border-white shadow-sm flex-shrink-0 bg-white"
+                class="w-[62px] h-[62px] rounded-full object-cover flex-shrink-0 bg-white"
               />
             </div>
             <div class="min-w-0 flex-1">
-              <div id="profile-name" class="font-bold text-[16px] text-[#222222] truncate"></div>
-              <div class="text-[13px] text-[#555555] mt-1">
+              <div id="profile-name" class="font-bold text-[15.5px] text-[#111111] leading-snug truncate"></div>
+              <div class="text-[14.5px] text-[#555555] mt-[7px] font-normal">
                 Mã BHXH: <span id="profile-mabhxh" class="text-[#555555]"></span>
               </div>
             </div>
           </div>
 
-          <div class="divide-y divide-[#d1d5db]/70 text-[14px] mt-1">
-            <div class="py-3 flex items-center justify-between gap-2">
-              <span class="text-[#555555]">Ngày sinh</span>
-              <span id="profile-dob" class="text-[#222222]"></span>
+          <div class="divide-y divide-[#c9d2d8] text-[14.5px]">
+            <div class="py-[9.5px] flex items-center justify-between gap-2">
+              <span class="text-[#4f4f4f]">Ngày sinh</span>
+              <span id="profile-dob" class="text-[#4f4f4f]"></span>
             </div>
-            <div class="py-3 flex items-center justify-between gap-2">
-              <span class="text-[#555555]">ĐDCN/CCCD/Hộ chiếu</span>
-              <span id="profile-cccd" class="text-[#222222]"></span>
+            <div class="py-[9.5px] flex items-center justify-between gap-2">
+              <span class="text-[#4f4f4f]">ĐDCN/CCCD/Hộ chiếu</span>
+              <span id="profile-cccd" class="text-[#4f4f4f]"></span>
             </div>
-            <div class="py-3 flex items-center justify-between gap-2">
-              <span class="text-[#555555]">Số điện thoại</span>
-              <span id="profile-phone" class="text-[#222222]"></span>
+            <div class="py-[9.5px] flex items-center justify-between gap-2">
+              <span class="text-[#4f4f4f]">Số điện thoại</span>
+              <span id="profile-phone" class="text-[#4f4f4f]"></span>
             </div>
-            <div class="pt-3 pb-1 flex items-start justify-between gap-4">
-              <span class="text-[#555555] flex-shrink-0">Địa chỉ</span>
-              <span id="profile-address" class="text-[#222222] text-right leading-[1.3] break-words"></span>
+            <div class="pt-[9.5px] pb-[4px] flex items-start justify-between gap-4">
+              <span class="text-[#4f4f4f] flex-shrink-0">Địa chỉ</span>
+              <span id="profile-address" class="text-[#4f4f4f] text-right leading-[1.32] break-words"></span>
             </div>
           </div>
         </div>
 
-        <div class="space-y-0 px-2 bg-transparent">
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
-            <div data-icon-slot="menu_the_bhyt" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
-              <i class="fa-regular fa-id-card text-[20px]"></i>
+        <!-- Menu List căn thẳng trục với thẻ thông tin cá nhân và chữ tên -->
+        <div class="mt-[15px] pl-[18px] pr-[36px] bg-transparent">
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+            <div data-icon-slot="menu_the_bhyt" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+              <i class="fa-regular fa-id-card text-[19px]"></i>
             </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
-              <span class="text-[15px] text-[#333333] font-normal uppercase">THẺ BHYT BẢN ĐIỆN TỬ</span>
-              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
-            </div>
-          </button>
-
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
-            <div data-icon-slot="menu_so_bhxh" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
-              <i class="fa-solid fa-hands-holding-heart text-[20px]"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
-              <span class="text-[15px] text-[#333333] font-normal uppercase">SỔ BHXH BẢN ĐIỆN TỬ</span>
-              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
+            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THẺ BHYT BẢN ĐIỆN TỬ</span>
+              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+              </svg>
             </div>
           </button>
 
-          <button type="button" onclick="openParticipationScreen()" class="w-full flex items-center text-left active:opacity-70 transition group menu-item-row pl-1">
-            <div data-icon-slot="menu_qua_trinh" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
-              <i class="fa-solid fa-clock-rotate-left text-[20px]"></i>
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+            <div data-icon-slot="menu_so_bhxh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+              <i class="fa-solid fa-hands-holding-heart text-[19px]"></i>
             </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
-              <span class="text-[15px] text-[#333333] font-normal uppercase">QUÁ TRÌNH THAM GIA</span>
-              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
-            </div>
-          </button>
-
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
-            <div data-icon-slot="menu_thong_tin_huong" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
-              <i class="fa-solid fa-user-check text-[20px]"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
-              <span class="text-[15px] text-[#333333] font-normal uppercase">THÔNG TIN HƯỞNG</span>
-              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
+            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ BHXH BẢN ĐIỆN TỬ</span>
+              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+              </svg>
             </div>
           </button>
 
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
-            <div data-icon-slot="menu_so_kcb" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
-              <i class="fa-solid fa-notes-medical text-[20px]"></i>
+          <button type="button" onclick="openParticipationScreen()" class="w-full flex items-center text-left active:opacity-70 transition group menu-item-row">
+            <div data-icon-slot="menu_qua_trinh" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+              <i class="fa-solid fa-clock-rotate-left text-[19px]"></i>
             </div>
-            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
-              <span class="text-[15px] text-[#333333] font-normal uppercase">SỔ KHÁM CHỮA BỆNH</span>
-              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
+            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">QUÁ TRÌNH THAM GIA</span>
+              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+              </svg>
+            </div>
+          </button>
+
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+            <div data-icon-slot="menu_thong_tin_huong" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+              <i class="fa-solid fa-user-check text-[19px]"></i>
+            </div>
+            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">THÔNG TIN HƯỞNG</span>
+              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+              </svg>
+            </div>
+          </button>
+
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row">
+            <div data-icon-slot="menu_so_kcb" class="w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center text-[#0074C7] flex-shrink-0 overflow-hidden bg-transparent">
+              <i class="fa-solid fa-plus text-[21px]"></i>
+            </div>
+            <div class="flex-1 flex items-center justify-between border-b border-[#a6a6a6] py-[18.5px] menu-item-border">
+              <span class="text-[15.5px] text-[#4f4f4f] font-normal uppercase tracking-[0.1px]">SỔ KHÁM CHỮA BỆNH</span>
+              <svg viewBox="0 0 10 18" class="w-[9px] h-[15px] text-[#666666] flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1.5 1.5 L8.5 9 L1.5 16.5" />
+              </svg>
             </div>
           </button>
         </div>
       </div>
 
-      <nav class="border-t border-slate-200 bg-white pt-2 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] px-2 grid grid-cols-4 text-center z-10 relative">
-        <button type="button" class="flex flex-col items-center justify-center text-[var(--vssid-primary)]">
-          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center mb-0.5">
+      <!-- Chân trang nền #FFFFFF -->
+      <nav class="bg-[#FFFFFF] pt-2 pb-[calc(env(safe-area-inset-bottom,0px)+8px)] px-2 grid grid-cols-4 text-center z-10 relative">
+        <button type="button" class="flex flex-col items-center justify-center">
+          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#0074C7]">
             <i class="fa-solid fa-id-badge text-[22px]"></i>
           </span>
-          <span class="text-[10.5px] font-medium">QL cá nhân</span>
+          <span class="text-[11px] text-[#222222] font-normal">QL cá nhân</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-700 transition">
-          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center mb-0.5">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
             <i class="fa-regular fa-file-lines text-[22px]"></i>
           </span>
-          <span class="text-[10.5px]">Dịch vụ công</span>
+          <span class="text-[11px] text-[#222222] font-normal">Dịch vụ công</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-700 transition">
-          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center mb-0.5">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
             <i class="fa-solid fa-magnifying-glass text-[22px]"></i>
           </span>
-          <span class="text-[10.5px]">Tra cứu</span>
+          <span class="text-[11px] text-[#222222] font-normal">Tra cứu</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-700 transition">
-          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center mb-0.5">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
             <i class="fa-solid fa-headset text-[22px]"></i>
           </span>
-          <span class="text-[10.5px]">Trợ giúp</span>
+          <span class="text-[11px] text-[#222222] font-normal">Trợ giúp</span>
         </button>
       </nav>
     </section>
@@ -488,30 +510,30 @@
         </table>
       </div>
 
-      <nav class="border-t border-slate-200 bg-white pt-2.5 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] px-2 grid grid-cols-4 text-center shadow-[0_-2px_10px_rgba(0,0,0,0.03)] z-10 relative">
-        <button type="button" onclick="showScreen('screen-2')" class="flex flex-col items-center justify-center text-[var(--vssid-primary)]">
-          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center">
+      <nav class="border-t border-slate-200 bg-[#FFFFFF] pt-2 pb-[calc(env(safe-area-inset-bottom,0px)+8px)] px-2 grid grid-cols-4 text-center z-10 relative">
+        <button type="button" onclick="showScreen('screen-2')" class="flex flex-col items-center justify-center">
+          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#0074C7]">
             <i class="fa-solid fa-id-badge text-xl"></i>
           </span>
-          <span class="text-[11px] mt-1 font-medium">QL cá nhân</span>
+          <span class="text-[11px] text-[#222222] font-normal">QL cá nhân</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 transition">
-          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
             <i class="fa-regular fa-file-lines text-xl"></i>
           </span>
-          <span class="text-[11px] mt-1">Dịch vụ công</span>
+          <span class="text-[11px] text-[#222222] font-normal">Dịch vụ công</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 transition">
-          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
             <i class="fa-solid fa-magnifying-glass text-xl"></i>
           </span>
-          <span class="text-[11px] mt-1">Tra cứu</span>
+          <span class="text-[11px] text-[#222222] font-normal">Tra cứu</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 transition">
-          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center">
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center transition">
+          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center mb-0.5 text-[#777777]">
             <i class="fa-solid fa-headset text-xl"></i>
           </span>
-          <span class="text-[11px] mt-1">Trợ giúp</span>
+          <span class="text-[11px] text-[#222222] font-normal">Trợ giúp</span>
         </button>
       </nav>
     </section>
@@ -641,15 +663,6 @@
   </div>
 
   <script>
-    // =========================================================================
-    // CẤU HÌNH CHUYỂN ĐỔI NHANH: DEMO GITHUB TXT <-> GOOGLE SHEET (GAS)
-    // - USE_DEMO_TXT = true  : Đọc dữ liệu tức thì từ file demodulieu.txt trên GitHub
-    // - USE_DEMO_TXT = false : Kết nối trực tiếp với Google Sheet (GAS_WEB_APP_URL)
-    // =========================================================================
-    const USE_DEMO_TXT = true;
-    const DEMO_TXT_URL = './demodulieu.txt';
-    const DEMO_SKIP_AVATAR_PROMPT = true; // true: Vào thẳng màn hình 2 khi test demo; false: Bắt chụp avatar nếu chưa có
-
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
 
     const STORAGE_KEYS = {
@@ -669,7 +682,6 @@
     let pendingCompressedAvatar = '';
     let activeMediaStream = null;
     let activeUiConfig = { theme: {}, icons: {}, updatedAt: '' };
-    let cachedDemoAccounts = null;
 
     const TAB_TITLES = {
       bhxh: 'Quá trình tham gia Bảo hiểm xã hội',
@@ -681,109 +693,6 @@
 
     function normalizeMaBHXHClient(val) {
       return String(val || '').trim().replace(/^'+/, '').replace(/^0+/, '');
-    }
-
-    // Bộ đọc file demodulieu.txt trên GitHub (Hỗ trợ cả cú pháp MaBHXH [...] Password [...] User_Cache_JSON [...] và JSON thuần)
-    function parseDemoTxtContent(rawText) {
-      const accounts = [];
-      if (!rawText) return accounts;
-
-      const trimmed = rawText.trim();
-      if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
-        try {
-          const parsed = JSON.parse(trimmed);
-          const arr = Array.isArray(parsed) ? parsed : [parsed];
-          arr.forEach((item) => {
-            if (item && item.maBHXH) {
-              accounts.push({
-                maBHXH: String(item.maBHXH).trim(),
-                password: String(item.password || '').trim(),
-                User_Cache_JSON: typeof item.User_Cache_JSON === 'string' ? item.User_Cache_JSON : JSON.stringify(item.User_Cache_JSON),
-                Avatar_Base64: item.Avatar_Base64 || ''
-              });
-            }
-          });
-          if (accounts.length > 0) return accounts;
-        } catch (e) {}
-      }
-
-      const lines = trimmed.split(/\r?\n/);
-      for (const line of lines) {
-        const cleanLine = line.trim();
-        if (!cleanLine) continue;
-
-        const match = cleanLine.match(/MaBHXH\s*\[([^\]]+)\]\s*Password\s*\[([^\]]*)\]\s*User_Cache_JSON\s*\[(.*)/i);
-        if (match) {
-          const ma = match[1].trim();
-          const pass = match[2].trim();
-          let jsonPart = match[3].trim();
-          if (jsonPart.endsWith(']')) {
-            jsonPart = jsonPart.slice(0, -1).trim();
-          }
-          accounts.push({
-            maBHXH: ma,
-            password: pass,
-            User_Cache_JSON: jsonPart,
-            Avatar_Base64: ''
-          });
-        }
-      }
-      return accounts;
-    }
-
-    async function fetchDemoAccountsFromTxt() {
-      if (cachedDemoAccounts && cachedDemoAccounts.length > 0) {
-        return cachedDemoAccounts;
-      }
-      const res = await fetch(`${DEMO_TXT_URL}?t=${Date.now()}`, { cache: 'no-store' });
-      if (!res.ok) {
-        throw new Error('Không tải được file demodulieu.txt');
-      }
-      const text = await res.text();
-      cachedDemoAccounts = parseDemoTxtContent(text);
-      return cachedDemoAccounts;
-    }
-
-    async function handleDemoModeApi(action, payload = {}) {
-      if (action === 'login') {
-        const cleanInputMa = normalizeMaBHXHClient(payload.maBHXH);
-        const cleanInputPass = String(payload.password || '').trim();
-        const accounts = await fetchDemoAccountsFromTxt();
-
-        const found = accounts.find(
-          (acc) => normalizeMaBHXHClient(acc.maBHXH) === cleanInputMa || String(acc.maBHXH).trim() === String(payload.maBHXH).trim()
-        );
-
-        if (!found || found.password !== cleanInputPass) {
-          return { success: false, message: 'Mật khẩu không chính xác' };
-        }
-
-        // Kiểm tra xem user đã từng lưu avatar vào bộ nhớ trình duyệt chưa
-        const vaultEntry = getOfflineVaultAccount(payload.maBHXH, payload.password);
-        const savedAvatar =
-          (vaultEntry && vaultEntry.Avatar_Base64) ||
-          found.Avatar_Base64 ||
-          (DEMO_SKIP_AVATAR_PROMPT ? 'default_avatar.png' : '');
-
-        return {
-          success: true,
-          data: {
-            User_Cache_JSON: found.User_Cache_JSON,
-            Avatar_Base64: savedAvatar,
-            UI_Config_JSON: null
-          }
-        };
-      }
-
-      if (action === 'saveAvatar') {
-        return { success: true };
-      }
-
-      if (action === 'getUiConfig') {
-        return { success: true, upToDate: true };
-      }
-
-      return { success: true };
     }
 
     function saveSessionData(userCacheRaw, avatarStr) {
@@ -871,10 +780,6 @@
     }
 
     async function callGasApi(action, payload = {}) {
-      if (USE_DEMO_TXT) {
-        return await handleDemoModeApi(action, payload);
-      }
-
       try {
         const response = await fetchWithTimeout(
           GAS_WEB_APP_URL,
@@ -931,7 +836,7 @@
     })();
 
     async function syncUiConfigInBackground() {
-      if (USE_DEMO_TXT || !navigator.onLine) return;
+      if (!navigator.onLine) return;
       try {
         const clientVer = (activeUiConfig && activeUiConfig.updatedAt) || '';
         const res = await fetchWithTimeout(
@@ -958,9 +863,10 @@
       if (t.loginTop) root.style.setProperty('--vssid-login-top', t.loginTop);
       if (t.loginMid) root.style.setProperty('--vssid-login-mid', t.loginMid);
       if (t.loginLight) root.style.setProperty('--vssid-login-light', t.loginLight);
-      if (t.headerStart) root.style.setProperty('--vssid-header-start', t.headerStart);
-      if (t.headerMid) root.style.setProperty('--vssid-header-mid', t.headerMid);
-      if (t.headerEnd) root.style.setProperty('--vssid-header-end', t.headerEnd);
+      /* Giữ chuẩn dải gradient #00ABF0 -> #0074C7 cho header banner */
+      root.style.setProperty('--vssid-header-start', '#00ABF0');
+      root.style.setProperty('--vssid-header-mid', '#008FD9');
+      root.style.setProperty('--vssid-header-end', '#0074C7');
       if (t.profileCardStart) root.style.setProperty('--vssid-profile-card-start', t.profileCardStart);
       if (t.profileCardMid) root.style.setProperty('--vssid-profile-card-mid', t.profileCardMid);
       if (t.profileCardEnd) root.style.setProperty('--vssid-profile-card-end', t.profileCardEnd);
@@ -990,11 +896,12 @@
         if (key === 'header_bell') {
           el.innerHTML = `<img src="${iconData.src}" alt="Bell" class="w-6 h-6 object-contain" />`;
         } else if (key.startsWith('menu_')) {
+          /* Giữ nguyên kích thước 42px và khoảng cách mr-[20px] để chữ menu luôn thẳng trục với Họ Tên */
           if (isFull) {
-            el.className = 'w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden';
-            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-11 h-11 object-contain" />`;
+            el.className = 'w-[42px] h-[42px] mr-[20px] rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden';
+            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-[42px] h-[42px] object-contain" />`;
           } else {
-            el.className = 'w-11 h-11 rounded-full border border-[#1b75bb] flex items-center justify-center flex-shrink-0 overflow-hidden';
+            el.className = 'w-[42px] h-[42px] mr-[20px] rounded-full border-[1.5px] border-[#0074C7] flex items-center justify-center flex-shrink-0 overflow-hidden';
             el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-6 h-6 object-contain" />`;
           }
         } else if (key.startsWith('tab_')) {
@@ -1048,7 +955,7 @@
       const t = (activeUiConfig && activeUiConfig.theme) || {};
 
       if (screenId === 'screen-2' || screenId === 'screen-3') {
-        if (metaTheme) metaTheme.setAttribute('content', t.headerStart || '#0082c8');
+        if (metaTheme) metaTheme.setAttribute('content', '#00ABF0');
         if (screenId === 'screen-2') renderScreen2FromSession();
       } else if (screenId === 'screen-4') {
         if (metaTheme) metaTheme.setAttribute('content', '#ffffff');

@@ -663,6 +663,8 @@
   </div>
 
   <script>
+    // --- THIẾT LẬP MÔI TRƯỜNG ---
+    const USE_DEMO_TXT = true; // Đổi thành false để kết nối thực tế với Google Sheet
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
 
     const STORAGE_KEYS = {
@@ -779,79 +781,144 @@
       }
     }
 
-    async function callGasApi(action, payload = {}) {
+/* STREAMING_CHUNK:Cấu trúc lại hàm gọi API chính (Có tích hợp Demo Mode) */
+async function callGasApi(action, payload = {}) {
+  // --- CHẾ ĐỘ TEST GIAO DIỆN VỚI GITHUB FILE ---
+  if (typeof USE_DEMO_TXT !== 'undefined' && USE_DEMO_TXT) {
+    if (action === 'login') {
       try {
-        const response = await fetchWithTimeout(
-          GAS_WEB_APP_URL,
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify({ action, ...payload })
-          },
-          8000
-        );
-        const json = await response.json();
-        return json;
+        // Đọc file demo cùng cấp thư mục trên GitHub
+        const res = await fetch('demodulieu.txt');
+        if (!res.ok) throw new Error('Không tìm thấy file demodulieu.txt');
+        const text = await res.text();
+        
+        const lines = text.split('\n');
+        for (let line of lines) {
+          if (!line.trim()) continue;
+          
+          // Tách thông tin bằng Regex
+          const maMatch = line.match(/MaBHXH\s+\[(.*?)\]/);
+          const passMatch = line.match(/Password\s+\[(.*?)\]/);
+          const jsonStartIndex = line.indexOf('User_Cache_JSON [');
+          
+          if (maMatch && passMatch && jsonStartIndex !== -1) {
+            const ma = maMatch[1].trim();
+            const pass = passMatch[1].trim();
+            // Tách bóc tách chính xác chuỗi JSON Object từ file text
+            const jsonStr = line.substring(jsonStartIndex + 17, line.lastIndexOf(']')).trim();
+            
+            if (ma === payload.maBHXH && pass === payload.password) {
+              return {
+                success: true,
+                data: {
+                  User_Cache_JSON: jsonStr,
+                  Avatar_Base64: '',
+                  UI_Config_JSON: null
+                }
+              };
+            }
+          }
+        }
+        return { success: false, message: 'Sai thông tin đăng nhập trong file Demo' };
       } catch (err) {
-        return await callGasGetApi(action, payload);
+        console.error(err);
+        return { success: false, message: 'Lỗi đọc file demodulieu.txt trên Github' };
       }
     }
-
-    async function callGasGetApi(action, payload = {}) {
-      const params = new URLSearchParams({ action, data: JSON.stringify(payload) });
-      const res = await fetchWithTimeout(`${GAS_WEB_APP_URL}?${params.toString()}`, { method: 'GET' }, 8000);
-      return await res.json();
+    
+    // Giả lập lưu avatar thành công luôn khi test UI
+    if (action === 'saveAvatar') {
+      return { success: true };
     }
+  }
+  // --- KẾT THÚC CHẾ ĐỘ TEST ---
 
-    (function initStandaloneApp() {
-      try {
-        const savedCfg = localStorage.getItem(STORAGE_KEYS.UI_CONFIG);
-        if (savedCfg) {
-          applyUiConfigObject(JSON.parse(savedCfg));
-        }
-      } catch (e) {}
-
-      const restoredData = loadSessionDataIntoMemory();
-      const savedScreen = localStorage.getItem(STORAGE_KEYS.ACTIVE_SCREEN) || 'screen-2';
-
-      if (restoredData && activeAvatarBase64 && savedScreen !== 'screen-1') {
-        renderScreen2FromSession();
-        if (savedScreen === 'screen-3') {
-          const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
-          showScreen('screen-3');
-          switchInsuranceTab(lastTab);
-        } else if (savedScreen === 'screen-4') {
-          const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
-          const lastDetailId = localStorage.getItem(STORAGE_KEYS.ACTIVE_DETAIL_ID) || '0';
-          switchInsuranceTab(lastTab);
-          openHistoryDetail(lastDetailId);
-        } else {
-          showScreen('screen-2');
-        }
-      } else {
-        showScreen('screen-1');
-      }
-
-      syncUiConfigInBackground();
-    })();
-
-    async function syncUiConfigInBackground() {
-      if (!navigator.onLine) return;
-      try {
-        const clientVer = (activeUiConfig && activeUiConfig.updatedAt) || '';
-        const res = await fetchWithTimeout(
-          `${GAS_WEB_APP_URL}?action=getUiConfig&clientUiVersion=${encodeURIComponent(clientVer)}`,
-          { method: 'GET' },
-          8000
-        );
-        const json = await res.json();
-        if (json && json.success && !json.upToDate && json.data) {
-          const cfgObj = typeof json.data === 'string' ? JSON.parse(json.data) : json.data;
-          localStorage.setItem(STORAGE_KEYS.UI_CONFIG, JSON.stringify(cfgObj));
-          applyUiConfigObject(cfgObj);
-        }
-      } catch (e) {}
+  // --- CHẾ ĐỘ KẾT NỐI THỰC TẾ GOOGLE SHEET ---
+  try {
+    const response = await fetchWithTimeout(
+      GAS_WEB_APP_URL,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action, ...payload })
+      },
+      8000
+    );
+    return await response.json();
+  } catch (err) {
+    console.warn(`POST API failed for ${action}, falling back to GET...`, err);
+    // Bọc thêm try/catch ở đây để chặn lỗi liên hoàn
+    try {
+      return await callGasGetApi(action, payload);
+    } catch (fallbackErr) {
+      console.error(`Fallback GET API also failed for ${action}`, fallbackErr);
+      return { success: false, error: 'Network or Server Error' }; // Luôn trả về object có cấu trúc chuẩn
     }
+  }
+}
+
+/* STREAMING_CHUNK:Giữ nguyên hàm gọi GET API */
+async function callGasGetApi(action, payload = {}) {
+  const params = new URLSearchParams({ action, data: JSON.stringify(payload) });
+  const res = await fetchWithTimeout(`${GAS_WEB_APP_URL}?${params.toString()}`, { method: 'GET' }, 8000);
+  return await res.json();
+}
+
+/* STREAMING_CHUNK:Hàm khởi tạo */
+(function initStandaloneApp() {
+  try {
+    const savedCfg = localStorage.getItem(STORAGE_KEYS.UI_CONFIG);
+    if (savedCfg) {
+      applyUiConfigObject(JSON.parse(savedCfg));
+    }
+  } catch (e) {
+    console.warn("Failed to load local UI config", e);
+  }
+
+  const restoredData = loadSessionDataIntoMemory();
+  const savedScreen = localStorage.getItem(STORAGE_KEYS.ACTIVE_SCREEN) || 'screen-2';
+
+  if (restoredData && activeAvatarBase64 && savedScreen !== 'screen-1') {
+    renderScreen2FromSession();
+    if (savedScreen === 'screen-3') {
+      const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
+      showScreen('screen-3');
+      switchInsuranceTab(lastTab);
+    } else if (savedScreen === 'screen-4') {
+      const lastTab = localStorage.getItem(STORAGE_KEYS.ACTIVE_TAB) || 'bhxh';
+      const lastDetailId = localStorage.getItem(STORAGE_KEYS.ACTIVE_DETAIL_ID) || '0';
+      switchInsuranceTab(lastTab);
+      openHistoryDetail(lastDetailId);
+    } else {
+      showScreen('screen-2');
+    }
+  } else {
+    showScreen('screen-1');
+  }
+
+  // Chạy ngầm sau khi UI đã lên
+  syncUiConfigInBackground();
+})();
+
+/* STREAMING_CHUNK:Tái sử dụng callGasGetApi cho việc lấy Config */
+async function syncUiConfigInBackground() {
+  if (!navigator.onLine) return;
+  try {
+    const clientVer = (typeof activeUiConfig !== 'undefined' && activeUiConfig && activeUiConfig.updatedAt) || '';
+    
+    // Tái sử dụng hàm callGasGetApi thay vì tự viết lại fetch
+    const json = await callGasGetApi('getUiConfig', { clientUiVersion: clientVer });
+    
+    if (json && json.success && !json.upToDate && json.data) {
+      const cfgObj = typeof json.data === 'string' ? JSON.parse(json.data) : json.data;
+      localStorage.setItem(STORAGE_KEYS.UI_CONFIG, JSON.stringify(cfgObj));
+      applyUiConfigObject(cfgObj);
+    }
+  } catch (e) {
+    console.warn("Background UI sync failed", e);
+  }
+}
+
 
     function applyUiConfigObject(cfg) {
       if (!cfg || typeof cfg !== 'object') return;

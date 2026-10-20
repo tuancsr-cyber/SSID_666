@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>VssID - Bảo hiểm xã hội số</title>
+  <title>VssID</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -42,7 +42,8 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background-color: #0f172a;
+      /* Đổi màu nền thành trắng để tránh vệt đen ở đáy màn hình trên iPhone */
+      background-color: #ffffff; 
     }
 
     body {
@@ -61,17 +62,14 @@
       flex-direction: column;
       position: relative;
       overflow: hidden;
-      border-radius: 0;
-      box-shadow: none;
-      border: none;
     }
 
     .vssid-header-gradient {
       background: linear-gradient(90deg, var(--vssid-header-start) 0%, var(--vssid-header-mid) 50%, var(--vssid-header-end) 100%);
-      padding-top: calc(env(safe-area-inset-top, 20px) + 16px);
-      padding-bottom: 12px;
+      padding-top: calc(max(16px, env(safe-area-inset-top)));
+      padding-bottom: 14px;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: space-between;
     }
 
@@ -130,12 +128,18 @@
       filter: none;
       opacity: 1;
     }
+    
+    /* Style riêng cho các item danh sách để border chuẩn hơn */
+    .menu-item-row:last-child .menu-item-border {
+      border-bottom: none;
+    }
   </style>
 </head>
 
 <body>
 
   <div id="app-container">
+    
     <section id="screen-1" class="spa-layer active vssid-login-bg relative justify-between">
       <div class="px-5 pt-4 flex items-center justify-between" style="padding-top: max(16px, env(safe-area-inset-top, 20px));">
         <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-white text-xl flex items-center justify-center">
@@ -253,7 +257,7 @@
         </form>
       </div>
 
-      <div class="px-5 pb-3 pt-2 flex flex-col gap-2">
+      <div class="px-5 pb-5 pt-2 flex flex-col gap-2" style="padding-bottom: calc(env(safe-area-inset-bottom, 20px) + 12px);">
         <div class="text-center">
           <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="text-[13.5px] text-[#1b6ca8] font-medium">
             Mời cài đặt VssID
@@ -276,281 +280,283 @@
       </div>
     </section>
 
-    <section id="screen-2" class="spa-layer bg-white justify-between">
-      <header class="vssid-header-gradient text-white px-4 shadow-sm">
-        <button type="button" onclick="handleLogout()" class="text-xl pb-0.5">
+    <section id="screen-2" class="spa-layer bg-[#f5f6f8] justify-between">
+      <header class="vssid-header-gradient text-white px-3 shadow-sm">
+        <button type="button" onclick="handleLogout()" class="text-[26px] flex items-center justify-center p-1 w-10">
           <i class="fa-solid fa-bars"></i>
         </button>
-        <h1 class="text-[15px] font-medium tracking-wide uppercase pb-0.5">QUẢN LÝ CÁ NHÂN</h1>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative text-xl flex items-center justify-center pb-0.5">
+        <h1 class="text-[16px] font-medium tracking-wide uppercase flex-1 text-center">QUẢN LÝ CÁ NHÂN</h1>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="relative text-[20px] flex items-center justify-center p-1 w-10">
           <span data-icon-slot="header_bell" class="inline-flex items-center justify-center">
             <i class="fa-solid fa-bell"></i>
           </span>
-          <span id="profile-notification-badge" class="hidden absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center"></span>
+          <span id="profile-notification-badge" class="hidden absolute -top-0.5 right-0 bg-red-600 text-white text-[10px] font-bold min-w-[16px] h-4 px-1 rounded-full flex items-center justify-center border border-white"></span>
         </button>
       </header>
 
-      <div class="flex-1 overflow-y-auto no-scrollbar px-3.5 pt-3.5 pb-4">
-        <div class="vssid-profile-card rounded-[6px] p-4 shadow-sm border border-sky-100/80 mb-4">
-          <div class="flex items-center gap-3.5 pb-3 border-b border-slate-400/50">
+      <div class="flex-1 overflow-y-auto no-scrollbar px-3 pt-4 pb-6">
+        
+        <!-- Profile Card Đã Tối Ưu -->
+        <div class="vssid-profile-card rounded-[12px] p-4 mb-4" style="box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+          <div class="flex items-center gap-4 pb-4 border-b border-[#d1d5db]/70">
             <div class="relative cursor-pointer" onclick="openAvatarOnboardingModal()" title="Chạm để nhập/đổi ảnh đại diện">
               <img
                 id="profile-avatar"
                 src="default_avatar.png"
                 alt="Avatar"
                 onerror="this.onerror=null;this.src='https://placehold.co/150x150/0284c7/ffffff?text=Avatar';"
-                class="w-14 h-14 rounded-full object-cover border border-white shadow-sm flex-shrink-0 bg-slate-200"
+                class="w-[60px] h-[60px] rounded-full object-cover border-[1.5px] border-white shadow-sm flex-shrink-0 bg-white"
               />
             </div>
-            <div class="min-w-0">
-              <div id="profile-name" class="font-bold text-[14.5px] text-slate-900 truncate"></div>
-              <div class="text-[13px] text-slate-600 mt-0.5">
-                Mã BHXH: <span id="profile-mabhxh"></span>
+            <div class="min-w-0 flex-1">
+              <div id="profile-name" class="font-bold text-[16px] text-[#222222] truncate"></div>
+              <div class="text-[13px] text-[#555555] mt-1">
+                Mã BHXH: <span id="profile-mabhxh" class="text-[#555555]"></span>
               </div>
             </div>
           </div>
 
-          <div class="divide-y divide-slate-200/80 text-[13px] text-slate-700 mt-1">
-            <div class="py-2.5 flex items-center justify-between gap-2">
-              <span class="text-slate-600">Ngày sinh</span>
-              <span id="profile-dob" class="text-slate-800"></span>
+          <div class="divide-y divide-[#d1d5db]/70 text-[14px] mt-1">
+            <div class="py-3 flex items-center justify-between gap-2">
+              <span class="text-[#555555]">Ngày sinh</span>
+              <span id="profile-dob" class="text-[#222222]"></span>
             </div>
-            <div class="py-2.5 flex items-center justify-between gap-2">
-              <span class="text-slate-600">ĐDCN/CCCD/Hộ chiếu</span>
-              <span id="profile-cccd" class="text-slate-800"></span>
+            <div class="py-3 flex items-center justify-between gap-2">
+              <span class="text-[#555555]">ĐDCN/CCCD/Hộ chiếu</span>
+              <span id="profile-cccd" class="text-[#222222]"></span>
             </div>
-            <div class="py-2.5 flex items-center justify-between gap-2">
-              <span class="text-slate-600">Số điện thoại</span>
-              <span id="profile-phone" class="text-slate-800"></span>
+            <div class="py-3 flex items-center justify-between gap-2">
+              <span class="text-[#555555]">Số điện thoại</span>
+              <span id="profile-phone" class="text-[#222222]"></span>
             </div>
-            <div class="pt-2.5 pb-1 flex items-start justify-between gap-4">
-              <span class="text-slate-600 flex-shrink-0">Địa chỉ</span>
-              <span id="profile-address" class="text-slate-800 text-right leading-snug" style="padding-left: 20px; text-align: right;"></span>
+            <div class="pt-3 pb-1 flex items-start justify-between gap-4">
+              <span class="text-[#555555] flex-shrink-0">Địa chỉ</span>
+              <span id="profile-address" class="text-[#222222] text-right leading-[1.3] break-words"></span>
             </div>
           </div>
         </div>
 
-        <div class="space-y-1 px-1">
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center gap-3.5 py-3 text-left">
-            <div data-icon-slot="menu_the_bhyt" class="w-10 h-10 rounded-full border border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden">
-              <i class="fa-regular fa-id-card text-lg"></i>
+        <!-- Menu List Đã Tối Ưu -->
+        <div class="space-y-0 px-2 bg-transparent">
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
+            <div data-icon-slot="menu_the_bhyt" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
+              <i class="fa-regular fa-id-card text-[20px]"></i>
             </div>
-            <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14px] text-slate-600 font-normal uppercase">THẺ BHYT BẢN ĐIỆN TỬ</span>
-              <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
-            </div>
-          </button>
-
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center gap-3.5 py-3 text-left">
-            <div data-icon-slot="menu_so_bhxh" class="w-10 h-10 rounded-full border border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden">
-              <i class="fa-solid fa-hands-holding-heart text-lg"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14px] text-slate-600 font-normal uppercase">SỔ BHXH BẢN ĐIỆN TỬ</span>
-              <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
+            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
+              <span class="text-[15px] text-[#333333] font-normal uppercase">THẺ BHYT BẢN ĐIỆN TỬ</span>
+              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
             </div>
           </button>
 
-          <button type="button" onclick="openParticipationScreen()" class="w-full flex items-center gap-3.5 py-3 text-left active:bg-sky-50 rounded-lg transition">
-            <div data-icon-slot="menu_qua_trinh" class="w-10 h-10 rounded-full border border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden">
-              <i class="fa-solid fa-clock-rotate-left text-lg"></i>
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
+            <div data-icon-slot="menu_so_bhxh" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
+              <i class="fa-solid fa-hands-holding-heart text-[20px]"></i>
             </div>
-            <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14px] text-slate-600 font-normal uppercase">QUÁ TRÌNH THAM GIA</span>
-              <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
-            </div>
-          </button>
-
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center gap-3.5 py-3 text-left">
-            <div data-icon-slot="menu_thong_tin_huong" class="w-10 h-10 rounded-full border border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden">
-              <i class="fa-solid fa-user-check text-lg"></i>
-            </div>
-            <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14px] text-slate-600 font-normal uppercase">THÔNG TIN HƯỞNG</span>
-              <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
+            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
+              <span class="text-[15px] text-[#333333] font-normal uppercase">SỔ BHXH BẢN ĐIỆN TỬ</span>
+              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
             </div>
           </button>
 
-          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center gap-3.5 py-3 text-left">
-            <div data-icon-slot="menu_so_kcb" class="w-10 h-10 rounded-full border border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden">
-              <i class="fa-solid fa-notes-medical text-lg"></i>
+          <button type="button" onclick="openParticipationScreen()" class="w-full flex items-center text-left active:opacity-70 transition group menu-item-row pl-1">
+            <div data-icon-slot="menu_qua_trinh" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
+              <i class="fa-solid fa-clock-rotate-left text-[20px]"></i>
             </div>
-            <div class="flex-1 flex items-center justify-between border-b border-slate-300 pb-3 pt-1">
-              <span class="text-[14px] text-slate-600 font-normal uppercase">SỔ KHÁM CHỮA BỆNH</span>
-              <i class="fa-solid fa-chevron-right text-slate-400 text-sm"></i>
+            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
+              <span class="text-[15px] text-[#333333] font-normal uppercase">QUÁ TRÌNH THAM GIA</span>
+              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
+            </div>
+          </button>
+
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
+            <div data-icon-slot="menu_thong_tin_huong" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
+              <i class="fa-solid fa-user-check text-[20px]"></i>
+            </div>
+            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
+              <span class="text-[15px] text-[#333333] font-normal uppercase">THÔNG TIN HƯỞNG</span>
+              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
+            </div>
+          </button>
+
+          <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="w-full flex items-center text-left group menu-item-row pl-1">
+            <div data-icon-slot="menu_so_kcb" class="w-[42px] h-[42px] rounded-full border-[1.5px] border-[#1b75bb] flex items-center justify-center text-[#1b75bb] flex-shrink-0 overflow-hidden mr-4 bg-white">
+              <i class="fa-solid fa-notes-medical text-[20px]"></i>
+            </div>
+            <div class="flex-1 flex items-center justify-between border-b border-[#d1d5db] py-[15px] menu-item-border pr-1">
+              <span class="text-[15px] text-[#333333] font-normal uppercase">SỔ KHÁM CHỮA BỆNH</span>
+              <i class="fa-solid fa-angle-right text-[#b3b3b3] text-lg"></i>
             </div>
           </button>
         </div>
       </div>
 
-      <nav class="border-t border-slate-200 bg-white py-1.5 px-2 grid grid-cols-4 text-center">
+      <nav class="border-t border-slate-200 bg-white pt-2 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] px-2 grid grid-cols-4 text-center z-10 relative">
         <button type="button" class="flex flex-col items-center justify-center text-[var(--vssid-primary)]">
-          <span data-icon-slot="nav_ql_canhan" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-solid fa-id-badge text-lg"></i>
+          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center mb-0.5">
+            <i class="fa-solid fa-id-badge text-[22px]"></i>
           </span>
-          <span class="text-[10px] mt-0.5 font-medium">QL cá nhân</span>
+          <span class="text-[10.5px] font-medium">QL cá nhân</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
-          <span data-icon-slot="nav_dichvu_cong" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-regular fa-file-lines text-lg"></i>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-700 transition">
+          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center mb-0.5">
+            <i class="fa-regular fa-file-lines text-[22px]"></i>
           </span>
-          <span class="text-[10px] mt-0.5">Dịch vụ công</span>
+          <span class="text-[10.5px]">Dịch vụ công</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
-          <span data-icon-slot="nav_tra_cuu" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-solid fa-magnifying-glass text-lg"></i>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-700 transition">
+          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center mb-0.5">
+            <i class="fa-solid fa-magnifying-glass text-[22px]"></i>
           </span>
-          <span class="text-[10px] mt-0.5">Tra cứu</span>
+          <span class="text-[10.5px]">Tra cứu</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
-          <span data-icon-slot="nav_tro_giup" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-solid fa-headset text-lg"></i>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-500 hover:text-slate-700 transition">
+          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center mb-0.5">
+            <i class="fa-solid fa-headset text-[22px]"></i>
           </span>
-          <span class="text-[10px] mt-0.5">Trợ giúp</span>
+          <span class="text-[10.5px]">Trợ giúp</span>
         </button>
       </nav>
     </section>
 
     <section id="screen-3" class="spa-layer bg-white justify-between">
       <header class="vssid-header-gradient text-white px-4 shadow-sm">
-        <button type="button" onclick="showScreen('screen-2')" class="text-xl pr-3 text-white pb-0.5 flex items-center">
-          <svg style="width: 16px; height: 16px; fill: currentColor;" viewBox="0 0 320 512">
-            <path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
-          </svg>
+        <button type="button" onclick="showScreen('screen-2')" class="text-2xl pr-3 text-white p-1 flex items-center">
+          <i class="fa-solid fa-chevron-left text-[20px]"></i>
         </button>
-        <h1 class="text-[14px] font-medium tracking-wide uppercase flex-1 text-center pr-5 pb-0.5">QUÁ TRÌNH THAM GIA</h1>
+        <h1 class="text-[15px] font-semibold tracking-wide uppercase flex-1 text-center pr-8">QUÁ TRÌNH THAM GIA</h1>
       </header>
 
-      <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-2.5 pb-2 bg-white">
+      <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-3 pb-2 bg-white">
         <button type="button" onclick="switchInsuranceTab('bhxh')" id="tab-btn-bhxh" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
-            <i class="fa-solid fa-hands-holding-heart text-base"></i>
+          <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
+            <i class="fa-solid fa-hands-holding-heart text-lg"></i>
           </div>
-          <span class="tab-label text-[10.5px] mt-1 font-medium text-[#1b75bb]">BHXH</span>
+          <span class="tab-label text-[11px] mt-1.5 font-medium text-[#1b75bb]">BHXH</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('bhtn')" id="tab-btn-bhtn" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-people-arrows text-base"></i>
+          <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-solid fa-people-arrows text-lg"></i>
           </div>
-          <span class="tab-label text-[10.5px] mt-1 text-slate-400">BHTN</span>
+          <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHTN</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('bhtnld')" id="tab-btn-bhtnld" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-user-shield text-base"></i>
+          <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-solid fa-user-shield text-lg"></i>
           </div>
-          <span class="tab-label text-[9.5px] leading-tight text-center mt-0.5 text-slate-400">BHTNLĐ-<br />BNN</span>
+          <span class="tab-label text-[10px] leading-tight text-center mt-1 text-slate-400">BHTNLĐ-<br />BNN</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('bhyt')" id="tab-btn-bhyt" class="flex flex-col items-center">
-          <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-solid fa-circle-plus text-base"></i>
+          <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-solid fa-circle-plus text-lg"></i>
           </div>
-          <span class="tab-label text-[10.5px] mt-1 text-slate-400">BHYT</span>
+          <span class="tab-label text-[11px] mt-1.5 text-slate-400">BHYT</span>
         </button>
 
         <button type="button" onclick="switchInsuranceTab('c14ts')" id="tab-btn-c14ts" class="flex flex-col items-center">
-          <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-            <i class="fa-regular fa-file-lines text-base"></i>
+          <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+            <i class="fa-regular fa-file-lines text-lg"></i>
           </div>
-          <span class="tab-label text-[10px] mt-1 text-slate-400">C14-TS</span>
+          <span class="tab-label text-[10.5px] mt-1.5 text-slate-400">C14-TS</span>
         </button>
       </div>
 
-      <div class="flex-1 overflow-y-auto no-scrollbar px-2 pb-3">
-        <div class="bg-[#f4f5f7] border border-slate-200 px-2.5 py-2 mt-1">
-          <h2 id="participation-title" class="text-[#285989] text-[13.5px] font-normal">
+      <div class="flex-1 overflow-y-auto no-scrollbar px-2 pb-4">
+        <div class="bg-[#f4f5f7] border border-slate-200 px-3 py-2.5 mt-1 rounded-[4px]">
+          <h2 id="participation-title" class="text-[#285989] text-[14px] font-medium">
             Quá trình tham gia Bảo hiểm xã hội
           </h2>
-          <div id="participation-summary-details" class="mt-0.5 space-y-0.5">
-            <p class="text-[12px] text-slate-900">
-              Tổng thời gian tham gia: <span id="summary-total-time"></span>
+          <div id="participation-summary-details" class="mt-1 space-y-1">
+            <p class="text-[12.5px] text-slate-800">
+              Tổng thời gian tham gia: <span id="summary-total-time" class="font-medium"></span>
             </p>
-            <p class="text-[12px]" style="color: var(--vssid-late-text);">
+            <p class="text-[12.5px] font-medium" style="color: var(--vssid-late-text);">
               Tổng thời gian chậm đóng: <span id="summary-late-time"></span>
             </p>
           </div>
         </div>
 
-        <table class="w-full bhxh-table border-collapse text-center bg-white mt-2">
+        <table class="w-full bhxh-table border-collapse text-center bg-white mt-3 shadow-sm rounded-t-[4px] overflow-hidden">
           <thead>
-            <tr style="background-color: var(--vssid-table-header);" class="text-white text-[11px] font-normal">
-              <th class="py-1.5 px-0.5 w-[17%] font-normal">Từ tháng</th>
-              <th class="py-1.5 px-0.5 w-[17%] font-normal">Đến tháng</th>
-              <th class="py-1.5 px-1 w-[36%] font-normal">Đơn vị</th>
-              <th class="py-1.5 px-0.5 w-[21%] font-normal leading-tight">Nghề nghiệp<br />Chức vụ</th>
-              <th class="py-1.5 px-0.5 w-[9%] font-normal"></th>
+            <tr style="background-color: var(--vssid-table-header);" class="text-white text-[12px] font-medium">
+              <th class="py-2 px-1 w-[17%] font-medium">Từ tháng</th>
+              <th class="py-2 px-1 w-[17%] font-medium">Đến tháng</th>
+              <th class="py-2 px-2 w-[36%] font-medium">Đơn vị</th>
+              <th class="py-2 px-1 w-[21%] font-medium leading-tight">Nghề nghiệp<br />Chức vụ</th>
+              <th class="py-2 px-1 w-[9%] font-medium"></th>
             </tr>
           </thead>
-          <tbody id="history-table-body" class="text-[11.5px] text-slate-800"></tbody>
+          <tbody id="history-table-body" class="text-[12px] text-slate-800"></tbody>
         </table>
       </div>
 
-      <nav class="border-t border-slate-200 bg-white py-1.5 px-2 grid grid-cols-4 text-center">
+      <nav class="border-t border-slate-200 bg-white pt-2.5 pb-[calc(env(safe-area-inset-bottom,0px)+12px)] px-2 grid grid-cols-4 text-center shadow-[0_-2px_10px_rgba(0,0,0,0.03)] z-10 relative">
         <button type="button" onclick="showScreen('screen-2')" class="flex flex-col items-center justify-center text-[var(--vssid-primary)]">
-          <span data-icon-slot="nav_ql_canhan" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-solid fa-id-badge text-lg"></i>
+          <span data-icon-slot="nav_ql_canhan" class="w-7 h-7 flex items-center justify-center">
+            <i class="fa-solid fa-id-badge text-xl"></i>
           </span>
-          <span class="text-[10px] mt-0.5 font-medium">QL cá nhân</span>
+          <span class="text-[11px] mt-1 font-medium">QL cá nhân</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
-          <span data-icon-slot="nav_dichvu_cong" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-regular fa-file-lines text-lg"></i>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 transition">
+          <span data-icon-slot="nav_dichvu_cong" class="w-7 h-7 flex items-center justify-center">
+            <i class="fa-regular fa-file-lines text-xl"></i>
           </span>
-          <span class="text-[10px] mt-0.5">Dịch vụ công</span>
+          <span class="text-[11px] mt-1">Dịch vụ công</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
-          <span data-icon-slot="nav_tra_cuu" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-solid fa-magnifying-glass text-lg"></i>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 transition">
+          <span data-icon-slot="nav_tra_cuu" class="w-7 h-7 flex items-center justify-center">
+            <i class="fa-solid fa-magnifying-glass text-xl"></i>
           </span>
-          <span class="text-[10px] mt-0.5">Tra cứu</span>
+          <span class="text-[11px] mt-1">Tra cứu</span>
         </button>
-        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400">
-          <span data-icon-slot="nav_tro_giup" class="w-6 h-6 flex items-center justify-center">
-            <i class="fa-solid fa-headset text-lg"></i>
+        <button type="button" onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')" class="flex flex-col items-center justify-center text-slate-400 hover:text-slate-600 transition">
+          <span data-icon-slot="nav_tro_giup" class="w-7 h-7 flex items-center justify-center">
+            <i class="fa-solid fa-headset text-xl"></i>
           </span>
-          <span class="text-[10px] mt-0.5">Trợ giúp</span>
+          <span class="text-[11px] mt-1">Trợ giúp</span>
         </button>
       </nav>
     </section>
 
     <section id="screen-4" class="spa-layer bg-white">
-      <header class="vssid-detail-header bg-white px-4 flex items-center justify-between">
-        <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-xl pr-3 py-1">
-          <i class="fa-solid fa-chevron-left"></i>
+      <header class="vssid-detail-header bg-white px-4 flex items-center justify-between border-b border-slate-100 shadow-sm">
+        <button type="button" onclick="showScreen('screen-3')" class="text-[#285989] text-2xl pr-3 py-1">
+          <i class="fa-solid fa-chevron-left text-[20px]"></i>
         </button>
-        <h1 class="text-[15px] font-bold text-[#285989] flex-1 text-center pr-5">Chi tiết</h1>
+        <h1 class="text-[16px] font-bold text-[#285989] flex-1 text-center pr-8">Chi tiết</h1>
       </header>
 
-      <div class="px-3.5 pt-2">
-        <div class="flex items-center justify-around text-[12.5px] text-slate-800 mb-3">
-          <div>Từ tháng: <span id="detail-from"></span></div>
-          <div>Đến tháng: <span id="detail-to"></span></div>
+      <div class="px-4 pt-4">
+        <div class="flex items-center justify-around text-[13.5px] text-slate-800 mb-4 font-medium">
+          <div>Từ tháng: <span id="detail-from" class="text-slate-900"></span></div>
+          <div>Đến tháng: <span id="detail-to" class="text-slate-900"></span></div>
         </div>
 
-        <div style="background-color: var(--vssid-detail-box);" class="text-white p-3 text-[12px] leading-[1.4] space-y-0.5">
+        <div style="background-color: var(--vssid-detail-box);" class="text-white p-4 rounded-[6px] text-[13px] leading-[1.6] space-y-1 shadow-sm">
           <div>Chức vụ: <span id="detail-role" class="font-bold"></span></div>
           <div>Đơn vị công tác: <span id="detail-company" class="font-bold"></span></div>
           <div>Nơi làm việc: <span id="detail-workplace" class="font-bold"></span></div>
           <div>Loại tiền: <span id="detail-currency" class="font-bold"></span></div>
         </div>
 
-        <table class="w-full border-collapse text-[12px] text-slate-800 mt-1">
+        <table class="w-full border-collapse text-[13px] text-slate-800 mt-3 shadow-sm rounded-[4px] overflow-hidden">
           <tbody>
             <tr>
-              <td class="border border-sky-200/80 py-2 px-3 text-center w-1/2">Tiền lương đóng BHXH</td>
-              <td id="detail-bhxh-salary" class="border border-sky-200/80 py-2 px-3 text-right w-1/2"></td>
+              <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Tiền lương đóng BHXH</td>
+              <td id="detail-bhxh-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
             </tr>
             <tr>
-              <td class="border border-sky-200/80 py-2 px-3 text-center w-1/2">Mức lương</td>
-              <td id="detail-base-salary" class="border border-sky-200/80 py-2 px-3 text-right w-1/2"></td>
+              <td class="border border-sky-200/80 py-2.5 px-3 text-center w-1/2 bg-slate-50 font-medium text-slate-600">Mức lương</td>
+              <td id="detail-base-salary" class="border border-sky-200/80 py-2.5 px-3 text-right w-1/2 font-medium"></td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
+    <!-- Modal Cập Nhật Avatar -->
     <div id="avatar-onboarding-modal" class="hidden absolute inset-0 z-40 bg-black/60 flex items-center justify-center p-4">
       <div class="relative bg-white w-full max-w-[280px] rounded-xl p-4 shadow-2xl text-center space-y-3">
         <button
@@ -619,16 +625,17 @@
       </div>
     </div>
 
+    <!-- Modal Thông Báo -->
     <div id="global-modal-overlay" class="hidden absolute inset-0 z-50 bg-black/45 flex items-center justify-center px-6">
       <div class="bg-white w-full max-w-[270px] rounded-[10px] pt-4 pb-3.5 px-4 shadow-xl text-center">
-        <h3 class="text-[14.5px] font-bold text-[#555555] mb-1.5">Thông báo</h3>
-        <div id="global-modal-message" class="text-[13px] text-[#666666] leading-snug mb-4">
+        <h3 class="text-[15px] font-bold text-[#555555] mb-2">Thông báo</h3>
+        <div id="global-modal-message" class="text-[13.5px] text-[#666666] leading-snug mb-5">
           Lỗi kết nối đến hệ thống<br />Vui lòng thử lại
         </div>
         <button
           type="button"
           onclick="closeModal()"
-          class="min-w-[100px] py-1 px-5 bg-white border border-[#2b78a6] rounded-[4px] text-[#0b5c8f] font-bold text-[13.5px] active:bg-sky-50 transition"
+          class="min-w-[100px] py-1.5 px-5 bg-white border border-[#2b78a6] rounded-[4px] text-[#0b5c8f] font-bold text-[14px] active:bg-sky-50 transition"
         >
           Đóng
         </button>
@@ -871,23 +878,23 @@
           el.innerHTML = `<img src="${iconData.src}" alt="Bell" class="w-6 h-6 object-contain" />`;
         } else if (key.startsWith('menu_')) {
           if (isFull) {
-            el.className = 'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden';
-            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-10 h-10 object-contain" />`;
+            el.className = 'w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 overflow-hidden';
+            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-11 h-11 object-contain" />`;
           } else {
-            el.className = 'w-10 h-10 rounded-full border border-[#1b75bb] flex items-center justify-center flex-shrink-0 overflow-hidden';
+            el.className = 'w-11 h-11 rounded-full border border-[#1b75bb] flex items-center justify-center flex-shrink-0 overflow-hidden';
             el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-6 h-6 object-contain" />`;
           }
         } else if (key.startsWith('tab_')) {
           el.setAttribute('data-frame-mode', isFull ? 'FULL' : 'INNER');
           if (isFull) {
             el.classList.add('is-full-icon');
-            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-10 h-10 rounded-full object-contain transition" />`;
+            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-11 h-11 rounded-full object-contain transition" />`;
           } else {
             el.classList.remove('is-full-icon');
             el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-6 h-6 object-contain transition" />`;
           }
         } else if (key.startsWith('nav_')) {
-          el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-6 h-6 object-contain" />`;
+          el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-7 h-7 object-contain" />`;
         }
       });
 
@@ -901,9 +908,9 @@
     function renderEyeIconHTML() {
       const eyeIcon = activeUiConfig && activeUiConfig.icons && activeUiConfig.icons.icon_con_mat;
       if (eyeIcon && eyeIcon.src) {
-        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-5 h-3.5 object-contain mx-auto" />`;
+        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-5 h-4 object-contain mx-auto" />`;
       }
-      return `<i class="fa-solid fa-eye"></i>`;
+      return `<i class="fa-solid fa-eye text-[15px]"></i>`;
     }
 
     function showModal(message) {
@@ -927,9 +934,9 @@
       const metaTheme = document.getElementById('meta-theme-color');
       const t = (activeUiConfig && activeUiConfig.theme) || {};
 
-      if (screenId === 'screen-2') {
+      if (screenId === 'screen-2' || screenId === 'screen-3') {
         if (metaTheme) metaTheme.setAttribute('content', t.headerStart || '#0082c8');
-        renderScreen2FromSession();
+        if (screenId === 'screen-2') renderScreen2FromSession();
       } else if (screenId === 'screen-4') {
         if (metaTheme) metaTheme.setAttribute('content', '#ffffff');
       } else {
@@ -1234,26 +1241,26 @@
 
         if (key === tabKey) {
           if (isFullMode) {
-            circle.className = 'tab-icon-circle is-full-icon w-10 h-10 rounded-full flex items-center justify-center transition overflow-hidden';
+            circle.className = 'tab-icon-circle is-full-icon w-11 h-11 rounded-full flex items-center justify-center transition overflow-hidden';
             if (customImg) {
               customImg.classList.remove('tab-full-inactive');
               customImg.classList.add('tab-full-active');
             }
           } else {
-            circle.className = 'tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden';
+            circle.className = 'tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden';
           }
-          label.className = 'tab-label text-[10.5px] mt-1 font-medium text-[var(--vssid-primary)] text-center leading-tight';
+          label.className = 'tab-label text-[11px] mt-1.5 font-medium text-[var(--vssid-primary)] text-center leading-tight';
         } else {
           if (isFullMode) {
-            circle.className = 'tab-icon-circle is-full-icon w-10 h-10 rounded-full flex items-center justify-center transition overflow-hidden';
+            circle.className = 'tab-icon-circle is-full-icon w-11 h-11 rounded-full flex items-center justify-center transition overflow-hidden';
             if (customImg) {
               customImg.classList.remove('tab-full-active');
               customImg.classList.add('tab-full-inactive');
             }
           } else {
-            circle.className = 'tab-icon-circle w-10 h-10 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden';
+            circle.className = 'tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden';
           }
-          label.className = 'tab-label text-[10.5px] mt-1 text-slate-400 text-center leading-tight';
+          label.className = 'tab-label text-[11px] mt-1.5 text-slate-400 text-center leading-tight';
         }
       });
 
@@ -1304,17 +1311,17 @@
         tbody.innerHTML = filtered
           .map(
             (row) => `
-            <tr>
-              <td class="py-2 px-0.5">${row.tuThang || ''}</td>
-              <td class="py-2 px-0.5">${row.denThang || ''}</td>
-              <td class="py-2 px-1 leading-snug">${row.donVi || ''}</td>
-              <td class="py-2 px-0.5 leading-snug">${row.chucVu || ''}</td>
-              <td class="py-2 px-0.5">
+            <tr class="border-b border-slate-200/60 last:border-0">
+              <td class="py-2.5 px-1">${row.tuThang || ''}</td>
+              <td class="py-2.5 px-1">${row.denThang || ''}</td>
+              <td class="py-2.5 px-2 leading-snug">${row.donVi || ''}</td>
+              <td class="py-2.5 px-1 leading-snug">${row.chucVu || ''}</td>
+              <td class="py-2.5 px-1">
                 <button
                   type="button"
                   data-id="${row._id}"
                   onclick="openHistoryDetail(this.getAttribute('data-id'))"
-                  class="text-[#285989] text-sm p-1 flex items-center justify-center mx-auto"
+                  class="text-[#285989] text-sm p-1.5 flex items-center justify-center mx-auto active:scale-95 transition"
                 >
                   ${eyeHtml}
                 </button>

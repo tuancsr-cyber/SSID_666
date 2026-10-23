@@ -3,6 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <!-- Chống các công cụ tìm kiếm, bot thu thập dữ liệu (Index / Crawl / Archive / Cache) -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache" />
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+  <meta name="googlebot-news" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="slurp" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="baiduspider" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="yandex" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="duckduckbot" content="noindex, nofollow, noarchive, nosnippet" />
+  <meta name="referrer" content="no-referrer" />
+  <script>
+    // Chặn sớm các bot/crawler dò quét tự động qua User-Agent
+    (function () {
+      var ua = (navigator.userAgent || '').toLowerCase();
+      var botPattern = /bot|googlebot|bingbot|slurp|duckduckbot|baiduspider|yandexbot|sogou|exabot|facebot|ia_archiver|crawler|spider|crawling|ahrefsbot|semrushbot|mj12bot|dotbot|petalbot|bytespider|gptbot|claudebot|ccbot/i;
+      if (botPattern.test(ua)) {
+        document.documentElement.innerHTML = '';
+        window.stop && window.stop();
+      }
+    })();
+  </script>
   <meta name="theme-color" content="#00ABF0" id="meta-theme-color" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
@@ -29,7 +50,7 @@
       --vssid-profile-card-end: #f4f6f8;
       --vssid-bg-main: #F2F2F2;
       --vssid-footer-bg: #FFFFFF;
-      /* Màu header bảng (03.png) và khung chi tiết (04.png) khóa chuẩn */
+      /* Màu header bảng (03.png / tham chiếu.jpg) và khung chi tiết (04.png) khóa chuẩn */
       --vssid-table-header: #355c85;
       --vssid-detail-box: #356291;
       --vssid-vneid-btn: #c80815;
@@ -118,7 +139,7 @@
       display: flex;
     }
 
-    /* Bảng quá trình tham gia chuẩn mẫu 03.png & image_d44c4d.png */
+    /* Bảng quá trình tham gia chuẩn mẫu tham chiếu.jpg */
     .bhxh-table {
       border-collapse: collapse;
       border: 1px solid #9fa6ad;
@@ -131,18 +152,7 @@
       border: none;
     }
     .bhxh-table td {
-      border-top: 1px solid #9fa6ad;
-      border-bottom: 1px solid #9fa6ad;
-      border-left: 1px solid #9fa6ad;
-      border-right: 1px solid #9fa6ad;
-    }
-    /* Màu viền 2 cột cuối: vạch ngăn giữa cột Nghề nghiệp/Chức vụ và cột Con mắt mảnh & nhạt hơn (#cfd7df), viền ngoài cùng ánh xanh xám nhẹ (#a8bfd4) */
-    .bhxh-table td.col-role {
-      border-right: 1px solid #cfd7df;
-    }
-    .bhxh-table td.col-eye {
-      border-left: 1px solid #cfd7df;
-      border-right: 1px solid #a8bfd4;
+      border: 1px solid #9fa6ad;
     }
 
     .tab-icon-circle.is-full-icon {
@@ -476,7 +486,7 @@
   </nav>
 </section>
 
-<!-- MÀN HÌNH 3: QUÁ TRÌNH THAM GIA (Chuẩn mẫu 03.png, c14-ts.jpg & image_d44c4d.png) -->
+<!-- MÀN HÌNH 3: QUÁ TRÌNH THAM GIA (Chuẩn mẫu tham chiếu.jpg, 03.png & c14-ts.jpg) -->
 <section id="screen-3" class="spa-layer bg-white justify-between">
   <header class="vssid-header-gradient text-white pl-[12px] pr-[18px]">
     <button type="button" onclick="showScreen('screen-2')" class="flex items-center justify-start w-8 h-8 text-white">
@@ -487,70 +497,76 @@
     <h1 class="text-[16.5px] font-normal tracking-[0.2px] uppercase flex-1 text-center pr-6">QUÁ TRÌNH THAM GIA</h1>
   </header>
 
-  <div class="grid grid-cols-5 gap-0.5 px-1.5 pt-2.5 pb-2 bg-white border-b border-[#e2e4e8]">
+  <div class="grid grid-cols-5 gap-0.5 px-2 pt-3 pb-3.5 bg-white">
     <button type="button" onclick="switchInsuranceTab('bhxh')" id="tab-btn-bhxh" class="flex flex-col items-center">
-      <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
-        <i class="fa-solid fa-hands-holding-heart text-lg"></i>
+      <div data-icon-slot="tab_bhxh" class="tab-icon-circle w-[50px] h-[50px] rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden">
+        <i class="fa-solid fa-hands-holding-heart text-xl"></i>
       </div>
-      <span class="tab-label text-[11px] mt-1.5 font-normal text-[#1d629d]">BHXH</span>
+      <span class="tab-label text-[12px] mt-1.5 font-normal text-[#1d629d] text-center leading-[1.22]">BHXH</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('bhtn')" id="tab-btn-bhtn" class="flex flex-col items-center">
-      <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-        <i class="fa-solid fa-people-arrows text-lg"></i>
+      <div data-icon-slot="tab_bhtn" class="tab-icon-circle w-[50px] h-[50px] rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-solid fa-people-arrows text-xl"></i>
       </div>
-      <span class="tab-label text-[11px] mt-1.5 text-[#8c8c8c]">BHTN</span>
+      <span class="tab-label text-[12px] mt-1.5 font-normal text-[#8c8c8c] text-center leading-[1.22]">BHTN</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('bhtnld')" id="tab-btn-bhtnld" class="flex flex-col items-center">
-      <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-        <i class="fa-solid fa-user-shield text-lg"></i>
+      <div data-icon-slot="tab_bhtnld" class="tab-icon-circle w-[50px] h-[50px] rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-solid fa-user-shield text-xl"></i>
       </div>
-      <span class="tab-label text-[10.5px] leading-tight text-center mt-1 text-[#8c8c8c]">BHTNLĐ-<br />BNN</span>
+      <span class="tab-label text-[12px] mt-1.5 font-normal text-[#8c8c8c] text-center leading-[1.22]">BHTNLĐ-<br />BNN</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('bhyt')" id="tab-btn-bhyt" class="flex flex-col items-center">
-      <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-        <i class="fa-solid fa-circle-plus text-lg"></i>
+      <div data-icon-slot="tab_bhyt" class="tab-icon-circle w-[50px] h-[50px] rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-solid fa-circle-plus text-xl"></i>
       </div>
-      <span class="tab-label text-[11px] mt-1.5 text-[#8c8c8c]">BHYT</span>
+      <span class="tab-label text-[12px] mt-1.5 font-normal text-[#8c8c8c] text-center leading-[1.22]">BHYT</span>
     </button>
 
     <button type="button" onclick="switchInsuranceTab('c14ts')" id="tab-btn-c14ts" class="flex flex-col items-center">
-      <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
-        <i class="fa-regular fa-file-lines text-lg"></i>
+      <div data-icon-slot="tab_c14ts" class="tab-icon-circle w-[50px] h-[50px] rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden">
+        <i class="fa-regular fa-file-lines text-xl"></i>
       </div>
-      <span class="tab-label text-[11px] mt-1.5 text-[#8c8c8c]">C14-TS</span>
+      <span class="tab-label text-[12px] mt-1.5 font-normal text-[#8c8c8c] text-center leading-[1.22]">C14-TS</span>
     </button>
   </div>
 
   <!-- Vùng hiển thị 1: Dành cho các tab BHXH, BHTN, BHTNLĐ-BNN, BHYT -->
-  <div id="standard-tab-content" class="flex-1 overflow-y-auto no-scrollbar px-2 pb-3 bg-white">
-    <div id="participation-summary-box" class="bg-[#f2f3f5] border border-[#e2e5e8] px-3 py-2 mt-2 rounded-none">
-      <h2 id="participation-title" class="text-[#285989] text-[14.5px] font-normal leading-snug">
+  <div id="standard-tab-content" class="flex-1 overflow-y-auto no-scrollbar px-2.5 pb-3 bg-white">
+    <div id="participation-summary-box" class="bg-[#f2f3f5] border border-[#dcdfe3] border-b-0 px-3 py-2.5 mt-0.5 rounded-none">
+      <h2 id="participation-title" class="text-[#285989] text-[15.5px] font-normal leading-snug">
         Quá trình tham gia Bảo hiểm xã hội
       </h2>
-      <div id="participation-summary-details" class="mt-0.5 space-y-0.5">
-        <p class="text-[13px] text-[#222222] font-normal leading-[1.42]">
+      <div id="participation-summary-details" class="mt-1 space-y-0.5">
+        <p class="text-[14px] text-[#111111] font-normal leading-[1.45]">
           Tổng thời gian tham gia: <span id="summary-total-time"></span>
         </p>
-        <p id="summary-late-row" class="text-[13px] font-normal leading-[1.42]" style="color: var(--vssid-late-text);">
+        <p id="summary-late-row" class="text-[14px] font-normal leading-[1.45]" style="color: var(--vssid-late-text);">
           Tổng thời gian chậm đóng: <span id="summary-late-time"></span>
+          <button
+            type="button"
+            id="summary-late-detail-btn"
+            onclick="showModal('Lỗi kết nối đến hệ thống<br>Vui lòng thử lại')"
+            class="hidden ml-1 text-[#285989] font-normal active:opacity-70"
+          >Chi tiết</button>
         </p>
       </div>
     </div>
 
-    <table class="w-full bhxh-table text-center bg-white mt-2.5 rounded-none overflow-hidden">
+    <table class="w-full bhxh-table text-center bg-white mt-0 rounded-none overflow-hidden">
       <thead>
-        <tr class="text-white text-[12px] font-normal">
-          <th class="py-1.5 px-0.5 w-[16.5%] font-normal whitespace-nowrap">Từ tháng</th>
-          <th class="py-1.5 px-0.5 w-[14.5%] font-normal leading-[1.2]">Đến<br />tháng</th>
-          <th class="py-1.5 px-1.5 w-[39%] font-normal">Đơn vị</th>
-          <th class="py-1.5 pl-0.5 pr-0 w-[22.5%] font-normal leading-[1.2]">Nghề nghiệp<br />Chức vụ</th>
-          <th class="py-1.5 px-0 w-[7.5%] font-normal"></th>
+        <tr class="text-white text-[12.5px] font-normal">
+          <th class="py-[7px] px-0.5 w-[17.5%] font-normal whitespace-nowrap">Từ tháng</th>
+          <th class="py-[7px] px-0.5 w-[16.5%] font-normal leading-[1.2]">Đến<br />tháng</th>
+          <th class="py-[7px] px-1.5 w-[35.5%] font-normal">Đơn vị</th>
+          <th class="py-[7px] px-0.5 w-[22.5%] font-normal leading-[1.2]">Nghề nghiệp<br />Chức vụ</th>
+          <th class="py-[7px] px-0 w-[8%] font-normal"></th>
         </tr>
       </thead>
-      <tbody id="history-table-body" class="text-[12px] text-[#222222]"></tbody>
+      <tbody id="history-table-body" class="text-[12.5px] text-[#111111]"></tbody>
     </table>
   </div>
 
@@ -730,7 +746,7 @@
 
   <script>
     // --- THIẾT LẬP MÔI TRƯỜNG ---
-    const USE_DEMO_TXT = false; // Đổi thành false để kết nối thực tế với Google Sheet
+    const USE_DEMO_TXT = True; // Đổi thành false để kết nối thực tế với Google Sheet
     const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzH9H9o59MZVIwovQkpUQJNWN51zt-YtGMiVnl9T2faUIzffqkjCvHlWEKXeXVFKAgo/exec';
 
     const STORAGE_KEYS = {
@@ -1022,10 +1038,10 @@
           el.setAttribute('data-frame-mode', isFull ? 'FULL' : 'INNER');
           if (isFull) {
             el.classList.add('is-full-icon');
-            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-11 h-11 rounded-full object-contain transition" />`;
+            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-[50px] h-[50px] rounded-full object-contain transition" />`;
           } else {
             el.classList.remove('is-full-icon');
-            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-6 h-6 object-contain transition" />`;
+            el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="tab-custom-img w-7 h-7 object-contain transition" />`;
           }
         } else if (key.startsWith('nav_')) {
           el.innerHTML = `<img src="${iconData.src}" alt="${key}" class="w-5 h-5 object-contain" />`;
@@ -1042,10 +1058,10 @@
     function renderEyeIconHTML() {
       const eyeIcon = activeUiConfig && activeUiConfig.icons && activeUiConfig.icons.icon_con_mat;
       if (eyeIcon && eyeIcon.src) {
-        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-[20px] h-[14px] object-contain mx-auto" />`;
+        return `<img src="${eyeIcon.src}" alt="Chi tiết" class="w-[21px] h-[15px] object-contain mx-auto" />`;
       }
       return `
-        <svg viewBox="0 0 24 16" class="w-[20px] h-[14px] mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 24 16" class="w-[21px] h-[15px] mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M1.5 8C3.8 3.5 7.5 1.25 12 1.25C16.5 1.25 20.2 3.5 22.5 8C20.2 12.5 16.5 14.75 12 14.75C7.5 14.75 3.8 12.5 1.5 8Z" stroke="#355c85" stroke-width="1.7" />
           <circle cx="12" cy="8" r="3.6" fill="#355c85" />
           <circle cx="10.8" cy="6.8" r="1" fill="#ffffff" />
@@ -1364,6 +1380,16 @@
       }
     }
 
+    function isNonZeroDuration(val) {
+      const s = String(val || '').trim();
+      if (!s) return false;
+      const nums = s.match(/\d+/g);
+      if (nums) {
+        return nums.some((n) => Number(n) > 0);
+      }
+      return s !== '0' && s.toLowerCase() !== '0 tháng';
+    }
+
     function switchInsuranceTab(tabKey) {
       try {
         localStorage.setItem(STORAGE_KEYS.ACTIVE_TAB, tabKey);
@@ -1380,30 +1406,26 @@
 
         if (key === tabKey) {
           if (isFullMode) {
-            circle.className = 'tab-icon-circle is-full-icon w-11 h-11 rounded-full flex items-center justify-center transition overflow-hidden';
+            circle.className = 'tab-icon-circle is-full-icon w-[50px] h-[50px] rounded-full flex items-center justify-center transition overflow-hidden';
             if (customImg) {
               customImg.classList.remove('tab-full-inactive');
               customImg.classList.add('tab-full-active');
             }
           } else {
-            circle.className = 'tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden';
+            circle.className = 'tab-icon-circle w-[50px] h-[50px] rounded-full border flex items-center justify-center transition border-[#1b75bb] bg-[#e6f2fa] text-[#1b75bb] overflow-hidden';
           }
-          label.className = key === 'bhtnld'
-            ? 'tab-label text-[10.5px] mt-1 font-normal text-[#1d629d] text-center leading-tight'
-            : 'tab-label text-[11px] mt-1.5 font-normal text-[#1d629d] text-center leading-tight';
+          label.className = 'tab-label text-[12px] mt-1.5 font-normal text-[#1d629d] text-center leading-[1.22]';
         } else {
           if (isFullMode) {
-            circle.className = 'tab-icon-circle is-full-icon w-11 h-11 rounded-full flex items-center justify-center transition overflow-hidden';
+            circle.className = 'tab-icon-circle is-full-icon w-[50px] h-[50px] rounded-full flex items-center justify-center transition overflow-hidden';
             if (customImg) {
               customImg.classList.remove('tab-full-active');
               customImg.classList.add('tab-full-inactive');
             }
           } else {
-            circle.className = 'tab-icon-circle w-11 h-11 rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden';
+            circle.className = 'tab-icon-circle w-[50px] h-[50px] rounded-full border flex items-center justify-center transition border-slate-300 bg-slate-100 text-slate-400 overflow-hidden';
           }
-          label.className = key === 'bhtnld'
-            ? 'tab-label text-[10.5px] mt-1 text-[#8c8c8c] text-center leading-tight'
-            : 'tab-label text-[11px] mt-1.5 text-[#8c8c8c] text-center leading-tight';
+          label.className = 'tab-label text-[12px] mt-1.5 font-normal text-[#8c8c8c] text-center leading-[1.22]';
         }
       });
 
@@ -1427,8 +1449,9 @@
 
       // Chỉ hiển thị "Tổng thời gian chậm đóng" ở tab bhxh và bhtn
       const lateRowEl = document.getElementById('summary-late-row');
+      const isLateTab = tabKey === 'bhxh' || tabKey === 'bhtn';
       if (lateRowEl) {
-        if (tabKey === 'bhxh' || tabKey === 'bhtn') {
+        if (isLateTab) {
           lateRowEl.classList.remove('hidden');
         } else {
           lateRowEl.classList.add('hidden');
@@ -1470,19 +1493,31 @@
         }
 
         summaryDetails.classList.remove('hidden');
-        document.getElementById('summary-total-time').textContent = tabSummary.tongThoiGian || '0 tháng';
-        document.getElementById('summary-late-time').textContent = tabSummary.thoiGianChamDong || '0 tháng';
+        const totalTimeText = tabSummary.tongThoiGian || '0 tháng';
+        const lateTimeText = tabSummary.thoiGianChamDong || '0 tháng';
+
+        document.getElementById('summary-total-time').textContent = totalTimeText;
+        document.getElementById('summary-late-time').textContent = lateTimeText;
+
+        const lateDetailBtn = document.getElementById('summary-late-detail-btn');
+        if (lateDetailBtn) {
+          if (isLateTab && isNonZeroDuration(lateTimeText)) {
+            lateDetailBtn.classList.remove('hidden');
+          } else {
+            lateDetailBtn.classList.add('hidden');
+          }
+        }
 
         const eyeHtml = renderEyeIconHTML();
         tbody.innerHTML = filtered
           .map(
             (row) => `
             <tr>
-              <td class="py-[6.5px] px-0.5 text-center whitespace-nowrap">${row.tuThang || ''}</td>
-              <td class="py-[6.5px] px-0.5 text-center whitespace-nowrap">${row.denThang || ''}</td>
-              <td class="py-[6.5px] px-1.5 text-center leading-[1.26]">${row.donVi || ''}</td>
-              <td class="col-role py-[6.5px] px-1 text-center leading-[1.26]">${row.chucVu || ''}</td>
-              <td class="col-eye py-[6.5px] px-0.5 text-center">
+              <td class="py-[9.5px] px-0.5 text-center whitespace-nowrap">${row.tuThang || ''}</td>
+              <td class="py-[9.5px] px-0.5 text-center whitespace-nowrap">${row.denThang || ''}</td>
+              <td class="py-[9.5px] px-1.5 text-center leading-[1.3]">${row.donVi || ''}</td>
+              <td class="py-[9.5px] px-1 text-center leading-[1.3]">${row.chucVu || ''}</td>
+              <td class="py-[9.5px] px-0.5 text-center">
                 <button
                   type="button"
                   data-id="${row._id}"

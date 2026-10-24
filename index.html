@@ -173,10 +173,14 @@
       padding-bottom: 4px;
     }
     
+.vssid-bottom-nav {
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+    
     @supports (padding-bottom: env(safe-area-inset-bottom)) {
       .vssid-bottom-nav {
-        /* Kiểm soát khoảng trống ở vùng an toàn đáy điện thoại */
-        padding-bottom: calc(env(safe-area-inset-bottom) + 11px) !important; 
+        padding-bottom: 8px !important;
       }
     }
   </style>
